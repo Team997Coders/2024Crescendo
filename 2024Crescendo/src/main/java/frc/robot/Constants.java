@@ -15,5 +15,17 @@ package frc.robot;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+
   }
+
+  public final class Shooter {
+      public static final int FLYWHEEL_MOTOR_ID = 0;
+
+      public static final boolean FLYWHEEL_MOTOR_IS_INVERTED = false;
+    }
+
+    public final class Intake {
+      public static final int INTAKE_MOTOR_ID = 0;
+
+    }
 }
