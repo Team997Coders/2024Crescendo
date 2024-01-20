@@ -24,9 +24,14 @@ public final class Constants {
       public static final boolean FLYWHEEL_MOTOR_IS_INVERTED = false;
     }
 
-    public final class Intake {
+    public final class Indexer {
       public static final int INTAKE_MOTOR_ID = 0;
       public static final int FEEDER_MOTOR_ID = 0;
+
+      public static final int FEEDER_SENSOR_CHANNEL = 0;
+
+      public static final boolean INTAKE_MOTOR_IS_INVERTED = false;
+      public static final boolean FEEDER_MOTOR_IS_INVERTED = false; 
 
     }
 }
