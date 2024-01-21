@@ -3,14 +3,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Shooter;
 
-public class IndexNote extends Command{
+public class IndexAndShoot extends Command{
 
     private Indexer indexer;
-
+    private Shooter shooter;
     private Timer timer;
-    
-    private double defaultVoltage = 0;
+
+    private double defaultVoltage = 1;
     
     @Override
     public void initialize() {
@@ -23,11 +24,26 @@ public class IndexNote extends Command{
         indexer.setFeederVoltage(defaultVoltage);
 
         if(indexer.getSensorStatus() == true) {
+            timer.start();
             indexer.setIntakeVoltage(0);
             indexer.setFeederVoltage(0);
-            //flywheel spin command for set time when finished
-            
+            shooter.setMotorVoltage(defaultVoltage);
+           
+        } 
+
+        if (timer.get() >= 5) {
+            indexer.setFeederVoltage(defaultVoltage);
+
+            if (indexer.getSensorStatus() == false && timer.get() >= 10) {
+            indexer.setFeederVoltage(0);
+            shooter.setMotorVoltage(0);
+            timer.stop();
+            timer.reset();
         }
+            } 
+
+        
+        
     }
 
     @Override 
@@ -36,6 +52,6 @@ public class IndexNote extends Command{
 
     @Override 
     public boolean isFinished() {
-        return false;
+        return (timer.get() >= 10);
     }
 }
