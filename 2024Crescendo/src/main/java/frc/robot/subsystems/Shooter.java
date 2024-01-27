@@ -9,9 +9,8 @@ import frc.robot.Constants;
 
 
 public class Shooter implements Subsystem{
-
-    private CANSparkMax flywheelNEO = new CANSparkMax(Constants.Shooter.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);  
-    private CANSparkMax invertedFlywheelNEO = new CANSparkMax(Constants.Shooter.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+    private CANSparkMax flywheelNEO = new CANSparkMax(Constants.Shooter.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+    private CANSparkMax invertedFlywheelNEO = new CANSparkMax(Constants.Shooter.INVERTED_FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
     private final RelativeEncoder ShooterEncoder;
 
 

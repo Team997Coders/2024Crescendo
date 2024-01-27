@@ -7,7 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.FlywheelCommand;
 import frc.robot.commands.IndexAndShoot;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,9 +21,12 @@ import frc.robot.commands.IndexAndShoot;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
+  private Indexer indexer;
+  private Shooter shooter;
+
   private RobotContainer m_robotContainer;
 
-  private IndexAndShoot indexAndShoot;
+  private IndexAndShoot indexAndShoot = new IndexAndShoot(indexer, shooter);
 
   private CommandScheduler scheduler;  
 
@@ -88,7 +94,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    scheduler.schedule(indexAndShoot);
+  }
 
   @Override
   public void testInit() {

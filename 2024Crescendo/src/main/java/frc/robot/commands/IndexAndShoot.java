@@ -7,13 +7,21 @@ import frc.robot.subsystems.Shooter;
 
 public class IndexAndShoot extends Command{
 
-    private Indexer indexer;
+    
     private Shooter shooter;
+    private Indexer indexer;
     private Timer timer;
 
-    private double defaultVoltage = 1;
+    private FlywheelCommand flywheelCommand = new FlywheelCommand(5, 1.0, shooter);
+
+    private double defaultVoltage;
     private boolean bool;
     
+    public IndexAndShoot(Indexer indexer, Shooter shooter) {
+        this.indexer = indexer;
+        this.shooter = shooter;
+    }
+
     @Override
     public void initialize() {
     bool = false;
