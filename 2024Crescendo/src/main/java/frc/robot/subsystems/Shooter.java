@@ -9,26 +9,39 @@ import frc.robot.Constants;
 
 public class Shooter implements Subsystem{
 
-    private final CANSparkMax flywheelNEO = new CANSparkMax(Constants.Shooter.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+    private final CANSparkMax leftFlywheelNeo = new CANSparkMax(Constants.Shooter.LEFT_FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+    private final CANSparkMax rightFlywheelNeo = new CANSparkMax(Constants.Shooter.RIGHT_FLYWHELL_MOTOR_ID, MotorType.kBrushless);
+
     
     private Shooter() {
-        flywheelNEO.setInverted(Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
+        leftFlywheelNeo.setInverted(Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
     }
 
 
     public void setMotorVoltage(double voltage) {
-        flywheelNEO.setVoltage(voltage);
+        leftFlywheelNeo.setVoltage(voltage);
+        rightFlywheelNeo.setVoltage(voltage);
+
     }
 
     public void setMotorOutput(double output) {
-        flywheelNEO.set(output); //between -1.0 and 1.0
+        leftFlywheelNeo.set(output); //between -1.0 and 1.0
+        rightFlywheelNeo.set(output);
     }
 
-    public double getFlywheelEncoderPosition() {
-        return flywheelNEO.getEncoder().getPosition();
+    public double getLeftFlywheelEncoderPosition() {
+        return leftFlywheelNeo.getEncoder().getPosition();
     }
-    public double getFlywheelEncoderVelocity(){
-        return flywheelNEO.getEncoder().getVelocity();
+    public double getLeftFlywheelEncoderVelocity(){
+        return leftFlywheelNeo.getEncoder().getVelocity();
+    }
+
+    public double getRightFlywheelEncoderPosition() {
+        return rightFlywheelNeo.getEncoder().getPosition();
+    }
+
+    public double getRightFlywheelEncoderVelocity() {
+        return rightFlywheelNeo.getEncoder().getVelocity();
     }
     
     

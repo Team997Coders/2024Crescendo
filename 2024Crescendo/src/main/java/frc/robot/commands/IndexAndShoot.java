@@ -12,29 +12,35 @@ public class IndexAndShoot extends Command{
     private Timer timer;
 
     private double defaultVoltage = 1;
+    private boolean bool;
     
     @Override
     public void initialize() {
-        timer.start();
+    bool = false;
     }
 
     @Override
     public void execute() {
+        if (indexer.getSensorStatus() == false && bool == false) {
         indexer.setIntakeVoltage(defaultVoltage);
         indexer.setFeederVoltage(defaultVoltage);
-
-        if(indexer.getSensorStatus() == true) {
+        bool = !bool;
+        } else if(indexer.getSensorStatus() == true && bool == true) {
             timer.start();
             indexer.setIntakeVoltage(0);
             indexer.setFeederVoltage(0);
             shooter.setMotorVoltage(defaultVoltage);
            
-        } 
+        } else if (indexer.getSensorStatus() == false && timer.get() > 0) {
+             indexer.setIntakeVoltage(0);
+             indexer.setFeederVoltage(0);
+             shooter.setMotorVoltage(defaultVoltage);
+        }
 
         if (timer.get() >= 5) {
             indexer.setFeederVoltage(defaultVoltage);
 
-            if (indexer.getSensorStatus() == false && timer.get() >= 10) {
+            if (indexer.getSensorStatus() == false && timer.get() >= 9) {
             indexer.setFeederVoltage(0);
             shooter.setMotorVoltage(0);
             timer.stop();
