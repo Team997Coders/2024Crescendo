@@ -28,9 +28,7 @@ public class Shooter implements Subsystem{
         
     }
 
-    public void setMotorOutput(double output) {
-        flywheelNEO.set(output); //between -1.0 and 1.0
-    }
+   
 
     public double getFlywheelEncoderPosition() {
         return ShooterEncoder.getPosition();
