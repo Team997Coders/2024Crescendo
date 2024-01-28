@@ -8,49 +8,48 @@ import frc.robot.subsystems.Shooter;
 public class IndexAndShoot extends Command{
 
     
-    private Shooter shooter;
-    private Indexer indexer;
+    private Shooter m_shooter;
+    private Indexer m_indexer;
     private Timer timer;
-
-    private FlywheelCommand flywheelCommand = new FlywheelCommand(5, 1.0, shooter);
 
     private double defaultVoltage;
     private boolean bool;
     
     public IndexAndShoot(Indexer indexer, Shooter shooter) {
-        this.indexer = indexer;
-        this.shooter = shooter;
+        m_indexer = indexer;
+        m_shooter = shooter;
+        timer = new Timer();
     }
 
     @Override
     public void initialize() {
-    bool = false;
+        bool = false;
     }
 
     @Override
     public void execute() {
-        if (indexer.getSensorStatus() == false && bool == false) {
-        indexer.setIntakeVoltage(defaultVoltage);
-        indexer.setFeederVoltage(defaultVoltage);
-        bool = !bool;
-        } else if(indexer.getSensorStatus() == true && bool == true) {
+        if (m_indexer.getSensorStatus() == false && bool == false) {
+            m_indexer.setIntakeVoltage(defaultVoltage);
+            m_indexer.setFeederVoltage(defaultVoltage);
+            bool = !bool;
+        } else if(m_indexer.getSensorStatus() == true && bool == true) {
             timer.start();
-            indexer.setIntakeVoltage(0);
-            indexer.setFeederVoltage(0);
-            shooter.setMotorVoltage(defaultVoltage);
+            m_indexer.setIntakeVoltage(0);
+            m_indexer.setFeederVoltage(0);
+            m_shooter.setMotorVoltage(defaultVoltage);
            
-        } else if (indexer.getSensorStatus() == false && timer.get() > 0) {
-             indexer.setIntakeVoltage(0);
-             indexer.setFeederVoltage(0);
-             shooter.setMotorVoltage(defaultVoltage);
+        } else if (m_indexer.getSensorStatus() == false && timer.get() > 0) {
+             m_indexer.setIntakeVoltage(0);
+             m_indexer.setFeederVoltage(0);
+             m_shooter.setMotorVoltage(defaultVoltage);
         }
 
         if (timer.get() >= 5) {
-            indexer.setFeederVoltage(defaultVoltage);
+            m_indexer.setFeederVoltage(defaultVoltage);
 
-            if (indexer.getSensorStatus() == false && timer.get() >= 9) {
-            indexer.setFeederVoltage(0);
-            shooter.setMotorVoltage(0);
+            if (m_indexer.getSensorStatus() == false && timer.get() >= 9) {
+            m_indexer.setFeederVoltage(0);
+            m_shooter.setMotorVoltage(0);
             timer.stop();
             timer.reset();
         }

@@ -10,13 +10,13 @@ import frc.robot.Constants;
 
 public class Shooter implements Subsystem{
     private CANSparkMax flywheelNEO = new CANSparkMax(Constants.Shooter.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
-    private CANSparkMax invertedFlywheelNEO = new CANSparkMax(Constants.Shooter.INVERTED_FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+   // private CANSparkMax invertedFlywheelNEO = new CANSparkMax(Constants.Shooter.INVERTED_FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
     private final RelativeEncoder ShooterEncoder;
 
 
-    private Shooter() {
-        invertedFlywheelNEO.setInverted(true);
-        invertedFlywheelNEO.follow(flywheelNEO);
+    public Shooter() {
+       // invertedFlywheelNEO.setInverted(true);
+     //   invertedFlywheelNEO.follow(flywheelNEO);
 
         ShooterEncoder = flywheelNEO.getEncoder(); 
     }
@@ -41,8 +41,8 @@ public class Shooter implements Subsystem{
     @Override 
     public void periodic() { 
         //loggers eventually
-        SmartDashboard.putNumber("", 0); 
-        SmartDashboard.putNumber("", 0);
-
+        SmartDashboard.putNumber("", getFlywheelEncoderPosition()); 
+        SmartDashboard.putNumber("", getFlywheelEncoderVelocity());
+        
     }
 }

@@ -26,8 +26,8 @@ public class FlywheelCommand extends Command {
     @Override
     public void execute() {
         timer.start();
-        while (timer.get() < 10){
-            
+        while (seconds < 10){
+            shooter.setMotorVoltage(voltage);
         }
     }
 

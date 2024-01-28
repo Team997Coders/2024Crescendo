@@ -19,7 +19,7 @@ public final class Constants {
   }
 
   public final class Shooter {
-      public static final int FLYWHEEL_MOTOR_ID = 0;
+      public static final int FLYWHEEL_MOTOR_ID = 1;
       public static final int INVERTED_FLYWHEEL_MOTOR_ID = 0;
       
 

@@ -13,9 +13,9 @@ public class Indexer implements Subsystem {
     private final CANSparkMax intakeNEO = new CANSparkMax(Constants.Indexer.INTAKE_MOTOR_ID, MotorType.kBrushless);
     private final CANSparkMax feederNEO = new CANSparkMax(Constants.Indexer.FEEDER_MOTOR_ID, MotorType.kBrushless);
 
-    private final DigitalInput feederSensor /* ? */ = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
+    private final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
 
-    private Indexer() {
+    public Indexer() {
         intakeNEO.setInverted(Constants.Indexer.INTAKE_MOTOR_IS_INVERTED);
         feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
     }
@@ -60,5 +60,6 @@ public class Indexer implements Subsystem {
     public void periodic(){
         //loggers
         SmartDashboard.putBoolean("sensor status", getSensorStatus());
+
     }
 }

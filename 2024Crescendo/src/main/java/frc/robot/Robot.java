@@ -21,12 +21,7 @@ import frc.robot.subsystems.Shooter;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private Indexer indexer;
-  private Shooter shooter;
-
   private RobotContainer m_robotContainer;
-
-  private IndexAndShoot indexAndShoot = new IndexAndShoot(indexer, shooter);
 
   private CommandScheduler scheduler;  
 
@@ -78,7 +73,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    scheduler.schedule(indexAndShoot);
+    
   }
 
   @Override
@@ -95,7 +90,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    scheduler.schedule(indexAndShoot);
   }
 
   @Override
