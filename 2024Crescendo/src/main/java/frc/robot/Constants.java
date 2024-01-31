@@ -19,8 +19,8 @@ public final class Constants {
   }
 
   public final class Shooter {
-      public static final int LEFT_FLYWHEEL_MOTOR_ID = 0;
-      public static final int RIGHT_FLYWHELL_MOTOR_ID = 0;
+      public static final int LEFT_FLYWHEEL_MOTOR_ID = 1;
+      public static final int RIGHT_FLYWHELL_MOTOR_ID = 4;
 
       public static final boolean FLYWHEEL_MOTOR_IS_INVERTED = false;
     }
@@ -29,7 +29,7 @@ public final class Constants {
       public static final int INTAKE_MOTOR_ID = 3;
       public static final int FEEDER_MOTOR_ID = 2;
 
-      public static final int FEEDER_SENSOR_CHANNEL = 0;
+      public static final int FEEDER_SENSOR_CHANNEL = 1;
 
       public static final boolean INTAKE_MOTOR_IS_INVERTED = false;
       public static final boolean FEEDER_MOTOR_IS_INVERTED = false; 
