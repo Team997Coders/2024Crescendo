@@ -61,13 +61,14 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_indexerSubsystem);
+    return Autos.exampleAuto(m_indexerSubsystem, m_shooterSubsystem);
   }
 
   public void populateDashboard() {
     SmartDashboard.putData("IndexerSubsystem", m_indexerSubsystem);
     SmartDashboard.putData("ShooterSubsystem", m_shooterSubsystem);
     SmartDashboard.putBoolean("Note Sensor", m_indexerSubsystem.getSensorStatus());
+    SmartDashboard.putBoolean("bool key", Autos.run_state);
     SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
     SmartDashboard.putNumber("Shooter Speed", m_shooterSubsystem.getLeftFlywheelEncoderVelocity());
   } 
