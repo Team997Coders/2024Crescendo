@@ -5,25 +5,25 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class IndexAndShoot extends Command {
+public class Index extends Command {
 
     private final IndexerSubsystem indexer;
     private final ShooterSubsystem shooter;
     private Timer timer;
 
-    private double intakeVoltage = 6;
-    private double feederVoltage = 6;
-    private double shooterVoltage = 12;
+    private double intakeVoltage = 2;
+    private double feederVoltage = 2;
 
     public static boolean bool;
 
-    public IndexAndShoot(IndexerSubsystem indexer, ShooterSubsystem shooter, Boolean run_state) {
+    public Index(IndexerSubsystem indexer, ShooterSubsystem shooter, Boolean run_state) {
         this.indexer = indexer;
         this.shooter = shooter;
-        this.bool = run_state;
+        Index.bool = run_state;
         addRequirements(indexer, shooter);
         timer = new Timer();
     }
+    
 
     @Override
     public void initialize() {
@@ -41,21 +41,25 @@ public class IndexAndShoot extends Command {
      */
     @Override
     public void execute() {
-        if (indexer.getSensorStatus() == false && bool == false) {
+        if (indexer.getSensorStatus() == false && bool == false) { //sensor is off and no notes
             indexer.setIntakeVoltage(intakeVoltage);
             indexer.setFeederVoltage(feederVoltage);
             bool = !bool;
-        } else if (indexer.getSensorStatus() == true && bool == true) {
+        }else if (indexer.getSensorStatus() == true && bool == true) { //sensor is on and yes notes(which means stop intake and feeder)
             timer.start();
             indexer.setIntakeVoltage(0);
             indexer.setFeederVoltage(0);
-            shooter.setMotorVoltage(shooterVoltage);
-
-        } else if (indexer.getSensorStatus() == false && timer.get() > 0) {
+            indexer.isFilled = true;
+        }else if (indexer.getSensorStatus() == true && bool == false){ //sensor is off and yes notes
+            indexer.setIntakeVoltage(intakeVoltage);
+            indexer.setFeederVoltage(feederVoltage);
+            indexer.isFilled = true;
+        }else if (indexer.getSensorStatus() == false && timer.get() > 0) { //after getting a note
             indexer.setIntakeVoltage(0);
             indexer.setFeederVoltage(0);
-            shooter.setMotorVoltage(shooterVoltage);
-        }
+            indexer.isFilled =true;
+        } 
+
 
         if (timer.get() >= 5) {
             indexer.setFeederVoltage(feederVoltage);

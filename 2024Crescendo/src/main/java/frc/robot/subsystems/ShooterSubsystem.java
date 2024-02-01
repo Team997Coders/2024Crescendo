@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
-
+    
     private final CANSparkMax leftFlywheelNeo = new CANSparkMax(Constants.Shooter.LEFT_FLYWHEEL_MOTOR_ID,
             MotorType.kBrushless);
-    private final CANSparkMax rightFlywheelNeo = new CANSparkMax(Constants.Shooter.RIGHT_FLYWHELL_MOTOR_ID,
-            MotorType.kBrushless);
+    //private final CANSparkMax rightFlywheelNeo = new CANSparkMax(Constants.Shooter.RIGHT_FLYWHELL_MOTOR_ID,
+    //        MotorType.kBrushless);
 
     public ShooterSubsystem() {
         leftFlywheelNeo.setInverted(Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
@@ -19,13 +19,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setMotorVoltage(double voltage) {
         leftFlywheelNeo.setVoltage(voltage);
-        rightFlywheelNeo.setVoltage(voltage);
+        //rightFlywheelNeo.setVoltage(voltage);
 
     }
 
     public void setMotorOutput(double output) {
         leftFlywheelNeo.set(output); // between -1.0 and 1.0
-        rightFlywheelNeo.set(output);
+        //rightFlywheelNeo.set(output);
     }
 
     public double getLeftFlywheelEncoderPosition() {
@@ -36,11 +36,12 @@ public class ShooterSubsystem extends SubsystemBase {
         return leftFlywheelNeo.getEncoder().getVelocity();
     }
 
-    public double getRightFlywheelEncoderPosition() {
-        return rightFlywheelNeo.getEncoder().getPosition();
-    }
+    // public double getRightFlywheelEncoderPosition() {
+    //     return rightFlywheelNeo.getEncoder().getPosition();
+    // }
 
-    public double getRightFlywheelEncoderVelocity() {
-        return rightFlywheelNeo.getEncoder().getVelocity();
-    }
+    // public double getRightFlywheelEncoderVelocity() {
+    //     return rightFlywheelNeo.getEncoder().getVelocity();
+    // }
+
 }

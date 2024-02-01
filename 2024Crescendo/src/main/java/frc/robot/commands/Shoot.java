@@ -5,6 +5,7 @@ import frc.robot.Constants.Shooter;
 
 public class Shoot extends Command{
     private Shooter shooter;
+    
      
 
     @Override

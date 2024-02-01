@@ -8,6 +8,8 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Indexer;
+
 
 public class IndexerSubsystem extends SubsystemBase {
 
@@ -16,15 +18,15 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final RelativeEncoder feederEncoder = feederNEO.getEncoder();
     private final RelativeEncoder intakeEncoder = intakeNEO.getEncoder();
-
-    private final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
-
+    public static final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
+    public  boolean isFilled = feederSensor.get();
     public IndexerSubsystem() {
         intakeNEO.setInverted(Constants.Indexer.INTAKE_MOTOR_IS_INVERTED);
         feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
 
         intakeEncoder.setPosition(0);
         feederEncoder.setPosition(0);
+        isFilled = false;
     }
 
     /**
@@ -32,7 +34,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return true if the sensor is blocked, false if not.
      */
     public boolean getSensorStatus() {
-        return feederSensor.get();
+        return !feederSensor.get();
     }
 
     /**
