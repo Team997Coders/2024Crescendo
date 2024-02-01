@@ -23,6 +23,8 @@ public final class Constants {
       public static final int RIGHT_FLYWHELL_MOTOR_ID = 4;
 
       public static final boolean FLYWHEEL_MOTOR_IS_INVERTED = false;
+
+      
     }
 
     public final class Indexer {

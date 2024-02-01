@@ -12,7 +12,6 @@ import frc.robot.Constants.Indexer;
 
 
 public class IndexerSubsystem extends SubsystemBase {
-
     private final CANSparkMax intakeNEO = new CANSparkMax(Constants.Indexer.INTAKE_MOTOR_ID, MotorType.kBrushless);
     private final CANSparkMax feederNEO = new CANSparkMax(Constants.Indexer.FEEDER_MOTOR_ID, MotorType.kBrushless);
 
@@ -27,6 +26,7 @@ public class IndexerSubsystem extends SubsystemBase {
         intakeEncoder.setPosition(0);
         feederEncoder.setPosition(0);
         isFilled = false;
+        
     }
 
     /**
@@ -36,7 +36,9 @@ public class IndexerSubsystem extends SubsystemBase {
     public boolean getSensorStatus() {
         return !feederSensor.get();
     }
-
+    public boolean isFilled(){
+        return (isFilled);
+    }
     /**
      * Set the voltage of the intake motor
      * @param voltage
