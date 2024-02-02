@@ -19,11 +19,12 @@ public final class Constants {
   }
 
   public final class Shooter {
-      public static final int FLYWHEEL_MOTOR_ID = 1;
-      public static final int INVERTED_FLYWHEEL_MOTOR_ID = 0;
-      
+      public static final int LEFT_FLYWHEEL_MOTOR_ID = 1;
+      public static final int RIGHT_FLYWHELL_MOTOR_ID = 4;
 
       public static final boolean FLYWHEEL_MOTOR_IS_INVERTED = false;
+
+      
     }
 
     public final class Indexer {
@@ -34,6 +35,6 @@ public final class Constants {
 
       public static final boolean INTAKE_MOTOR_IS_INVERTED = false;
       public static final boolean FEEDER_MOTOR_IS_INVERTED = false; 
-
+      public final boolean NOTE_SWITCH_ACTIVE = false;
     }
 }
