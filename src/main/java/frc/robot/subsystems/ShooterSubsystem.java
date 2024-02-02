@@ -17,6 +17,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
         leftFlywheelNeo.setInverted(Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
+        rightFlywheelNeo.setInverted(!Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
+        rightFlywheelNeo.follow(leftFlywheelNeo);
+        shooterEncoder = leftFlywheelNeo.getEncoder();
         shooterEncoder.setPosition(0);
     }
 
@@ -26,12 +29,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setShooterVoltage(double FlywheelVoltage) {
         leftFlywheelNeo.setVoltage(FlywheelVoltage);
-        rightFlywheelNeo.setVoltage(FlywheelVoltage);
     }
 
     public void setMotorOutput(double output) {
         leftFlywheelNeo.set(output); // between -1.0 and 1.0
-        rightFlywheelNeo.set(output);
     }
 
     public double getFlywheelPosition() {
