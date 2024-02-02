@@ -11,10 +11,9 @@ public class Shoot extends Command{
     private ShooterSubsystem rightFlywheel;
     private ShooterSubsystem shooterStart;
     private boolean isFilled;
-    public Shoot (ShooterSubsystem leftFlywheel, ShooterSubsystem rightFlywheel, ShooterSubsystem shooterStart){
-       
+    private double voltage;
+    public Shoot (ShooterSubsystem leftFlywheel, ShooterSubsystem rightFlywheel, ShooterSubsystem shooterStart, double voltage){
         isFilled = new IndexerSubsystem().isFilled;
-
     }
 
     @Override
@@ -27,12 +26,15 @@ public class Shoot extends Command{
         while (isFilled){
             if (shooterStart.shooterOn == true){
                 timer.start();
-                leftFlywheel.setLeftMotorVoltage();
-                rightFlywheel.setRightMotorVoltage();
+                leftFlywheel.setLeftMotorVoltage(voltage);
+                rightFlywheel.setRightMotorVoltage(voltage);
                 if (timer.get() > 5){
                     shooterStart.shooterOn = false;
                     timer.reset();
                 }
+            }else{
+                leftFlywheel.setLeftMotorVoltage(0);
+                rightFlywheel.setRightMotorVoltage(0);
             }
             if(!isFilled){
                 break;

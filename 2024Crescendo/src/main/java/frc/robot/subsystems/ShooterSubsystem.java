@@ -8,8 +8,7 @@ import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
     public Boolean shooterOn = false;
-    public double leftFlywheelVoltage;
-    public double rightFlywheelVoltage;
+
     private final CANSparkMax leftFlywheelNeo = new CANSparkMax(Constants.Shooter.LEFT_FLYWHEEL_MOTOR_ID,
             MotorType.kBrushless);
     private final CANSparkMax rightFlywheelNeo = new CANSparkMax(Constants.Shooter.RIGHT_FLYWHELL_MOTOR_ID,
@@ -21,10 +20,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isShooterOn(){
         return shooterOn;
     }
-    public void setLeftMotorVoltage() {
+    public void setLeftMotorVoltage(double leftFlywheelVoltage) {
         leftFlywheelNeo.setVoltage(leftFlywheelVoltage);
     }
-    public void setRightMotorVoltage(){
+    public void setRightMotorVoltage(double rightFlywheelVoltage){
          rightFlywheelNeo.setVoltage(rightFlywheelVoltage);
     }
 
