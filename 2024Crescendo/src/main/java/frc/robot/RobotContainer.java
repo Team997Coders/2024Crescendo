@@ -6,8 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ClimbCommand;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+//import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -21,12 +23,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+ // private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+  //private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
+  //Trigger rightBumper = m_driverController.rightBumper();
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -46,12 +51,11 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(m_exampleSubsystem::exampleCondition)
-    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
-
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+   // rightBumper.whileTrue(climb);
+
   }
 
   /**
@@ -59,18 +63,19 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_indexerSubsystem, m_shooterSubsystem);
-  }
+  // public Command getAutonomousCommand() {
+  //   // An example command will be run in autonomous
+  //  // return Autos.exampleAuto(m_climber, 1);
+  // }
 
   public void populateDashboard() {
-    SmartDashboard.putData("IndexerSubsystem", m_indexerSubsystem);
-    SmartDashboard.putData("ShooterSubsystem", m_shooterSubsystem);
-    SmartDashboard.putBoolean("Note Sensor", m_indexerSubsystem.getSensorStatus());
-    SmartDashboard.putBoolean("bool key", Autos.run_state);
-    SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
-    SmartDashboard.putNumber("Shooter Speed", m_shooterSubsystem.getLeftFlywheelEncoderVelocity());
+    // SmartDashboard.putData("IndexerSubsystem", m_indexerSubsystem);
+    // //SmartDashboard.putData("ShooterSubsystem", m_shooterSubsystem);
+    // SmartDashboard.putData("ClimberSubsystem", m_climber);
+    // SmartDashboard.putBoolean("Note Sensor", m_indexerSubsystem.getSensorStatus());
+    // SmartDashboard.putBoolean("bool key", Autos.run_state);
+    // SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
+    // //SmartDashboard.putNumber("Shooter Speed", m_shooterSubsystem.getLeftFlywheelEncoderVelocity());
   } 
 
 }
