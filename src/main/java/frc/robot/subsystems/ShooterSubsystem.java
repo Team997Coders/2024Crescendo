@@ -6,30 +6,33 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
-    public Boolean shooterOn = false;
-
     private final CANSparkMax leftFlywheelNeo = new CANSparkMax(Constants.Shooter.LEFT_FLYWHEEL_MOTOR_ID,
             MotorType.kBrushless);
     private final CANSparkMax rightFlywheelNeo = new CANSparkMax(Constants.Shooter.RIGHT_FLYWHELL_MOTOR_ID,
             MotorType.kBrushless);
 
+    private RelativeEncoder shooterEncoder;
+
     public ShooterSubsystem() {
         leftFlywheelNeo.setInverted(Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
+        rightFlywheelNeo.setInverted(!Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
+        rightFlywheelNeo.follow(leftFlywheelNeo);
+        shooterEncoder = leftFlywheelNeo.getEncoder();
+        shooterEncoder.setPosition(0);
     }
-    public boolean isShooterOn(){
-        return shooterOn;
+
+    public boolean isShooterOn() {
+        return leftFlywheelNeo.getAppliedOutput() > 0;
     }
-    public void setLeftMotorVoltage(double leftFlywheelVoltage) {
-        leftFlywheelNeo.setVoltage(leftFlywheelVoltage);
-    }
-    public void setRightMotorVoltage(double rightFlywheelVoltage){
-         rightFlywheelNeo.setVoltage(rightFlywheelVoltage);
+
+    public void setShooterVoltage(double FlywheelVoltage) {
+        leftFlywheelNeo.setVoltage(FlywheelVoltage);
     }
 
     public void setMotorOutput(double output) {
         leftFlywheelNeo.set(output); // between -1.0 and 1.0
-        rightFlywheelNeo.set(output);
     }
+<<<<<<< HEAD
     public double getFlywheelEncoderPosition() {
         return ShooterEncoder.getPosition();
     }
@@ -45,3 +48,14 @@ public class ShooterSubsystem extends SubsystemBase {
         return rightFlywheelNeo.getEncoder().getVelocity();
     }
 
+=======
+
+    public double getFlywheelPosition() {
+        return shooterEncoder.getPosition();
+    }
+
+    public double getFlywheelVelocity() {
+        return shooterEncoder.getVelocity();
+    }
+}
+>>>>>>> mentor_changes

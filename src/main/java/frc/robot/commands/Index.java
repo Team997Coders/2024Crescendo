@@ -7,7 +7,6 @@ import frc.robot.subsystems.IndexerSubsystem;
 
 public class Index extends Command {
     private final IndexerSubsystem indexer;
-    static IndexerSubsystem isFilled;
     private Timer timer;
 
     private double intakeVoltage = 2;
@@ -15,10 +14,8 @@ public class Index extends Command {
 
     public static boolean bool;
 
-    public Index(IndexerSubsystem indexer, Boolean run_state) {
+    public Index(IndexerSubsystem indexer) {
         this.indexer = indexer;
-        indexer.isFilled = false;
-        Index.bool = run_state;
         timer = new Timer();
     }
     
@@ -39,26 +36,14 @@ public class Index extends Command {
      */
     @Override
     public void execute() {
-        if (indexer.getSensorStatus() == false && bool == false ) { //sensor is off and no notes
+        if (!indexer.isFilled() && bool == false ) { //sensor is off and no notes
             indexer.setIntakeVoltage(intakeVoltage);
             indexer.setFeederVoltage(feederVoltage);
             bool = !bool;
-        }else if (indexer.getSensorStatus() == true && bool == true) { //sensor is on and index did run(which means stop intake and feeder)
-            timer.start();
+        }else if (indexer.isFilled() && bool == true) { //sensor is on and index did run(which means stop intake and feeder)
             indexer.setIntakeVoltage(0);
             indexer.setFeederVoltage(0);
-            indexer.isFilled = true;
-        }else if (indexer.getSensorStatus() == true && bool == false){ //sensor is on and index did run(no notes inside)
-            indexer.setIntakeVoltage(intakeVoltage);
-            indexer.setFeederVoltage(feederVoltage);
-            indexer.isFilled = false;
         }
-        if (indexer.getSensorStatus() == false && timer.get() > 0) { //sensor is off and index start
-            indexer.setIntakeVoltage(intakeVoltage);
-            indexer.setFeederVoltage(feederVoltage);
-            indexer.isFilled =true;
-        } 
-
 
         // if (timer.get() >= 5) {
         //     indexer.setFeederVoltage(feederVoltage);
@@ -78,6 +63,6 @@ public class Index extends Command {
 
     @Override
     public boolean isFinished() {
-        return (indexer.isFilled);
+        return (indexer.isFilled());
     }
 }
