@@ -24,8 +24,7 @@ public class Index extends Command {
 
     @Override
     public void initialize() {
-        bool = false;
-        execute();
+        timer.start();
     }
 
     /**
@@ -37,19 +36,15 @@ public class Index extends Command {
      */
     @Override
     public void execute() {
-        if (indexer.getSensorStatus() == false && bool == false ) { // if the switch is off and no notes
+        if(indexer.getSensorStatus() == false  ) { // if the switch is off and no notes
             indexer.setIntakeVoltage(intakeVoltage);
-            indexer.setFeederVoltage(feederVoltage);
-            bool = !bool;
-            timer.start();
-            if (timer.get() < 3){ // run the index 3 seconds
-                indexer.isFilled();
-            }
-        }else if (indexer.getSensorStatus() == true && bool == true) {  // the switch is on and there is notes inside
-            indexer.setIntakeVoltage(0);
-            indexer.setFeederVoltage(0);
-            indexer.isFilled = true;
-        }
+            indexer.setFeederVoltage(feederVoltage);   
+        }else if (indexer.getSensorStatus() == true ) {  // the switch is on and there is notes inside
+                indexer.setIntakeVoltage(0);
+                indexer.setFeederVoltage(0);
+                indexer.isFilled = true;
+        }  
+    
 
     }
 

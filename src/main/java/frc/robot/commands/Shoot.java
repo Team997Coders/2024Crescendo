@@ -11,12 +11,14 @@ public class Shoot extends Command{
     private ShooterSubsystem m_shooter;
     private IndexerSubsystem m_indexer;
     private double shooterVoltage;
+    private boolean isShooterButtonPressed;
+    private double feederVoltage= 3;
     // constructor
-    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer, double shooterVoltage){
+    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer, double shooterVoltage, boolean isShooterButtonPressed){
         this.m_shooter = shooterStart;
         this.m_indexer = indexer;
         this.shooterVoltage = shooterVoltage;
-        
+        this.isShooterButtonPressed = isShooterButtonPressed;
     }
 
 
@@ -40,22 +42,23 @@ public class Shoot extends Command{
      *      turn off the shooter
      */
     public void execute() {
-        while (m_indexer.isFilled() == true){ //while there is a notes inside
+        if (m_indexer.isFilled() == true){ //while there is a notes inside
             m_indexer.setFeederVoltage(0); // turn off the feeder
             m_indexer.setIntakeVoltage(0); // turn off the intake
-            if (m_shooter.isShooterButtonPressed() == true){// the shooter button pressed
+            if (m_shooter.isShooterButtonPressed() == isShooterButtonPressed){// the shooter button pressed
                 timer.start(); //start time
                   m_shooter.setLeftMotorVoltage(shooterVoltage);
                 if (timer.get() > 5){ // wait 5 second
-                   
+                    m_indexer.setFeederVoltage(feederVoltage);
                     timer.reset();
                 }
-            }else{ // else turn off the shooter motor
+            }
+        }else{ // else turn off the shooter motor
                 m_shooter.setLeftMotorVoltage(0);
                
             }
           
-        } 
+        
        
         
     }

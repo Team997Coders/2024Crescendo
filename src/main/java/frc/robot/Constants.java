@@ -34,7 +34,7 @@ public final class Constants {
       public static final int FEEDER_SENSOR_CHANNEL = 0;
 
       public static final boolean INTAKE_MOTOR_IS_INVERTED = false;
-      public static final boolean FEEDER_MOTOR_IS_INVERTED = false; 
+      public static final boolean FEEDER_MOTOR_IS_INVERTED = true; 
       public final boolean NOTE_SWITCH_ACTIVE = false;
     }
 }
