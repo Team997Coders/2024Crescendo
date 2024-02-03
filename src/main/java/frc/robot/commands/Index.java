@@ -11,7 +11,7 @@ public class Index extends Command {
     private Timer timer;
 
     private double intakeVoltage = 2;
-    private double feederVoltage = 2;
+    private double feederVoltage = 3;
 
     public static boolean bool;
 
@@ -42,7 +42,7 @@ public class Index extends Command {
             indexer.setFeederVoltage(feederVoltage);
             bool = !bool;
             timer.start();
-            if (timer.get() < 3){
+            if (timer.get() < 3){ // run the index 3 seconds
                 indexer.isFilled();
             }
         }else if (indexer.getSensorStatus() == true && bool == true) {  // the switch is on and there is notes inside

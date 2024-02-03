@@ -10,11 +10,12 @@ public class Shoot extends Command{
     private Timer timer;
     private ShooterSubsystem m_shooter;
     private IndexerSubsystem m_indexer;
-
+    private double shooterVoltage;
     // constructor
-    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer){
+    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer, double shooterVoltage){
         this.m_shooter = shooterStart;
         this.m_indexer = indexer;
+        this.shooterVoltage = shooterVoltage;
         
     }
 
@@ -39,24 +40,21 @@ public class Shoot extends Command{
      *      turn off the shooter
      */
     public void execute() {
-        while (m_indexer.isFilled()){ //while there is a notes inside
-            m_indexer.setFeederVoltage(m_indexer.getFeederMotorVoltage()); // turn off the feeder
-            m_indexer.setIntakeVoltage(m_indexer.getIntakeMotorVoltage()); // turn off the intake
+        while (m_indexer.isFilled() == true){ //while there is a notes inside
+            m_indexer.setFeederVoltage(0); // turn off the feeder
+            m_indexer.setIntakeVoltage(0); // turn off the intake
             if (m_shooter.isShooterButtonPressed() == true){// the shooter button pressed
                 timer.start(); //start time
+                  m_shooter.setLeftMotorVoltage(shooterVoltage);
                 if (timer.get() > 5){ // wait 5 second
-                    m_shooter.setMotorOutput(m_shooter.getLeftFlywheelEncoderVelocity()); //maybe. need to test this
-                    m_shooter.setMotorOutput(m_shooter.getRightFlywheelEncoderVelocity());
-                    timer.reset();// that's the error we have. before the time reset we need to start the shoot
+                   
+                    timer.reset();
                 }
             }else{ // else turn off the shooter motor
                 m_shooter.setLeftMotorVoltage(0);
-                m_shooter.setRightMotorVoltage(0);
+               
             }
           
-            if(!m_indexer.isFilled()){ // if no notes, break
-                break;
-            }
         }
        
         
