@@ -22,10 +22,10 @@ public class IndexerSubsystem extends SubsystemBase {
     public IndexerSubsystem() {
         intakeNEO.setInverted(Constants.Indexer.INTAKE_MOTOR_IS_INVERTED);
         feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
-
+        
         intakeEncoder.setPosition(0);
         feederEncoder.setPosition(0);
-        isFilled = false;
+       
         
     }
 

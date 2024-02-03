@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Index;
+import frc.robot.commands.Shoot;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,10 +29,10 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+  
     configureBindings();
     populateDashboard();
   }
@@ -52,6 +54,9 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+    m_driverController.b().onTrue(new Shoot(m_shooterSubsystem, m_indexerSubsystem));
+    m_driverController.a().onTrue(new Index(m_indexerSubsystem));
   }
 
   /**
@@ -63,6 +68,9 @@ public class RobotContainer {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_indexerSubsystem, m_shooterSubsystem);
   }
+  // public Command getTeleoperateCommand(){
+    
+  // }
 
   public void populateDashboard() {
     SmartDashboard.putData("IndexerSubsystem", m_indexerSubsystem);

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Index;
+import frc.robot.commands.Shoot;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,6 +23,8 @@ public class Robot extends TimedRobot {
 
   private Index indexAndShoot;
 
+  private Shoot shooter;
+
   private CommandScheduler scheduler;  
 
   /**
@@ -33,6 +36,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    shooter = new Shoot(null, null);
   }
 
   /**
@@ -87,7 +91,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    //this.shooter.execute();
+  }
 
   @Override
   public void testInit() {
