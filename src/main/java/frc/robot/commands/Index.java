@@ -41,6 +41,10 @@ public class Index extends Command {
             indexer.setIntakeVoltage(intakeVoltage);
             indexer.setFeederVoltage(feederVoltage);
             bool = !bool;
+            timer.start();
+            if (timer.get() < 3){
+                indexer.isFilled(true);
+            }
         }else if (indexer.getSensorStatus() == true && bool == true) {  // the switch is on and there is notes inside
             indexer.setIntakeVoltage(0);
             indexer.setFeederVoltage(0);

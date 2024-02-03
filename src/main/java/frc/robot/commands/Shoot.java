@@ -39,17 +39,21 @@ public class Shoot extends Command{
      *      turn off the shooter
      */
     public void execute() {
-        while (m_indexer.isFilled()){
-            if (m_shooter.isShooterButtonPressed() == true){
-                timer.start();
-                if (timer.get() < 5){
-                    timer.reset();
+        while (m_indexer.isFilled()){ //while there is a notes inside
+            m_indexer.setFeederVoltage(0); // turn off the feeder
+            m_indexer.setIntakeVoltage(0); // turn off the intake
+            if (m_shooter.isShooterButtonPressed() == true){// the shooter button pressed
+                timer.start(); //start time
+                if (timer.get() > 5){ // wait 5 second
+                    m_shooter.setMotorOutput; //maybe. need to test this
+                    timer.reset();// that's the error we have. before the time reset we need to start the shoot
                 }
-            }else{
+            }else{ // else turn off the shooter motor
                 m_shooter.setLeftMotorVoltage(0);
                 m_shooter.setRightMotorVoltage(0);
             }
-            if(!m_indexer.isFilled()){
+          
+            if(!m_indexer.isFilled()){ // if no notes, break
                 break;
             }
         }
