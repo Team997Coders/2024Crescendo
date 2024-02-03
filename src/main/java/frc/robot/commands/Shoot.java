@@ -9,12 +9,12 @@ public class Shoot extends Command{
     private Timer timer;
     private ShooterSubsystem m_shooter;
     private IndexerSubsystem m_indexer;
-    private double voltage;
 
-    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer, double voltage){
+
+    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer){
         this.m_shooter = shooterStart;
         this.m_indexer = indexer;
-        this.voltage = voltage;
+        
     }
 
     @Override
@@ -39,7 +39,6 @@ public class Shoot extends Command{
         while (m_indexer.isFilled()){
             if (m_shooter.isShooterOn() == true){
                 timer.start();
-                m_shooter.setShooterVoltage(voltage);
                 if (timer.get() > 5){
                     timer.reset();
                 }
