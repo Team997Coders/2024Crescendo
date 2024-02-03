@@ -54,7 +54,12 @@ public class IndexerSubsystem extends SubsystemBase {
     public void setFeederVoltage(double voltage) {
         feederNEO.setVoltage(voltage);
     }
-    
+    public double getIntakeMotorVoltage(){
+        return intakeNEO.getEncoder().getVelocity();
+    }
+    public double getFeederMotorVoltage(){
+        return feederNEO.getEncoder().getVelocity();
+    }
     public double getIntakeEncoderPosition() {
         return intakeEncoder.getPosition();
     }
