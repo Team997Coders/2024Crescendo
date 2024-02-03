@@ -32,23 +32,6 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setMotorOutput(double output) {
         leftFlywheelNeo.set(output); // between -1.0 and 1.0
     }
-<<<<<<< HEAD
-    public double getFlywheelEncoderPosition() {
-        return ShooterEncoder.getPosition();
-    }
-    public double getLeftFlywheelEncoderVelocity() {
-        return leftFlywheelNeo.getEncoder().getVelocity();
-    }
-
-    public double getRightFlywheelEncoderPosition() {
-        return rightFlywheelNeo.getEncoder().getPosition();
-    }
-
-    public double getRightFlywheelEncoderVelocity() {
-        return rightFlywheelNeo.getEncoder().getVelocity();
-    }
-
-=======
 
     public double getFlywheelPosition() {
         return shooterEncoder.getPosition();
@@ -58,4 +41,3 @@ public class ShooterSubsystem extends SubsystemBase {
         return shooterEncoder.getVelocity();
     }
 }
->>>>>>> mentor_changes

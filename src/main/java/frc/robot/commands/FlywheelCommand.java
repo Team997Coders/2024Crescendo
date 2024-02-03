@@ -1,17 +1,16 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class FlywheelCommand extends Command {
 
-    private Shooter shooter;
+    private ShooterSubsystem shooter;
   
-
     private double seconds;
     private double voltage;
 
-    public FlywheelCommand (double seconds, double voltage, Shooter shooter){
+    public FlywheelCommand (double seconds, double voltage, ShooterSubsystem shooter){
         this.seconds = seconds;
         this.voltage = voltage;
         this.shooter = shooter;
@@ -27,7 +26,7 @@ public class FlywheelCommand extends Command {
     public void execute() {
         timer.start();
         while (seconds < 10){
-            shooter.setMotorVoltage(voltage);
+            shooter.setShooterVoltage(voltage);
         }
     }
 
