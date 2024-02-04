@@ -37,4 +37,10 @@ public final class Constants {
       public static final boolean FEEDER_MOTOR_IS_INVERTED = true; 
       public final boolean NOTE_SWITCH_ACTIVE = false;
     }
+
+    public final class Climber {
+      public static final int CLIMBER_MOTOR_ID = 5;
+
+      public static final boolean CLIMBER_MOTOR_IS_INVERTED = false;
+    }
 }
