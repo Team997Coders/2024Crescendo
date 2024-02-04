@@ -1,45 +1,33 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.revrobotics.CANSparkBase.IdleMode;
+
 public class ClimberSubsystem extends SubsystemBase {
-    
-    private CANSparkMax climberNEO = new CANSparkMax(Constants.Climber.CLIMBER_MOTOR_ID, MotorType.kBrushless);
-    private RelativeEncoder climberEncoder = climberNEO.getEncoder();
-    private double setPoint;
 
-    public ClimberSubsystem() {
-        climberNEO.setInverted(Constants.Climber.CLIMBER_MOTOR_IS_INVERTED);
-        climberNEO.setIdleMode(IdleMode.kBrake);
+    private final CANSparkMax climberMotor = new CANSparkMax(Constants.Climber.CLIMBER_MOTOR_ID, MotorType.kBrushless);
 
-        climberEncoder.setPosition(0);
+    public ClimberSubsystem() { 
+        climberMotor.setIdleMode(IdleMode.kBrake);
     }
 
-    public void setVoltage(double voltage) {
-        climberNEO.setVoltage(voltage);
-
-
-        
+    public void setMotorVoltage(double voltage) {
+        climberMotor.setVoltage(voltage);
     }
-    
+
     public double getEncoderRotations() {
-        return climberEncoder.getPosition();
+        return climberMotor.getEncoder().getPosition();
     }
 
-    public double getEncoderVelocity() {
-        return climberEncoder.getVelocity();
+    public void setBrakeMode() {
+        climberMotor.setIdleMode(IdleMode.kBrake);
     }
-
-    public double getMotorCurrent() {
-        return climberNEO.getOutputCurrent();
-    }
-    
-
 
 
 }
+
