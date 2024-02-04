@@ -11,14 +11,14 @@ public class Shoot extends Command{
     private ShooterSubsystem m_shooter;
     private IndexerSubsystem m_indexer;
     private double shooterVoltage;
-    private boolean isShooterButtonPressed;
-    private double feederVoltage= 3;
+    private double feederVoltage= 2;
+    
+
     // constructor
-    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer, double shooterVoltage, boolean isShooterButtonPressed){
+    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer, double shooterVoltage){
         this.m_shooter = shooterStart;
         this.m_indexer = indexer;
         this.shooterVoltage = shooterVoltage;
-        this.isShooterButtonPressed = isShooterButtonPressed;
     }
 
 
@@ -42,24 +42,18 @@ public class Shoot extends Command{
      *      turn off the shooter
      */
     public void execute() {
-        if (m_indexer.isFilled() == true){ //while there is a notes inside
-            m_indexer.setFeederVoltage(0); // turn off the feeder
-            m_indexer.setIntakeVoltage(0); // turn off the intake
-            if (m_shooter.isShooterButtonPressed() == isShooterButtonPressed){// the shooter button pressed
-                timer.start(); //start time
-                  m_shooter.setLeftMotorVoltage(shooterVoltage);
-                if (timer.get() > 5){ // wait 5 second
-                    m_indexer.setFeederVoltage(feederVoltage);
-                    timer.reset();
-                }
-            }
-        }else{ // else turn off the shooter motor
-                m_shooter.setLeftMotorVoltage(0);
-               
-            }
-          
-        
+        while(m_indexer.getSensorStatus() == false){ //while there is a notes inside
+             m_shooter.setLeftMotorVoltage(0);
+        }
        
+        // m_indexer.setFeederVoltage(m_indexer.getFeederMotorVoltage());
+        // m_indexer.setIntakeVoltage(m_indexer.getIntakeMotorVoltage());
+        timer.start(); //start time
+            m_shooter.setLeftMotorVoltage(shooterVoltage); //start the shooter
+            if (timer.get() > 3){ // wait 5 second
+                m_indexer.setFeederVoltage(feederVoltage); //start the feeder
+                timer.reset();// reset time
+            }
         
     }
 

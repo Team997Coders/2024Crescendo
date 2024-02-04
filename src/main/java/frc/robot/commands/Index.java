@@ -3,21 +3,24 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+
 
 
 public class Index extends Command {
     private final IndexerSubsystem indexer;
-    //static IndexerSubsystem isFilled;
+    
     private Timer timer;
 
     private double intakeVoltage = 2;
-    private double feederVoltage = 3;
-
+    private double feederVoltage = 2;
     public static boolean bool;
 
-    public Index(IndexerSubsystem indexer) {
+    private  ShooterSubsystem shoot;
+    public Index(IndexerSubsystem indexer, ShooterSubsystem shoot) {
         this.indexer = indexer;
-        indexer.isFilled = false;   
+        this.shoot = shoot;
+        
         timer = new Timer();
     }
     
@@ -36,15 +39,15 @@ public class Index extends Command {
      */
     @Override
     public void execute() {
-        if(indexer.getSensorStatus() == false  ) { // if the switch is off and no notes
-            indexer.setIntakeVoltage(intakeVoltage);
-            indexer.setFeederVoltage(feederVoltage);   
-        }else if (indexer.getSensorStatus() == true ) {  // the switch is on and there is notes inside
-                indexer.setIntakeVoltage(0);
-                indexer.setFeederVoltage(0);
-                indexer.isFilled = true;
-        }  
-    
+        while (indexer.getSensorStatus() == true ) {  // there is notes
+            indexer.setIntakeVoltage(0);//stop intake
+            indexer.setFeederVoltage(0);//stop feeder
+
+        } 
+            indexer.setIntakeVoltage(intakeVoltage);//start intake
+            indexer.setFeederVoltage(feederVoltage);//start feeder
+            shoot.setLeftMotorVoltage(0);
+         
 
     }
 
@@ -54,6 +57,6 @@ public class Index extends Command {
 
     @Override
     public boolean isFinished() {
-        return (indexer.isFilled);
+        return (false);
     }
 }

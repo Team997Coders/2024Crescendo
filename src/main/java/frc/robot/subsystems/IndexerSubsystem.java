@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 
 
@@ -17,8 +18,10 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final RelativeEncoder feederEncoder = feederNEO.getEncoder();
     private final RelativeEncoder intakeEncoder = intakeNEO.getEncoder();
+
     public final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
-    public  boolean isFilled = feederSensor.get();
+    public Trigger FeederTrigger = new Trigger(feederSensor::get);
+    
     public IndexerSubsystem() {
         intakeNEO.setInverted(Constants.Indexer.INTAKE_MOTOR_IS_INVERTED);
         feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
@@ -26,6 +29,7 @@ public class IndexerSubsystem extends SubsystemBase {
         intakeEncoder.setPosition(0);
         feederEncoder.setPosition(0);
        
+        
         
     }
 
@@ -36,9 +40,7 @@ public class IndexerSubsystem extends SubsystemBase {
     public boolean getSensorStatus() {
         return !feederSensor.get();
     }
-    public boolean isFilled(){
-        return (isFilled);
-    }
+    
     /**
      * Set the voltage of the intake motor
      * @param voltage
