@@ -4,9 +4,11 @@
 
 package frc.robot;
 
+import frc.robot.Constants.Climber;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Index;
+import frc.robot.commands.IndexAndShoot;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -25,7 +27,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -54,12 +55,14 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.a().whileTrue(new Index(m_indexerSubsystem, m_shooterSubsystem));
-    m_driverController.b().whileTrue(new Shoot(m_shooterSubsystem, m_indexerSubsystem, 2));
-   m_indexerSubsystem.FeederTrigger.whileFalse(new Index(m_indexerSubsystem, m_shooterSubsystem));
-    //m_driverController.b().onTrue(new Shoot(m_shooterSubsystem, m_indexerSubsystem, 2 ,m_driverController.b().getAsBoolean()));
-   
-  }
+//old code
+    //m_driverController.a().whileTrue(new Index(m_indexerSubsystem, m_shooterSubsystem));
+    //m_driverController.b().whileTrue(new Shoot(m_shooterSubsystem, m_indexerSubsystem, 2));
+    //m_indexerSubsystem.FeederTrigger.whileFalse(new Index(m_indexerSubsystem, m_shooterSubsystem));
+//new one:
+    m_driverController.a().whileTrue(new IndexAndShoot(2, 2, 3, m_shooterSubsystem, m_indexerSubsystem));
+    
+   }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

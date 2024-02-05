@@ -14,9 +14,10 @@ public class Index extends Command {
 
     private double intakeVoltage = 2;
     private double feederVoltage = 2;
-    public static boolean bool;
+    
 
     private  ShooterSubsystem shoot;
+
     public Index(IndexerSubsystem indexer, ShooterSubsystem shoot) {
         this.indexer = indexer;
         this.shoot = shoot;
@@ -42,12 +43,11 @@ public class Index extends Command {
         while (indexer.getSensorStatus() == true ) {  // there is notes
             indexer.setIntakeVoltage(0);//stop intake
             indexer.setFeederVoltage(0);//stop feeder
-
         } 
-            indexer.setIntakeVoltage(intakeVoltage);//start intake
-            indexer.setFeederVoltage(feederVoltage);//start feeder
-            shoot.setLeftMotorVoltage(0);
-         
+        indexer.setIntakeVoltage(intakeVoltage);//start intake
+        indexer.setFeederVoltage(feederVoltage);//start feeder
+        shoot.setLeftMotorVoltage(0);
+        
 
     }
 

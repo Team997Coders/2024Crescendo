@@ -13,7 +13,8 @@ public final class Autos {
   /** Example static factory for an autonomous command. */
   public static Command exampleAuto(IndexerSubsystem m_indexer, ShooterSubsystem m_shooter) {
     //return new Index(m_indexer,run_state);
-    return new Shoot(m_shooter, m_indexer,2);
+    //return new Shoot(m_shooter, m_indexer,2);
+    return new IndexAndShoot(2, 2, 3, m_shooter, m_indexer);
   }
 
   private Autos() {

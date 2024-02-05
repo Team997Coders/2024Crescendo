@@ -46,14 +46,12 @@ public class Shoot extends Command{
              m_shooter.setLeftMotorVoltage(0);
         }
        
-        // m_indexer.setFeederVoltage(m_indexer.getFeederMotorVoltage());
-        // m_indexer.setIntakeVoltage(m_indexer.getIntakeMotorVoltage());
         timer.start(); //start time
-            m_shooter.setLeftMotorVoltage(shooterVoltage); //start the shooter
-            if (timer.get() > 3){ // wait 5 second
-                m_indexer.setFeederVoltage(feederVoltage); //start the feeder
-                timer.reset();// reset time
-            }
+        m_shooter.setLeftMotorVoltage(shooterVoltage); //start the shooter
+        if (timer.get() > 3){ // wait 3 second
+            m_indexer.setFeederVoltage(feederVoltage); //start the feeder
+            timer.reset();// reset time
+        }
         
     }
 
