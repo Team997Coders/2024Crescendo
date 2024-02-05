@@ -14,6 +14,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public ClimberSubsystem() { 
         climberMotor.setIdleMode(IdleMode.kBrake);
+        climberMotor.setInverted(Constants.Climber.CLIMBER_MOTOR_IS_INVERTED);
     }
 
     public void setMotorVoltage(double voltage) {
