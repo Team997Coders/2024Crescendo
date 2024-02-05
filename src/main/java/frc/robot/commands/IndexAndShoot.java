@@ -28,30 +28,23 @@ public class IndexAndShoot extends Command{
     }
     @Override
     public void execute(){
-        
-        
-
-
         while (indexer.getSensorStatus() == true ) {  // there is notes
             indexer.setIntakeVoltage(0);//stop intake
             indexer.setFeederVoltage(0);//stop feeder
-            shooter.setLeftMotorVoltage(shooterVoltage); //start the shooter
+            shooter.setLeftMotorVoltage(shooterVoltage); //start shooter
             if (timer.get() > 3){ // wait 3 second
-                indexer.setFeederVoltage(feederVoltage); //start the feeder
+                indexer.setFeederVoltage(feederVoltage); //start feeder
                 timer.reset();// reset time
-            }
-        } 
+            }   
+        }   
         while(indexer.getSensorStatus() == false){ //while there is a notes inside
-            shooter.setLeftMotorVoltage(0);
+            shooter.setLeftMotorVoltage(0); //stop shooter
             indexer.setIntakeVoltage(intakeVoltage);//start intake
             indexer.setFeederVoltage(feederVoltage);//start feeder
-            shooter.setLeftMotorVoltage(0);
         }
-        
     }   
     @Override
     public void end(boolean interrupted){
-        
     }
     
     @Override 
