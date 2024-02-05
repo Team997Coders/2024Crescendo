@@ -5,23 +5,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class Shoot extends Command{
+public class Shoot extends Command {
+    // define private fields
     private Timer timer;
     private ShooterSubsystem m_shooter;
     private IndexerSubsystem m_indexer;
 
-
-    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer){
+    public Shoot(ShooterSubsystem shooterStart, IndexerSubsystem indexer) {
         this.m_shooter = shooterStart;
         this.m_indexer = indexer;
-        
     }
 
     @Override
     public void initialize() {
         timer = new Timer();
     }
-    
+
     @Override
     /**
      * Shoot the note.
@@ -49,16 +48,13 @@ public class Shoot extends Command{
                 break;
             }
         }
-       
-        
     }
 
     @Override
-    public void end (boolean interrupted) {
-
+    public void end(boolean interrupted) {
     }
 
-    @Override 
+    @Override
     public boolean isFinished() {
         return false;
     }

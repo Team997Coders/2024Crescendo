@@ -6,8 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Climb;
 import frc.robot.commands.Index;
 import frc.robot.commands.Shoot;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +30,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
+
+  private final Climb climbUp = new Climb(m_ClimberSubsystem, 2);
+  private final Climb climbDown = new Climb(m_ClimberSubsystem, -2);
+  private final Climb dontClimb = new Climb(m_ClimberSubsystem, 0);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
@@ -38,6 +45,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the trigger bindings
+
     configureBindings();
     populateDashboard();
   }
@@ -65,8 +73,26 @@ public class RobotContainer {
     // pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.b().onTrue(new Shoot(m_shooterSubsystem, m_indexerSubsystem));
+    m_driverController.b().whileTrue(new Shoot(m_shooterSubsystem, m_indexerSubsystem, 2, true));
+    // m_driverController.b().onTrue(new Shoot(m_shooterSubsystem,
+    // m_indexerSubsystem, 2 ,m_driverController.b().getAsBoolean()));
     m_driverController.a().onTrue(new Index(m_indexerSubsystem));
+
+    // m_driverController.rightBumper().whileTrue(new Climb(m_ClimberSubsystem,
+    // -3));
+    // m_driverController.leftBumper().whileTrue(new Climb(m_ClimberSubsystem, 3));
+
+    if (m_ClimberSubsystem.getEncoderRotations() < 5) {
+      m_driverController.rightBumper().whileTrue(new Climb(m_ClimberSubsystem, -3));
+    }
+
+    if (true) {
+      m_driverController.leftBumper().whileTrue(new Climb(m_ClimberSubsystem, 3));
+    }
+
+    m_driverController.rightBumper().onFalse(dontClimb);
+    m_driverController.leftBumper().onFalse(dontClimb);
+
   }
 
   /**

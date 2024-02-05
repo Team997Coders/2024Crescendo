@@ -8,7 +8,7 @@ public class Index extends Command {
     private final IndexerSubsystem indexer;
 
     private double intakeVoltage = 2;
-    private double feederVoltage = 2;
+    private double feederVoltage = 3;
 
     public static boolean bool;
 
@@ -19,17 +19,14 @@ public class Index extends Command {
 
     @Override
     public void initialize() {
-        bool = false;
     }
 
     /**
      * A series of actions to intake a note, migrate it through the feeder
-     * and then shoot it.
      * A minor state maching:
      * 1. Intake the ball
      * a. If the sensor is not tripped, intake the ball
      * 2. Wait for the ball to reach the feeder
-     * 3. Feed the ball into the shooter and shoot it
      */
     @Override
     public void execute() {
