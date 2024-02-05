@@ -6,7 +6,6 @@ import frc.robot.subsystems.ClimberSubsystem;
 public class Climb extends Command {
     
     private ClimberSubsystem climber;
-    
     private double voltage;
    
 
@@ -17,12 +16,11 @@ public class Climb extends Command {
 
     @Override
     public void initialize() {
-
     }
 
     @Override
     public void execute() {
- 
+         climber.setMotorVoltage(voltage);
     }
 
     @Override
