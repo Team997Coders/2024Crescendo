@@ -7,8 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Index;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.IndexAndShoot;
+import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -20,13 +21,14 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
-  private Index indexAndShoot;
-
-  private Shoot shooter;
-
+  private IndexerSubsystem m_indexerSubsystem;
+  private ShooterSubsystem m_shooterSubsystem;
+  
+  private IndexAndShoot indexAndShoot;
   private CommandScheduler scheduler;  
-
+  private double shooterVoltage;
+  private double feederVoltage;
+  private double intakeVoltage;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -36,7 +38,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    shooter = new Shoot(null, null,2);
+   
+    indexAndShoot = new IndexAndShoot(intakeVoltage, feederVoltage, shooterVoltage, m_shooterSubsystem, m_indexerSubsystem);
   }
 
   /**

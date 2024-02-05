@@ -4,12 +4,12 @@
 
 package frc.robot;
 
-import frc.robot.Constants.Climber;
+
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.Index;
+
 import frc.robot.commands.IndexAndShoot;
-import frc.robot.commands.Shoot;
+
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -55,7 +55,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-//old code
+//old code:
     //m_driverController.a().whileTrue(new Index(m_indexerSubsystem, m_shooterSubsystem));
     //m_driverController.b().whileTrue(new Shoot(m_shooterSubsystem, m_indexerSubsystem, 2));
     //m_indexerSubsystem.FeederTrigger.whileFalse(new Index(m_indexerSubsystem, m_shooterSubsystem));
@@ -81,9 +81,15 @@ public class RobotContainer {
     SmartDashboard.putData("IndexerSubsystem", m_indexerSubsystem);
     SmartDashboard.putData("ShooterSubsystem", m_shooterSubsystem);
     SmartDashboard.putBoolean("Note Sensor", m_indexerSubsystem.getSensorStatus());
+    SmartDashboard.putNumber("Shooter Velocity", m_shooterSubsystem.getLeftFlywheelEncoderVelocity());
+    SmartDashboard.putNumber("Feeder Velocity", m_indexerSubsystem.getFeederMotorVoltage());
+    SmartDashboard.putNumber("Intake Velocity", m_indexerSubsystem.getIntakeMotorVoltage());
     SmartDashboard.putBoolean("bool key", Autos.run_state);
     SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
-    SmartDashboard.putNumber("Shooter Speed", m_shooterSubsystem.getLeftFlywheelEncoderVelocity());
+    SmartDashboard.putNumber("Feeder Encoder Position", m_indexerSubsystem.getFeederEncoderPosition());
+    SmartDashboard.putNumber("Left Shooter Encoder Position", m_shooterSubsystem.getLeftFlywheelEncoderPosition());
+    SmartDashboard.putNumber("Right Shooter Encoder Position", m_shooterSubsystem.getRightFlywheelEncoderPosition());
+    
   } 
 
 }
