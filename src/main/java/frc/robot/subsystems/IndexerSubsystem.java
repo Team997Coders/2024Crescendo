@@ -17,26 +17,15 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final RelativeEncoder feederEncoder = feederNEO.getEncoder();
     private final RelativeEncoder intakeEncoder = intakeNEO.getEncoder();
-<<<<<<< HEAD
 
     public static final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
 
-=======
-    public final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
-    public  boolean isFilled = feederSensor.get();
->>>>>>> climber
     public IndexerSubsystem() {
         intakeNEO.setInverted(Constants.Indexer.INTAKE_MOTOR_IS_INVERTED);
         feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
         
         intakeEncoder.setPosition(0);
-<<<<<<< HEAD
         feederEncoder.setPosition(0);    
-=======
-        feederEncoder.setPosition(0);
-       
-        
->>>>>>> climber
     }
 
     /**
