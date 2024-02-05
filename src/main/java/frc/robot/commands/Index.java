@@ -1,13 +1,11 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 
 
 public class Index extends Command {
     private final IndexerSubsystem indexer;
-    private Timer timer;
 
     private double intakeVoltage = 2;
     private double feederVoltage = 2;
@@ -16,7 +14,6 @@ public class Index extends Command {
 
     public Index(IndexerSubsystem indexer) {
         this.indexer = indexer;
-        timer = new Timer();
     }
     
 
