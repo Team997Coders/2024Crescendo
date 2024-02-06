@@ -24,9 +24,4 @@ public class ClimberSubsystem extends SubsystemBase {
     public double getEncoderRotations() {
         return climberMotor.getEncoder().getPosition();
     }
-
-    public void setBrakeMode() {
-        climberMotor.setIdleMode(IdleMode.kBrake);
-    }
-
 }
