@@ -12,7 +12,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     private final CANSparkMax climberMotor = new CANSparkMax(Constants.Climber.CLIMBER_MOTOR_ID, MotorType.kBrushless);
 
-    public ClimberSubsystem() { 
+    public ClimberSubsystem() {
         climberMotor.setIdleMode(IdleMode.kBrake);
         climberMotor.setInverted(Constants.Climber.CLIMBER_MOTOR_IS_INVERTED);
     }
@@ -29,6 +29,4 @@ public class ClimberSubsystem extends SubsystemBase {
         climberMotor.setIdleMode(IdleMode.kBrake);
     }
 
-
 }
-

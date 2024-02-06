@@ -1,24 +1,21 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class Shoot extends Command {
     // define private fields
-    private Timer timer;
     private ShooterSubsystem m_shooter;
     private IndexerSubsystem m_indexer;
 
-    public Shoot(ShooterSubsystem shooterStart, IndexerSubsystem indexer) {
-        this.m_shooter = shooterStart;
+    public Shoot(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexer) {
+        this.m_shooter = shooterSubsystem;
         this.m_indexer = indexer;
     }
 
     @Override
     public void initialize() {
-        timer = new Timer();
     }
 
     @Override
@@ -35,18 +32,8 @@ public class Shoot extends Command {
      *      turn off the shooter
      */
     public void execute() {
-        while (m_indexer.isFilled()){
-            if (m_shooter.isShooterOn() == true){
-                timer.start();
-                if (timer.get() > 5){
-                    timer.reset();
-                }
-            }else{
-                m_shooter.setShooterVoltage(0);
-            }
-            if(!m_indexer.isFilled()){
-                break;
-            }
+        if (m_indexer.isFilled()){
+            m_shooter.setShooterVoltage(12);
         }
     }
 
@@ -56,7 +43,7 @@ public class Shoot extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
 }

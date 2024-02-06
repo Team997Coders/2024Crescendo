@@ -34,10 +34,22 @@ public class ShooterSubsystem extends SubsystemBase {
         leftFlywheelNeo.set(output); // between -1.0 and 1.0
     }
 
-    public double getFlywheelPosition() {
-        return shooterEncoder.getPosition();
+    // These two methods will fake out a PID controlled subsystem.
+    public void enable() {
+        setMotorOutput(1.0);
     }
 
+    public void disable() {
+        setMotorOutput(0);
+    }
+
+    public boolean atSetpoint() {
+        return true;
+    }
+
+    // use this simple method to get the velocity characteristics
+    // of the motor and flywheel combination (measure velocity) and 
+    // determine the motor velocity conversion factor.
     public double getFlywheelVelocity() {
         return shooterEncoder.getVelocity();
     }

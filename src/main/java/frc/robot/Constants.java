@@ -27,6 +27,22 @@ public final class Constants {
     public static final int RIGHT_FLYWHELL_MOTOR_ID = 4;
 
     public static final boolean FLYWHEEL_MOTOR_IS_INVERTED = false;
+
+    public static final double kShooterFreeRPS = 5300;
+    public static final double kShooterTargetRPS = 4000;
+    public static final double kShooterToleranceRPS = 50;
+
+    // These are not real PID gains, and will have to be tuned for your specific robot.
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    // On a real robot the feedforward constants should be empirically determined; these are
+    // reasonable guesses.
+    public static final double kSVolts = 0.05;
+    public static final double kVVoltSecondsPerRotation =
+        // Should have value 12V at free speed...
+        12.0 / kShooterFreeRPS;
   }
 
   public final class Indexer {
@@ -45,5 +61,10 @@ public final class Constants {
     public static final boolean CLIMBER_MOTOR_IS_INVERTED = false;
     public static final double CLIMBER_UP_VOLTAGE = 5;
     public static final double CLIMBER_DOWN_VOLTAGE = 5;
+  }
+
+  public static final class AutoConstants {
+    public static final double kAutoTimeoutSeconds = 12;
+    public static final double kAutoShootTimeSeconds = 7;
   }
 }

@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -53,12 +52,15 @@ public class IndexerSubsystem extends SubsystemBase {
     public void setFeederVoltage(double voltage) {
         feederNEO.setVoltage(voltage);
     }
+
     public double getIntakeMotorVoltage(){
         return intakeNEO.getEncoder().getVelocity();
     }
+
     public double getFeederMotorVoltage(){
         return feederNEO.getEncoder().getVelocity();
     }
+
     public double getIntakeEncoderPosition() {
         return intakeEncoder.getPosition();
     }
@@ -67,21 +69,15 @@ public class IndexerSubsystem extends SubsystemBase {
         return feederEncoder.getPosition();
     }
 
-    public void resetIntakePosition() {
-        feederEncoder.setPosition(0);
+    public void startFeeder() {
+        setFeederVoltage(0.4);
     }
 
-    /**
-     * Simple command to run the intake motor as a test
-     *
-     * @return a command
-     */
-    public Command runIntakeCommand() {
-        // Inline construction of command goes here.
-        // Subsystem::RunOnce implicitly requires `this` subsystem.
-        return runOnce(
-            () -> {
-                setIntakeVoltage(8.0);
-            });
+    public void stopFeeder() {
+        setFeederVoltage(0);
+    }
+
+    public void resetIntakePosition() {
+        feederEncoder.setPosition(0);
     }
 }
