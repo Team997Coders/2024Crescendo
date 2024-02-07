@@ -58,6 +58,7 @@ public class IndexAndShoot extends Command{
         //     indexer.setIntakeVoltage(0);
         //     if (timer.get() > 3){
         //         indexer.setFeederVoltage(feederVoltage);
+        //         timer.reset();
         //     }
         //     status = indexer.getSensorStatus();
         // }
@@ -77,6 +78,7 @@ public class IndexAndShoot extends Command{
         //     indexer.setIntakeVoltage(0);
         //     if (timer.get() > 3){
         //         indexer.setFeederVoltage(feederVoltage);
+        //         timer.reset();
         //     }
         //     status = indexer.getSensorStatus();
         // }
@@ -87,7 +89,32 @@ public class IndexAndShoot extends Command{
         //     status = indexer.getSensorStatus();
         // }
         
-            
+        //index and shoot 4.0
+        while (status){
+            status = indexer.getSensorStatus();
+            if (status = true){
+                shooter.setLeftMotorVoltage(shooterVoltage);
+                indexer.setFeederVoltage(0);
+                indexer.setIntakeVoltage(0);
+                if (timer.get() > 3){
+                    indexer.setFeederVoltage(feederVoltage);
+                    timer.reset();
+                }
+            }else{
+                break;
+            }
+        }
+        while (!status){
+            status = indexer.getSensorStatus();
+            if (status = false){
+                shooter.setLeftMotorVoltage(0);
+                indexer.setFeederVoltage(feederVoltage);
+                indexer.setIntakeVoltage(intakeVoltage);
+            }
+            else {
+                break;
+            }
+        }
             
 
         
