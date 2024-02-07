@@ -73,16 +73,16 @@ public class RobotContainer {
 
  
 
-    if (m_ClimberSubsystem.getEncoderRotations() < 5) {
-      m_driverController.rightBumper().whileTrue(new Climb(m_ClimberSubsystem, -3));
+    if (true) {
+      m_driverController.rightBumper().onTrue(new Climb(m_ClimberSubsystem, -3));
     }  
 
      if (true) {
-      m_driverController.leftBumper().whileTrue(new Climb(m_ClimberSubsystem, 3));
+      m_driverController.leftBumper().onTrue(new Climb(m_ClimberSubsystem, 3));
     }  
 
-    m_driverController.rightBumper().onFalse(dontClimb);
-    m_driverController.leftBumper().onFalse(dontClimb);
+    m_driverController.rightBumper().onFalse(new Climb(m_ClimberSubsystem, 0));
+    m_driverController.leftBumper().onFalse(new Climb(m_ClimberSubsystem, 0));
 
   }
 
@@ -107,7 +107,7 @@ public class RobotContainer {
     SmartDashboard.putBoolean("bool key", Autos.run_state);
     SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
     SmartDashboard.putNumber("Shooter Speed", m_shooterSubsystem.getLeftFlywheelEncoderVelocity());
-    SmartDashboard.putNumber("climber motor current", m_ClimberSubsystem.getMotorCurrent());
+  //  SmartDashboard.putNumber("climber motor current", m_ClimberSubsystem.getMotorCurrent());
 
   } 
 
