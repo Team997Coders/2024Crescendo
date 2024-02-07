@@ -10,7 +10,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax leftFlywheelNeo = new CANSparkMax(Constants.Shooter.LEFT_FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
     private final CANSparkMax rightFlywheelNeo = new CANSparkMax(Constants.Shooter.RIGHT_FLYWHELL_MOTOR_ID,MotorType.kBrushless);
     private RelativeEncoder shooterEncoder;
-    private boolean isShooterButtonPressed;
+   
     public ShooterSubsystem() {
         leftFlywheelNeo.setInverted(Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
         rightFlywheelNeo.setInverted(!Constants.Shooter.FLYWHEEL_MOTOR_IS_INVERTED);
@@ -19,18 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterEncoder.setPosition(0);
 
     }
-
-
-
-   
-
-
-
-    public boolean isShooterButtonPressed(){
-        return isShooterButtonPressed;
-    }
-
-
+ 
 
     public void setLeftMotorVoltage(double leftFlywheelVoltage) {
         leftFlywheelNeo.setVoltage(leftFlywheelVoltage);

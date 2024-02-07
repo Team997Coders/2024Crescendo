@@ -87,8 +87,8 @@ public class RobotContainer {
     SmartDashboard.putBoolean("bool key", Autos.run_state);
     SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
     SmartDashboard.putNumber("Feeder Encoder Position", m_indexerSubsystem.getFeederEncoderPosition());
-    SmartDashboard.putNumber("Left Shooter Encoder Position", m_shooterSubsystem.getLeftFlywheelEncoderPosition());
-    SmartDashboard.putNumber("Right Shooter Encoder Position", m_shooterSubsystem.getRightFlywheelEncoderPosition());
+    SmartDashboard.putNumber("Left FLywheel Encoder Position", m_shooterSubsystem.getLeftFlywheelEncoderPosition());
+    SmartDashboard.putNumber("Right Flywheel Encoder Position", m_shooterSubsystem.getRightFlywheelEncoderPosition());
     
   } 
 

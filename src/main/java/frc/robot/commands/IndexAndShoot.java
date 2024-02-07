@@ -28,7 +28,7 @@ public class IndexAndShoot extends Command{
     }
     @Override
     public void execute(){
-        while (indexer.getSensorStatus() == true ) {  // there is notes
+        while (indexer.getSensorStatus() == true ) {  //while there is notes
             indexer.setIntakeVoltage(0);//stop intake
             indexer.setFeederVoltage(0);//stop feeder
             shooter.setLeftMotorVoltage(shooterVoltage); //start shooter
@@ -37,11 +37,15 @@ public class IndexAndShoot extends Command{
                 timer.reset();// reset time
             }   
         }   
-        while(indexer.getSensorStatus() == false){ //while there is a notes inside
+        while(indexer.getSensorStatus() == false){ //while there is no notes inside
             shooter.setLeftMotorVoltage(0); //stop shooter
             indexer.setIntakeVoltage(intakeVoltage);//start intake
             indexer.setFeederVoltage(feederVoltage);//start feeder
         }
+        //add another one
+        shooter.setLeftMotorVoltage(0);
+        indexer.setIntakeVoltage(intakeVoltage);
+        indexer.setFeederVoltage(feederVoltage);
     }   
     @Override
     public void end(boolean interrupted){
