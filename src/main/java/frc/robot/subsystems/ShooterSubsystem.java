@@ -21,16 +21,9 @@ public class ShooterSubsystem extends SubsystemBase {
     }
  
 
-    public void setLeftMotorVoltage(double leftFlywheelVoltage) {
-        leftFlywheelNeo.setVoltage(leftFlywheelVoltage);
+    public void setLeftMotorVoltage(double FlywheelVoltage) {
+        leftFlywheelNeo.setVoltage(FlywheelVoltage);
     }
-
-
-
-    public void setRightMotorVoltage(double rightFlywheelVoltage){
-         rightFlywheelNeo.setVoltage(rightFlywheelVoltage);
-    }
-
 
 
 
@@ -38,7 +31,7 @@ public class ShooterSubsystem extends SubsystemBase {
         leftFlywheelNeo.set(output); // between -1.0 and 1.0
         rightFlywheelNeo.set(output);
     }
-
+    
 
 
 
