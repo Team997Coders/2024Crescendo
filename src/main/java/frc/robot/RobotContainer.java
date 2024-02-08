@@ -7,8 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Climb;
-import frc.robot.commands.Index;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.IndexAndShoot;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -69,14 +68,7 @@ public class RobotContainer {
     // pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.b().whileTrue(new Shoot(m_shooterSubsystem, m_indexerSubsystem, 2, true));
-    // m_driverController.b().onTrue(new Shoot(m_shooterSubsystem,
-    // m_indexerSubsystem, 2 ,m_driverController.b().getAsBoolean()));
-    m_driverController.a().onTrue(new Index(m_indexerSubsystem));
-
-    // m_driverController.rightBumper().whileTrue(new Climb(m_ClimberSubsystem,
-    // -3));
-    // m_driverController.leftBumper().whileTrue(new Climb(m_ClimberSubsystem, 3));
+    m_driverController.a().whileTrue(new IndexAndShoot(2, 2, 3, m_shooterSubsystem, m_indexerSubsystem));
 
     m_driverController.rightBumper().whileTrue(new Climb(m_ClimberSubsystem, -3));
     m_driverController.leftBumper().whileTrue(new Climb(m_ClimberSubsystem, 3)); 
@@ -100,7 +92,14 @@ public class RobotContainer {
     SmartDashboard.putData("IndexerSubsystem", m_indexerSubsystem);
     SmartDashboard.putData("ShooterSubsystem", m_shooterSubsystem);
     SmartDashboard.putBoolean("Note Sensor", m_indexerSubsystem.getSensorStatus());
+    SmartDashboard.putNumber("Shooter Velocity", m_shooterSubsystem.getFlywheelVelocity());
+    SmartDashboard.putNumber("Feeder Velocity", m_indexerSubsystem.getFeederMotorVoltage());
+    SmartDashboard.putNumber("Intake Velocity", m_indexerSubsystem.getIntakeMotorVoltage());
+    SmartDashboard.putBoolean("bool key", Autos.run_state);
     SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
+    SmartDashboard.putNumber("Feeder Encoder Position", m_indexerSubsystem.getFeederEncoderPosition());
+    SmartDashboard.putNumber("Left FLywheel Encoder Position", m_shooterSubsystem.getFlywheelPosition());
+    SmartDashboard.putNumber("climber motor rotations",m_ClimberSubsystem.getEncoderRotations());
 
   } 
 
