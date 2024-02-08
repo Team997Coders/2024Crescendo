@@ -10,20 +10,11 @@
     "Retained Values": {
       "open": false
     },
-    "Transitory Values": {
-      "open": false
-    },
     "transitory": {
       "Shuffleboard": {
         "open": true
       },
       "SmartDashboard": {
-        "IndexerSubsystem": {
-          "open": true
-        },
-        "ShooterSubsystem": {
-          "open": true
-        },
         "open": true
       }
     }

@@ -100,6 +100,7 @@ public class RobotContainer {
     SmartDashboard.putBoolean("Note Sensor", m_indexerSubsystem.getSensorStatus());
     SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
     SmartDashboard.putNumber("Shooter Speed", m_shooterSubsystem.getFlywheelVelocity());
+    SmartDashboard.putNumber("Climber Position", m_ClimberSubsystem.getEncoderRotations());
   }
 
 }
