@@ -29,92 +29,39 @@ public class IndexAndShoot extends Command{
     @Override
     public void execute(){
         boolean status = indexer.getSensorStatus();
-        // index and shoot 1.0
-        if (status){
-            while (true){
+         while (!status){
+            shooter.setLeftMotorVoltage(0);
+            indexer.setFeederVoltage(feederVoltage);
+            indexer.setIntakeVoltage(intakeVoltage);
+            status = indexer.getSensorStatus();
+            if(status){
                 shooter.setLeftMotorVoltage(shooterVoltage);
                 indexer.setFeederVoltage(0);
                 indexer.setIntakeVoltage(0);
-                if (timer.get()>2){
-                    indexer.setFeederVoltage(feederVoltage);
-                    timer.reset();
-                }
-                status = indexer.getSensorStatus();
             }
-        }else if (!status){
-            while (true){
-                shooter.setLeftMotorVoltage(0);
+        }
+        
+
+
+      
+        while (status ){
+            status = indexer.getSensorStatus();
+            shooter.setLeftMotorVoltage(shooterVoltage);
+            indexer.setFeederVoltage(0);
+            indexer.setIntakeVoltage(0);
+            if (timer.get() > 3){
                 indexer.setFeederVoltage(feederVoltage);
-                indexer.setIntakeVoltage(intakeVoltage);
-                status=indexer.getSensorStatus();
+                timer.reset();
             }
-        }
-
-
-        //index and shoot 2.0
-        // while (status ){
-        //     shooter.setLeftMotorVoltage(feederVoltage);
-        //     indexer.setFeederVoltage(0);
-        //     indexer.setIntakeVoltage(0);
-        //     if (timer.get() > 3){
-        //         indexer.setFeederVoltage(feederVoltage);
-        //         timer.reset();
-        //     }
-        //     status = indexer.getSensorStatus();
-        // }
-        // while (!status){
-        //     shooter.setLeftMotorVoltage(0);
-        //     indexer.setFeederVoltage(feederVoltage);
-        //     indexer.setIntakeVoltage(intakeVoltage);
-        //     status = indexer.getSensorStatus();
-        // }
-
-        
-        //index and shoot 3.0
-
-        // if (status ){
-        //     shooter.setLeftMotorVoltage(feederVoltage);
-        //     indexer.setFeederVoltage(0);
-        //     indexer.setIntakeVoltage(0);
-        //     if (timer.get() > 3){
-        //         indexer.setFeederVoltage(feederVoltage);
-        //         timer.reset();
-        //     }
-        //     status = indexer.getSensorStatus();
-        // }
-        // if (!status){
-        //     shooter.setLeftMotorVoltage(0);
-        //     indexer.setFeederVoltage(feederVoltage);
-        //     indexer.setIntakeVoltage(intakeVoltage);
-        //     status = indexer.getSensorStatus();
-        // }
-        
-        //index and shoot 4.0
-        while (status){
-            status = indexer.getSensorStatus();
-            if (status = true){
-                shooter.setLeftMotorVoltage(shooterVoltage);
-                indexer.setFeederVoltage(0);
-                indexer.setIntakeVoltage(0);
-                if (timer.get() > 3){
-                    indexer.setFeederVoltage(feederVoltage);
-                    timer.reset();
-                }
-            }else{
-                break;
-            }
-        }
-        while (!status){
-            status = indexer.getSensorStatus();
-            if (status = false){
+            if (!status){
                 shooter.setLeftMotorVoltage(0);
                 indexer.setFeederVoltage(feederVoltage);
                 indexer.setIntakeVoltage(intakeVoltage);
             }
-            else {
-                break;
-            }
+            
         }
+    
+
             
 
         
