@@ -7,53 +7,44 @@ import frc.robot.subsystems.IndexerSubsystem;
 
 public class Index extends Command {
     private final IndexerSubsystem indexer;
+    //static IndexerSubsystem isFilled;
     private Timer timer;
 
     private double intakeVoltage = 2;
-    private double feederVoltage = 2;
+    private double feederVoltage = 3;
 
     public static boolean bool;
 
     public Index(IndexerSubsystem indexer) {
         this.indexer = indexer;
+        indexer.isFilled = false;   
         timer = new Timer();
     }
     
 
     @Override
     public void initialize() {
-        bool = false;
+        timer.start();
     }
 
     /**
      * A series of actions to intake a note, migrate it through the feeder
-     * and then shoot it.
      * A minor state maching:
      * 1. Intake the ball
      * a. If the sensor is not tripped, intake the ball
      * 2. Wait for the ball to reach the feeder
-     * 3. Feed the ball into the shooter and shoot it
      */
     @Override
     public void execute() {
-        if (!indexer.isFilled() && bool == false ) { //sensor is off and no notes
+        if(indexer.getSensorStatus() == false  ) { // if the switch is off and no notes
             indexer.setIntakeVoltage(intakeVoltage);
-            indexer.setFeederVoltage(feederVoltage);
-            bool = !bool;
-        }else if (indexer.isFilled() && bool == true) { //sensor is on and index did run(which means stop intake and feeder)
-            indexer.setIntakeVoltage(0);
-            indexer.setFeederVoltage(0);
-        }
-
-        // if (timer.get() >= 5) {
-        //     indexer.setFeederVoltage(feederVoltage);
-
-        //     if (indexer.getSensorStatus() == false && timer.get() >= 9) {
-        //         indexer.setFeederVoltage(0);
-        //         timer.stop();
-        //         timer.reset();
-        //     }
-        // }
+            indexer.setFeederVoltage(feederVoltage);   
+        }else if (indexer.getSensorStatus() == true ) {  // the switch is on and there is notes inside
+                indexer.setIntakeVoltage(0);
+                indexer.setFeederVoltage(0);
+                indexer.isFilled = true;
+        }  
+    
 
     }
 

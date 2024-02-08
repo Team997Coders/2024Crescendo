@@ -6,16 +6,22 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class Shoot extends Command{
+    // define private fields
     private Timer timer;
     private ShooterSubsystem m_shooter;
     private IndexerSubsystem m_indexer;
-
-
-    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer){
+    private double shooterVoltage;
+    private boolean isShooterButtonPressed;
+    private double feederVoltage= 3;
+    // constructor
+    public Shoot (ShooterSubsystem shooterStart, IndexerSubsystem indexer, double shooterVoltage, boolean isShooterButtonPressed){
         this.m_shooter = shooterStart;
         this.m_indexer = indexer;
-        
+        this.shooterVoltage = shooterVoltage;
+        this.isShooterButtonPressed = isShooterButtonPressed;
     }
+
+
 
     @Override
     public void initialize() {
@@ -36,20 +42,7 @@ public class Shoot extends Command{
      *      turn off the shooter
      */
     public void execute() {
-        while (m_indexer.isFilled()){
-            if (m_shooter.isShooterOn() == true){
-                timer.start();
-                if (timer.get() > 5){
-                    timer.reset();
-                }
-            }else{
-                m_shooter.setShooterVoltage(0);
-            }
-            if(!m_indexer.isFilled()){
-                break;
-            }
-        }
-       
+      
         
     }
 

@@ -17,15 +17,16 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final RelativeEncoder feederEncoder = feederNEO.getEncoder();
     private final RelativeEncoder intakeEncoder = intakeNEO.getEncoder();
-
-    public static final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
-
+    public final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
+    public  boolean isFilled = feederSensor.get();
     public IndexerSubsystem() {
         intakeNEO.setInverted(Constants.Indexer.INTAKE_MOTOR_IS_INVERTED);
         feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
-
+        
         intakeEncoder.setPosition(0);
-        feederEncoder.setPosition(0);    
+        feederEncoder.setPosition(0);
+       
+        
     }
 
     /**
@@ -53,7 +54,12 @@ public class IndexerSubsystem extends SubsystemBase {
     public void setFeederVoltage(double voltage) {
         feederNEO.setVoltage(voltage);
     }
-    
+    public double getIntakeMotorVoltage(){
+        return intakeNEO.getEncoder().getVelocity();
+    }
+    public double getFeederMotorVoltage(){
+        return feederNEO.getEncoder().getVelocity();
+    }
     public double getIntakeEncoderPosition() {
         return intakeEncoder.getPosition();
     }
