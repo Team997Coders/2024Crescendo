@@ -17,22 +17,32 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static class Swerve{
+    public static final int Front_Left_Driving_ID = 1;
+    public static final int Front_Left_Turning_ID = 8;
+    public static final int Front_Right_Driving_ID = 7;
+    public static final int Front_Right_Turning_ID = 6;
+    public static final int Back_Left_Driving_ID = 5;
+    public static final int Back_Left_Turing_ID = 4;
+    public static final int Back_Right_Driving_ID = 3;
+    public static final int Back_Right_Turning_ID = 2;
+  }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
   }
 
   public final class Shooter {
-    public static final int LEFT_FLYWHEEL_MOTOR_ID = 1;
-    public static final int RIGHT_FLYWHELL_MOTOR_ID = 4;
+    public static final int LEFT_FLYWHEEL_MOTOR_ID = 11;
+    public static final int RIGHT_FLYWHELL_MOTOR_ID = 12;
 
     public static final boolean LEFT_FLYWHEEL_MOTOR_IS_INVERTED = false;
     public static final boolean RIGHT_FLYWHEEL_MOTOR_IS_INVERTED = true;
   }
 
   public final class Indexer {
-    public static final int INTAKE_MOTOR_ID = 3;
-    public static final int FEEDER_MOTOR_ID = 2;
+    public static final int INTAKE_MOTOR_ID = 9;
+    public static final int FEEDER_MOTOR_ID = 10;
 
     public static final int FEEDER_SENSOR_CHANNEL = 0;
 
@@ -42,7 +52,7 @@ public final class Constants {
     }
 
     public final class Climber {
-      public static final int CLIMBER_MOTOR_ID = 5;
+      public static final int CLIMBER_MOTOR_ID = 14;
 
       public static final boolean CLIMBER_MOTOR_IS_INVERTED = false;
     }
