@@ -27,10 +27,9 @@ public final class Autos {
   public static boolean run_state = false;
   /** Example static factory for an autonomous command. */
   public static Command exampleAuto(IntakeSubsystem m_intake, ShooterSubsystem m_shooter, FeederSubsystem m_feeder, SwerveSubsystem m_drive) {
-    // this is wrong and i'll do it later
-    //return new Intake(m_intake, 0);
-    //return new Feeder(m_feeder, 0);
-    //return new Shooter(m_shooter, 0);
+    
+
+    //this is the swerve code for auto. 
       TrajectoryConfig config = new TrajectoryConfig(
         AutoConstants.kMaxSpeedMetersPerSecond,
         AutoConstants.kMaxAccelerationMetersPerSecondSquared)
@@ -68,6 +67,11 @@ public final class Autos {
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_drive.drive(0, 0, 0, false, false));
+
+
+
+
+    // the rest of auto codes goes here
   }
 
   private Autos() {

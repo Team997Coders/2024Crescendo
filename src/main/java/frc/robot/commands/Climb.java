@@ -13,7 +13,7 @@ public class Climb extends Command {
     }
     @Override
     public void execute() {
-        climber.setMotorVoltage(voltage);
+        climber.setClimberVoltage(voltage);
     }
     @Override
     public void end(boolean interrupted) {

@@ -20,7 +20,6 @@ public class FeederSubsystem extends SubsystemBase {
     public FeederSubsystem(){
         feederEncoder.setPosition(0);
         feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
-
     }
         /**
      * Get the current status of the note sensor that sits in the feeder before the note reaches the shooter.

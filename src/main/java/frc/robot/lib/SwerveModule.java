@@ -8,14 +8,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants.ModuleConstants;
+/* This is the swerve module
+ * used by each of the four swerve system
+ */
+public class SwerveModule{ 
 
-public class SwerveModule{
+    //swerve spark max
     private CANSparkMax m_drivingSparkMax;
     private CANSparkMax m_turningSparkMax;
-
+    //swerve encoder
     private RelativeEncoder m_drivingEncoder;
     private AbsoluteEncoder m_turningEncoder;
-
+    //pid controller for both
     private SparkPIDController m_drivingPIDController;
     private SparkPIDController m_turningPIDController;
 
@@ -37,7 +41,7 @@ public class SwerveModule{
     m_drivingSparkMax.restoreFactoryDefaults();
     m_turningSparkMax.restoreFactoryDefaults();
 
-    // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
+    // Setup encoders and PID controllers for driving and turning
     m_drivingEncoder = m_drivingSparkMax.getEncoder();
     m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(com.revrobotics.SparkAbsoluteEncoder.Type.kDutyCycle);
     m_drivingPIDController = m_drivingSparkMax.getPIDController();
@@ -113,7 +117,6 @@ public class SwerveModule{
     return new SwerveModuleState(m_drivingEncoder.getVelocity(),
         new Rotation2d(m_turningEncoder.getPosition() - m_chassisAngularOffset));
   }
-
   /**
    * Returns the current position of the module.
    *

@@ -25,6 +25,6 @@ public class BarSubsystem extends SubsystemBase{
     public double getBarEncoderPosition() {
         return barMotorEncoder.getPosition();
     }
-
+    
     
 }

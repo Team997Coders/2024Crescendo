@@ -7,21 +7,21 @@ import frc.robot.Constants;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 public class ClimberSubsystem extends SubsystemBase {
-    private final CANSparkMax climberMotor = new CANSparkMax(Constants.Climber.CLIMBER_MOTOR_ID, MotorType.kBrushless);
+    private final CANSparkMax climberNEO = new CANSparkMax(Constants.Climber.CLIMBER_MOTOR_ID, MotorType.kBrushless);
     private final RelativeEncoder climberEncoder;
     public ClimberSubsystem() { 
-        climberEncoder = climberMotor.getEncoder(); 
+        climberEncoder = climberNEO.getEncoder(); 
         climberEncoder.setPosition(0);
-        climberMotor.setIdleMode(IdleMode.kBrake); 
+        climberNEO.setIdleMode(IdleMode.kBrake); 
     }
-    public void setMotorVoltage(double voltage) {
-        climberMotor.setVoltage(voltage);
+    public void setClimberVoltage(double voltage) {
+        climberNEO.setVoltage(voltage);
     }
     public double getEncoderRotations() {
         return climberEncoder.getPosition();
     }
     public void setBrakeMode() {
-        climberMotor.setIdleMode(IdleMode.kBrake);
+        climberNEO.setIdleMode(IdleMode.kBrake);
     }
     
 }

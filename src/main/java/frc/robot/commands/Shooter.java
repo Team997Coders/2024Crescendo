@@ -5,15 +5,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class Shooter extends Command {
-    private ShooterSubsystem Shooter;
+    private ShooterSubsystem shooter;
     private double voltage;
-    public Shooter(ShooterSubsystem Shooter, double voltage){
-        this.Shooter = Shooter;
+    public Shooter(ShooterSubsystem shooter, double voltage){
+        this.shooter = shooter;
         this.voltage = voltage;
     }
     @Override
     public void initialize(){
-        Shooter.setLeftMotorVoltage(voltage);
+        shooter.setLeftMotorVoltage(voltage);
     }
     @Override
     public void execute(){

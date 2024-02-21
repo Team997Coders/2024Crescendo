@@ -5,15 +5,15 @@ import frc.robot.subsystems.FeederSubsystem;
 
 
 public class Feeder extends Command {
-    private FeederSubsystem Feeder;
+    private FeederSubsystem feeder;
     private double voltage;
-    public Feeder(FeederSubsystem Feeder, double voltage){
-        this.Feeder = Feeder;
+    public Feeder(FeederSubsystem feeder, double voltage){
+        this.feeder = feeder;
         this.voltage = voltage;
     }
     @Override
     public void initialize(){
-        Feeder.setFeederVoltage(voltage);
+        feeder.setFeederVoltage(voltage);
     }
     @Override
     public void execute(){

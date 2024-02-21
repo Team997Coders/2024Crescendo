@@ -4,15 +4,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class Intake extends Command {
-    private IntakeSubsystem Intake; 
+    private IntakeSubsystem intake; 
     private double voltage;
-    public Intake(IntakeSubsystem Intake, double voltage){
-        this.Intake = Intake;
+    public Intake(IntakeSubsystem intake, double voltage){
+        this.intake = intake;
         this.voltage = voltage;
     }
     @Override
     public void initialize(){
-        Intake.setIntakeVoltage(voltage);
+        intake.setIntakeVoltage(voltage);
     }
     @Override
     public void execute(){
