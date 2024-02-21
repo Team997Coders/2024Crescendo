@@ -132,11 +132,14 @@ public class RobotContainer {
     SmartDashboard.putNumber("Shooter Velocity", m_shooterSubsystem.getFlywheelVelocity());
     SmartDashboard.putNumber("Feeder Velocity", m_feederSubsystem.getFeederMotorVoltage());
     SmartDashboard.putNumber("Intake Velocity", m_intakeSubsystem.getIntakeMotorVoltage());
-    SmartDashboard.putBoolean("bool key", Autos.run_state);
+    SmartDashboard.putBoolean("Bool key", Autos.run_state);
     SmartDashboard.putNumber("Intake Encoder Position", m_intakeSubsystem.getIntakeEncoderPosition());
     SmartDashboard.putNumber("Feeder Encoder Position", m_feederSubsystem.getFeederEncoderPosition());
     SmartDashboard.putNumber("Left FLywheel Encoder Position", m_shooterSubsystem.getFlywheelPosition());
-    SmartDashboard.putNumber("climber motor rotations",m_climberSubsystem.getEncoderRotations());
+    SmartDashboard.putNumber("Climber motor rotations",m_climberSubsystem.getEncoderRotations());
+    SmartDashboard.putNumber("Heading", m_driveSubsystem.getHeading());
+    SmartDashboard.putNumber("Turn rate", m_driveSubsystem.getTurnRate());
+
 
   } 
 
