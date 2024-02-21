@@ -19,23 +19,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SwerveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
   private final SwerveModule m_frontLeft = new SwerveModule(
-      DriveConstants.kFrontLeftDrivingCanId,
-      DriveConstants.kFrontLeftTurningCanId,
+      DriveConstants.FRONT_LEFT_DRIVE_CAN_ID,
+      DriveConstants.FRONT_LEFT_TURN_CAN_ID,
       DriveConstants.kFrontLeftChassisAngularOffset);
 
   private final SwerveModule m_frontRight = new SwerveModule(
-      DriveConstants.kFrontRightDrivingCanId,
-      DriveConstants.kFrontRightTurningCanId,
+      DriveConstants.FRONT_RIGHT_DRIVE_CAN_ID,
+      DriveConstants.FRONT_RIGHT_TURN_CAN_ID,
       DriveConstants.kFrontRightChassisAngularOffset);
 
-  private final SwerveModule m_rearLeft = new SwerveModule(
-      DriveConstants.kRearLeftDrivingCanId,
-      DriveConstants.kRearLeftTurningCanId,
+  private final SwerveModule m_backLeft = new SwerveModule(
+      DriveConstants.BACK_LEFT_DRIVE_CAN_ID,
+      DriveConstants.BACK_LEFT_TURN_CAN_ID,
       DriveConstants.kBackLeftChassisAngularOffset);
 
-  private final SwerveModule m_rearRight = new SwerveModule(
-      DriveConstants.kRearRightDrivingCanId,
-      DriveConstants.kRearRightTurningCanId,
+  private final SwerveModule m_backRight = new SwerveModule(
+      DriveConstants.BACK_RIGHT_DRIVE_CAN_ID,
+      DriveConstants.BACK_RIGHT_TURN_CAN_ID,
       DriveConstants.kBackRightChassisAngularOffset);
 
   // The gyro sensor
@@ -57,8 +57,8 @@ public class SwerveSubsystem extends SubsystemBase {
       new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
           m_frontRight.getPosition(),
-          m_rearLeft.getPosition(),
-          m_rearRight.getPosition()
+          m_backLeft.getPosition(),
+          m_backRight.getPosition()
       });
 
   /** Creates a new DriveSubsystem. */
@@ -73,8 +73,8 @@ public class SwerveSubsystem extends SubsystemBase {
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
-            m_rearLeft.getPosition(),
-            m_rearRight.getPosition()
+            m_backLeft.getPosition(),
+            m_backRight.getPosition()
         });
   }
 
@@ -98,8 +98,8 @@ public class SwerveSubsystem extends SubsystemBase {
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
-            m_rearLeft.getPosition(),
-            m_rearRight.getPosition()
+            m_backLeft.getPosition(),
+            m_backRight.getPosition()
         },
         pose);
   }
@@ -180,8 +180,8 @@ public class SwerveSubsystem extends SubsystemBase {
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
-    m_rearLeft.setDesiredState(swerveModuleStates[2]);
-    m_rearRight.setDesiredState(swerveModuleStates[3]);
+    m_backLeft.setDesiredState(swerveModuleStates[2]);
+    m_backRight.setDesiredState(swerveModuleStates[3]);
   }
 
   /**
@@ -190,8 +190,8 @@ public class SwerveSubsystem extends SubsystemBase {
   public void setX() {
     m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
     m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    m_backLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    m_backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
   }
 
   /**
@@ -204,16 +204,16 @@ public class SwerveSubsystem extends SubsystemBase {
         desiredStates, DriveConstants.kMaxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
-    m_rearLeft.setDesiredState(desiredStates[2]);
-    m_rearRight.setDesiredState(desiredStates[3]);
+    m_backLeft.setDesiredState(desiredStates[2]);
+    m_backRight.setDesiredState(desiredStates[3]);
   }
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
     m_frontLeft.resetEncoders();
-    m_rearLeft.resetEncoders();
+    m_backLeft.resetEncoders();
     m_frontRight.resetEncoders();
-    m_rearRight.resetEncoders();
+    m_backRight.resetEncoders();
   }
 
   /** Zeroes the heading of the robot. */
