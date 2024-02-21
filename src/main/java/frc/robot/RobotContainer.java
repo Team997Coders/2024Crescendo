@@ -81,36 +81,48 @@ public class RobotContainer {
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     //m_driverController.whileTrue(new RunCommand(() -> m_driveSubsystem.setX(),m_driveSubsystem));
+    
+
+    //swerve 
     new JoystickButton(m_driverController, Button.kRightStick.value)
         .whileTrue(new RunCommand(
             () -> m_driveSubsystem.setX(),
             m_driveSubsystem));
-    if (m_driverController.getAButtonPressed())
-      if (!m_feederSubsystem.getSensorStatus()){
-        new Shooter(m_shooterSubsystem, 0);
-        new Feeder(m_feederSubsystem, 3);
-        new Intake(m_intakeSubsystem, 3);
-        m_feederSubsystem.getSensorStatus();
-      }else{
-        timer.start();
-        new Shooter(m_shooterSubsystem, 3);
-          if (timer.get() > 3){
-            new Feeder(m_feederSubsystem, 3);
-            timer.reset();
-          }
-      }
-    while (m_driverController.getRightBumperPressed()){
-      new Climb(m_climberSubsystem, -3);
-    }
-    while (m_driverController.getLeftBumperPressed()){
-      new Climb(m_climberSubsystem, 3);
-    }
-    while (!m_driverController.getRightBumperPressed()){
-      new Climb(m_climberSubsystem, 0);
-    }
-    while (!m_driverController.getLeftBumperPressed()){
-      new Climb(m_climberSubsystem, 0);
-    }
+
+
+    //other
+    // while (m_driverController.getAButtonPressed())
+    //   if (!m_feederSubsystem.getSensorStatus()){
+    //     new Shooter(m_shooterSubsystem, 0);
+    //     new Feeder(m_feederSubsystem, 3);
+    //     new Intake(m_intakeSubsystem, 3);
+    //     m_feederSubsystem.getSensorStatus();
+    //   }else{
+    //     timer.start();
+    //     new Shooter(m_shooterSubsystem, 3);
+    //       if (timer.get() > 3){
+    //         new Feeder(m_feederSubsystem, 3);
+    //         timer.reset();
+    //       }
+    //   }
+
+
+
+    // while (m_driverController.getRightBumperPressed()){
+    //   new Climb(m_climberSubsystem, -3);
+    // }
+    // while (m_driverController.getLeftBumperPressed()){
+    //   new Climb(m_climberSubsystem, 3);
+    // }
+
+
+
+    // while (!m_driverController.getRightBumperPressed()){
+    //   new Climb(m_climberSubsystem, 0);
+    // }
+    // while (!m_driverController.getLeftBumperPressed()){
+    //   new Climb(m_climberSubsystem, 0);
+    // }
     
    
   }
