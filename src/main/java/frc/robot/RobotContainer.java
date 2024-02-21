@@ -7,10 +7,14 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Climb;
-import frc.robot.commands.IndexAndShoot;
+import frc.robot.commands.Feeder;
+import frc.robot.commands.Intake;
+import frc.robot.commands.Shooter;
 import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -26,11 +30,16 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  private Timer timer;
   // The robot's subsystems and commands are defined here...
-  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
+  private final FeederSubsystem m_feederSubsystem = new FeederSubsystem();
+  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   
+
+
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
@@ -68,13 +77,25 @@ public class RobotContainer {
     // pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.a().whileTrue(new IndexAndShoot(2, 2, 3, m_shooterSubsystem, m_indexerSubsystem));
+   
+    if (!m_feederSubsystem.getSensorStatus()){
+      m_driverController.a().whileTrue(new Shooter(m_shooterSubsystem, 0));
+      new Feeder(m_feederSubsystem, 3);
+      new Intake(m_intakeSubsystem, 3);
+      m_feederSubsystem.getSensorStatus();
+    }else{
+      timer.start();
+      m_driverController.a().whileTrue(new Shooter(m_shooterSubsystem, 3));
+        if (timer.get() > 3){
+          new Feeder(m_feederSubsystem, 3);
+          timer.reset();
+        }
+    }
+    m_driverController.rightBumper().whileTrue(new Climb(m_climberSubsystem, -3));
+    m_driverController.leftBumper().whileTrue(new Climb(m_climberSubsystem, 3)); 
 
-    m_driverController.rightBumper().whileTrue(new Climb(m_ClimberSubsystem, -3));
-    m_driverController.leftBumper().whileTrue(new Climb(m_ClimberSubsystem, 3)); 
-
-    m_driverController.rightBumper().onFalse(new Climb(m_ClimberSubsystem, 0));
-    m_driverController.leftBumper().onFalse(new Climb(m_ClimberSubsystem, 0));
+    m_driverController.rightBumper().onFalse(new Climb(m_climberSubsystem, 0));
+    m_driverController.leftBumper().onFalse(new Climb(m_climberSubsystem, 0));
 
   }
 
@@ -85,21 +106,21 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_indexerSubsystem, m_shooterSubsystem);
+    return Autos.exampleAuto(m_intakeSubsystem, m_shooterSubsystem, m_feederSubsystem);
   }
 
   public void populateDashboard() {
-    SmartDashboard.putData("IndexerSubsystem", m_indexerSubsystem);
+    SmartDashboard.putData("IndexerSubsystem", m_intakeSubsystem);
     SmartDashboard.putData("ShooterSubsystem", m_shooterSubsystem);
-    SmartDashboard.putBoolean("Note Sensor", m_indexerSubsystem.getSensorStatus());
+    SmartDashboard.putBoolean("Note Sensor", m_feederSubsystem.getSensorStatus());
     SmartDashboard.putNumber("Shooter Velocity", m_shooterSubsystem.getFlywheelVelocity());
-    SmartDashboard.putNumber("Feeder Velocity", m_indexerSubsystem.getFeederMotorVoltage());
-    SmartDashboard.putNumber("Intake Velocity", m_indexerSubsystem.getIntakeMotorVoltage());
+    SmartDashboard.putNumber("Feeder Velocity", m_feederSubsystem.getFeederMotorVoltage());
+    SmartDashboard.putNumber("Intake Velocity", m_intakeSubsystem.getIntakeMotorVoltage());
     SmartDashboard.putBoolean("bool key", Autos.run_state);
-    SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
-    SmartDashboard.putNumber("Feeder Encoder Position", m_indexerSubsystem.getFeederEncoderPosition());
+    SmartDashboard.putNumber("Intake Encoder Position", m_intakeSubsystem.getIntakeEncoderPosition());
+    SmartDashboard.putNumber("Feeder Encoder Position", m_feederSubsystem.getFeederEncoderPosition());
     SmartDashboard.putNumber("Left FLywheel Encoder Position", m_shooterSubsystem.getFlywheelPosition());
-    SmartDashboard.putNumber("climber motor rotations",m_ClimberSubsystem.getEncoderRotations());
+    SmartDashboard.putNumber("climber motor rotations",m_climberSubsystem.getEncoderRotations());
 
   } 
 
