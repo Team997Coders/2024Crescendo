@@ -27,7 +27,7 @@ public class FeederSubsystem extends SubsystemBase {
      * @return true if the sensor is blocked, false if not.
      */
     public boolean getSensorStatus() {
-        return !feederSensor.get();
+        return !this.feederSensor.get();
     }
     public void setFeederVoltage(double voltage) {
         feederNEO.setVoltage(voltage);
