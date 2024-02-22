@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.math.util.Units;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -141,33 +142,54 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
 
   }
+  
+  public final class Intake {
+    public static final int INTAKE_MOTOR_ID = 9;
+    public static final boolean INTAKE_MOTOR_IS_INVERTED = false; 
+    //PID
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
 
+  }
+
+
+  public final class Feeder{
+    public static final int FEEDER_MOTOR_ID = 10;
+    public static final int FEEDER_SENSOR_CHANNEL = 0;
+    public static final boolean FEEDER_MOTOR_IS_INVERTED = true; 
+    //PID
+    public static final double kP = 5;
+    public static final double kI = 0;
+    public static final double kD = 0;
+  }
   public final class Shooter {
     public static final int LEFT_FLYWHEEL_MOTOR_ID = 11;
     public static final int RIGHT_FLYWHELL_MOTOR_ID = 12;
-
     public static final boolean LEFT_FLYWHEEL_MOTOR_IS_INVERTED = false;
     public static final boolean RIGHT_FLYWHEEL_MOTOR_IS_INVERTED = true;
+    public static final double FLYWHEEL_GEAR_RATIO = 1.0;
+    public static final double FLYWHEEL_DIAMETER = 12; //cm
+    //PID
+    public static final double kP = 0.5;
+    public static final double kI = 0;
+    public static final double kD = 0.05;
+  }
+  public final class Bar{
+    public static final int BAR_MOTOR_ID = 13;
+  }
+  public final class Climber {
+    public static final int CLIMBER_MOTOR_ID = 14;
+    public static final boolean CLIMBER_MOTOR_IS_INVERTED = false;
+    //PID
+    public static final double kP = 5;
+    public static final double kI = 0;
+    public static final double kD = 0;
+  
   }
 
-  public final class Indexer {
-    public static final int INTAKE_MOTOR_ID = 9;
-    public static final int FEEDER_MOTOR_ID = 10;
 
-    public static final int FEEDER_SENSOR_CHANNEL = 0;
 
-      public static final boolean INTAKE_MOTOR_IS_INVERTED = false;
-      public static final boolean FEEDER_MOTOR_IS_INVERTED = true; 
-      public final boolean NOTE_SWITCH_ACTIVE = false;
-    }
-    public final class Bar{
-      public static final int BAR_MOTOR_ID = 13;
-    }
-
-    public final class Climber {
-      public static final int CLIMBER_MOTOR_ID = 14;
-
-      public static final boolean CLIMBER_MOTOR_IS_INVERTED = false;
-    }
+    
     
 }

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -13,13 +14,16 @@ import frc.robot.Constants;
 
 
 public class FeederSubsystem extends SubsystemBase {
-    private final CANSparkMax feederNEO = new CANSparkMax(Constants.Indexer.FEEDER_MOTOR_ID, MotorType.kBrushless);
-    public final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
+    private final CANSparkMax feederNEO = new CANSparkMax(Constants.Feeder.FEEDER_MOTOR_ID, MotorType.kBrushless);
+    public final DigitalInput feederSensor = new DigitalInput(Constants.Feeder.FEEDER_SENSOR_CHANNEL);
     public Trigger FeederTrigger = new Trigger(feederSensor::get);
     private final RelativeEncoder feederEncoder = feederNEO.getEncoder();
     public FeederSubsystem(){
         feederEncoder.setPosition(0);
-        feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
+        feederNEO.setInverted(Constants.Feeder.FEEDER_MOTOR_IS_INVERTED);
+    }
+    public void setFeederVelocity(PIDController feederPID){
+        feederPID.setPID(Constants.Feeder.kP, Constants.Feeder.kI, Constants.Feeder.kD);
     }
         /**
      * Get the current status of the note sensor that sits in the feeder before the note reaches the shooter.

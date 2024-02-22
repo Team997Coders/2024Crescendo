@@ -3,7 +3,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,7 +20,14 @@ public class ShooterSubsystem extends SubsystemBase {
         rightFlywheelNeo.follow(leftFlywheelNeo);
         shooterEncoder = leftFlywheelNeo.getEncoder();
         shooterEncoder.setPosition(0);
+        shooterEncoder.setPositionConversionFactor((1/ Constants.Shooter.FLYWHEEL_GEAR_RATIO) * (Constants.Shooter.FLYWHEEL_DIAMETER/100)* Math.PI);
+        shooterEncoder.setVelocityConversionFactor(((1/ Constants.Shooter.FLYWHEEL_GEAR_RATIO) * (Constants.Shooter.FLYWHEEL_DIAMETER/100)* Math.PI)/ 60.0);
+
     }
+    public void setFlywheelVelocity(PIDController shooterPID){
+        shooterPID.setPID(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
+    }
+    
     public void setLeftMotorVoltage(double leftFlywheelVoltage) {
         leftFlywheelNeo.setVoltage(leftFlywheelVoltage);
     }

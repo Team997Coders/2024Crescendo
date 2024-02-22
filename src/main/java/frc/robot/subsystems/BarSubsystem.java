@@ -11,8 +11,11 @@ import frc.robot.Constants;
 public class BarSubsystem extends SubsystemBase{
     private final CANSparkMax barNEO = new CANSparkMax(Constants.Bar.BAR_MOTOR_ID, MotorType.kBrushless);
     private final RelativeEncoder barMotorEncoder;
+    
     public BarSubsystem(){
         barMotorEncoder = barNEO.getEncoder();
+        barMotorEncoder.setPosition(0);
+        barMotorEncoder.setPositionConversionFactor(2*Math.PI);
     }
     public void setBarVoltage(double voltage){
         barNEO.setVoltage(voltage);
