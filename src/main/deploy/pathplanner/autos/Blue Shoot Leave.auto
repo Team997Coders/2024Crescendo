@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7434431971001721,
+      "y": 4.358141922934678
+    },
+    "rotation": -59.743562836470765
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot and Leave Blue"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Leave",
+  "choreoAuto": false
+}

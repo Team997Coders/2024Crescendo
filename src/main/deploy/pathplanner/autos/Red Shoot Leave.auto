@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 15.865318191443983,
+      "y": 4.319142890067254
+    },
+    "rotation": -119.26799521489274
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot and Leave Red"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Leave",
+  "choreoAuto": false
+}

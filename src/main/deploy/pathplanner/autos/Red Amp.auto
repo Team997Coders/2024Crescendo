@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 15.9725655318294,
+      "y": 6.932078092184688
+    },
+    "rotation": 179.4594898128693
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp Note 1 Red"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Amp Score"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp Note 2 Red"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Amp Score"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Amp",
+  "choreoAuto": false
+}
