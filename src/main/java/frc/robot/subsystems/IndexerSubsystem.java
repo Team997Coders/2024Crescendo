@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IntakeConstants;
 
-
-
 public class IndexerSubsystem extends SubsystemBase {
     private final CANSparkMax intakeNEO = new CANSparkMax(IntakeConstants.intakeMotorId, MotorType.kBrushless);
     private final CANSparkMax feederNEO = new CANSparkMax(IntakeConstants.indexMotorId, MotorType.kBrushless);
@@ -21,47 +19,59 @@ public class IndexerSubsystem extends SubsystemBase {
 
     public final DigitalInput feederSensor = new DigitalInput(IntakeConstants.noteSensorId);
     public Trigger FeederTrigger = new Trigger(feederSensor::get);
-    
+
     public IndexerSubsystem() {
-        intakeNEO.setInverted(IntakeConstants.intakeMotorReversed);
-        feederNEO.setInverted(IntakeConstants.indexMotorReversed);
-        
+        intakeNEO.setInverted(IntakeConstants.IntakeMotorReversed);
+        feederNEO.setInverted(IntakeConstants.IndexMotorReversed);
+
         intakeEncoder.setPosition(0);
         feederEncoder.setPosition(0);
     }
+
     /**
-     * Get the current status of the note sensor that sits in the feeder before the note reaches the shooter.
+     * Get the current status of the note sensor that sits in the feeder before the
+     * note reaches the shooter.
+     * 
      * @return true if the sensor is blocked, false if not.
      */
     public boolean getSensorStatus() {
         return !feederSensor.get();
     }
+
     /**
      * Set the voltage of the intake motor
+     * 
      * @param voltage
      */
     public void setIntakeVoltage(double voltage) {
         intakeNEO.setVoltage(voltage);
     }
+
     /**
      * Set the voltage of the feeder motor
+     * 
      * @param voltage
      */
     public void setFeederVoltage(double voltage) {
         feederNEO.setVoltage(voltage);
     }
-    public double getIntakeMotorVoltage(){
+
+    public double getIntakeMotorVoltage() {
         return intakeNEO.getEncoder().getVelocity();
     }
-    public double getFeederMotorVoltage(){
+
+    public double getFeederMotorVoltage() {
         return feederNEO.getEncoder().getVelocity();
     }
+
     public double getIntakeEncoderPosition() {
         return intakeEncoder.getPosition();
     }
+
     public double getFeederEncoderPosition() {
         return feederEncoder.getPosition();
     }
+
     /**
      * Simple command to run the intake motor as a test
      *
@@ -71,8 +81,8 @@ public class IndexerSubsystem extends SubsystemBase {
         // Inline construction of command goes here.
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
-            () -> {
-                setIntakeVoltage(8.0);
-            });
+                () -> {
+                    setIntakeVoltage(8.0);
+                });
     }
 }
