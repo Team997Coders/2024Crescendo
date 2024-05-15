@@ -6,16 +6,16 @@ package frc.robot.commands.autoCommands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.DrivebaseSubsystem;
 
 public class TimeDrive extends Command {
-  private final Drivebase drivebase;
+  private final DrivebaseSubsystem drivebase;
   private final double speed;
   private final double delay;
   private double startTime;
 
   /** Creates a new TimeDrive. */
-  public TimeDrive(Drivebase drivebase, double speed, double delay) {
+  public TimeDrive(DrivebaseSubsystem drivebase, double speed, double delay) {
     this.drivebase = drivebase;
     this.speed = speed;
     this.delay = delay;

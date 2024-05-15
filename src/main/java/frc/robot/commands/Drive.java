@@ -8,16 +8,16 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.DrivebaseSubsystem;
 
 public class Drive extends Command {
 
-  private final Drivebase drivebase;
+  private final DrivebaseSubsystem drivebase;
   private final Supplier<double[]> speedXY;
   private final DoubleSupplier rot;
 
   /** Creates a new Drive. */
-  public Drive(Drivebase drivebase, Supplier<double[]> speedXY, DoubleSupplier rot) {
+  public Drive(DrivebaseSubsystem drivebase, Supplier<double[]> speedXY, DoubleSupplier rot) {
     this.drivebase = drivebase;
     this.speedXY = speedXY;
     this.rot = rot;
