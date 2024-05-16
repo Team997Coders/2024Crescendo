@@ -72,17 +72,36 @@ public class IndexerSubsystem extends SubsystemBase {
         return feederEncoder.getPosition();
     }
 
+    public void stop() {
+        setFeederVoltage(0);
+        setIntakeVoltage(0);
+    }
+
     /**
      * Simple command to run the intake motor as a test
      *
      * @return a command
      */
-    public Command runIntakeCommand() {
+    public Command runIntakeCommand(double speed) {
         // Inline construction of command goes here.
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
                 () -> {
-                    setIntakeVoltage(8.0);
-                });
+                    setIntakeVoltage(speed);
+                }).withTimeout(5);
+    }
+
+        /**
+     * Simple command to run the index motor as a test
+     *
+     * @return a command
+     */
+    public Command runIndexCommand(double speed) {
+        // Inline construction of command goes here.
+        // Subsystem::RunOnce implicitly requires `this` subsystem.
+        return runOnce(
+                () -> {
+                    setFeederVoltage(speed);
+                }).withTimeout(5);
     }
 }

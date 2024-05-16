@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-    m_robotContainer.populateDashboard();
+    //m_robotContainer.populateDashboard();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -99,7 +99,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    m_robotContainer.testCommandSequence();
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override
