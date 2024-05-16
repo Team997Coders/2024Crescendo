@@ -10,10 +10,10 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.DrivebaseSubsystem;
 
 public class TriPIDDrive extends Command {
-  private Drivebase drivebase;
+  private DrivebaseSubsystem drivebase;
   private PIDController xPID;
   private PIDController yPID;
   private PIDController rPID;
@@ -28,7 +28,7 @@ public class TriPIDDrive extends Command {
   double rOutput;
 
   /** Creates a new TriPIDDrive. */
-  public TriPIDDrive(Drivebase drivebase, double xTarget, double yTarget,
+  public TriPIDDrive(DrivebaseSubsystem drivebase, double xTarget, double yTarget,
       double rTarget,
       DoubleSupplier xPose, DoubleSupplier yPose, DoubleSupplier angle) {
     this.drivebase = drivebase;
