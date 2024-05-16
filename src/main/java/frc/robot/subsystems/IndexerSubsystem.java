@@ -91,7 +91,7 @@ public class IndexerSubsystem extends SubsystemBase {
                 }).withTimeout(5);
     }
 
-        /**
+    /**
      * Simple command to run the index motor as a test
      *
      * @return a command
