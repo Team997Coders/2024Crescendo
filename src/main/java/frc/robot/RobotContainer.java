@@ -6,8 +6,11 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Climb;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IndexNote;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.ShootCommand;
 import frc.robot.commands.test.TestSubsystems;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
@@ -159,6 +162,9 @@ public class RobotContainer {
 
     // Intake
     c_driveStick.a().onTrue(new IndexNote(indexer));
+    c_driveStick.b().onTrue(new ShootCommand(shooter, indexer));
+    // c_driveStick.leftBumper().whileTrue(new Climb(climber, -3));
+    // c_driveStick.rightBumper().whileTrue(new Climb(climber, 3));
 
     // Codriver climb controls
     // c_driveStick2.y().whileTrue(new Climb(climber, 1));
@@ -176,7 +182,7 @@ public class RobotContainer {
   }
 
   public Command testCommandSequence() {
-    return new TestSubsystems();
+    return new TestSubsystems(indexer, shooter, climber);
   }
 
     public void populateDashboard() {

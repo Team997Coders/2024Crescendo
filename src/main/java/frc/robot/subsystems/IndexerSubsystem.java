@@ -104,4 +104,12 @@ public class IndexerSubsystem extends SubsystemBase {
                     setFeederVoltage(speed);
                 }).withTimeout(5);
     }
+
+    public Command runStopCommand() {
+        return runOnce(
+            () -> {
+                this.stop();
+            }
+        );
+    }
 }
