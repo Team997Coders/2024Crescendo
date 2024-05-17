@@ -5,10 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
-import frc.robot.commands.IndexAndShoot;
 import frc.robot.commands.IndexNote;
 import frc.robot.commands.test.TestSubsystems;
 import frc.robot.subsystems.ClimberSubsystem;
