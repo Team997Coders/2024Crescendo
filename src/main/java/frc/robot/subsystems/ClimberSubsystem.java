@@ -16,7 +16,7 @@ public class ClimberSubsystem extends SubsystemBase {
             MotorType.kBrushless);
     private final RelativeEncoder climberEncoder;
     private final DigitalInput leftClimberLimit = new DigitalInput(Constants.ClimberConstants.leftClimberSensorId);
-    private final DigitalInput rightClimberLimit = new DigitalInput(Constants.ClimberConstants.rightClimberSensorId);
+    //private final DigitalInput rightClimberLimit = new DigitalInput(Constants.ClimberConstants.rightClimberSensorId);
 
     public ClimberSubsystem() {
         climberEncoder = leftClimberMotor.getEncoder();

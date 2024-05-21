@@ -4,9 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -31,7 +28,7 @@ public class ShootCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands( m_shooter.spinupShooterCommand(Constants.ShooterConstants.shooterSpeed));
-    addCommands( new WaitCommand(5). until(() -> (m_shooter.getFlywheelVelocity() >= speed)));
+    addCommands( new WaitCommand(5). until(() -> (m_shooter.getFlywheelVelocity() >= m_speed)));
     addCommands( m_indexer.runIndexCommand(5).withTimeout(3.0));
   }
 }

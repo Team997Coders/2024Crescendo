@@ -6,10 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.Climb;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IndexNote;
-import frc.robot.commands.Shoot;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.test.TestSubsystems;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -161,12 +159,12 @@ public class RobotContainer {
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
 
     // Intake
-    c_driveStick.a().onTrue(new IndexNote(indexer));
+    c_driveStick.a().whileTrue(new IndexNote(indexer));
     c_driveStick.b().onTrue(new ShootCommand(shooter, indexer, 100));
     // c_driveStick.leftBumper().whileTrue(new Climb(climber, -3));
     // c_driveStick.rightBumper().whileTrue(new Climb(climber, 3));
 
-    // Codriver climb controls
+    // Co-driver climb controls
     // c_driveStick2.y().whileTrue(new Climb(climber, 1));
     // c_driveStick2.a().whileTrue(new Climb(climber, -1));
   }

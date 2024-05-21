@@ -11,6 +11,7 @@ import frc.robot.subsystems.IndexerSubsystem;
 public class IndexNote extends Command {
   /** Creates a new RunIntake. */
   public final IndexerSubsystem indexer;
+  private boolean indexOn = false;
 
   public IndexNote(IndexerSubsystem indexer) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -20,14 +21,20 @@ public class IndexNote extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    this.indexOn = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(indexer.getSensorStatus() == false) {
-    indexer.setIntakeVoltage(Constants.IntakeConstants.intakeSpeed);
-    indexer.setFeederVoltage(Constants.IntakeConstants.indexSpeed);
+      if (!this.indexOn){
+        System.out.println("Start indexNote");
+      }
+      indexer.setIntakeVoltage(Constants.IntakeConstants.intakeSpeed);
+      indexer.setFeederVoltage(Constants.IntakeConstants.indexSpeed);
+      this.indexOn = true;
     } else if (indexer.getSensorStatus() == true ) {
       this.end(true);
     }
@@ -36,6 +43,7 @@ public class IndexNote extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("Stop indexNote");
     indexer.stop();
   }
 
