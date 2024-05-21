@@ -3,18 +3,18 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
     public Boolean shooterOn = false;
-    private final CANSparkMax leftFlywheelNeo = new CANSparkMax(Constants.Shooter.LEFT_FLYWHEEL_MOTOR_ID,
+    private final CANSparkMax leftFlywheelNeo = new CANSparkMax(ShooterConstants.leftShootMotorID,
             MotorType.kBrushless);
-    private final CANSparkMax rightFlywheelNeo = new CANSparkMax(Constants.Shooter.RIGHT_FLYWHELL_MOTOR_ID,
+    private final CANSparkMax rightFlywheelNeo = new CANSparkMax(ShooterConstants.rightShootMotorID,
             MotorType.kBrushless);
     private RelativeEncoder shooterEncoder; 
     public ShooterSubsystem() {
-        leftFlywheelNeo.setInverted(Constants.Shooter.LEFT_FLYWHEEL_MOTOR_IS_INVERTED);
-        rightFlywheelNeo.setInverted(Constants.Shooter.RIGHT_FLYWHEEL_MOTOR_IS_INVERTED);
+        leftFlywheelNeo.setInverted(ShooterConstants.leftShooterMotorReversed);
+        rightFlywheelNeo.setInverted(ShooterConstants.rightShooterMotorReversed);
         rightFlywheelNeo.follow(leftFlywheelNeo);
         shooterEncoder = leftFlywheelNeo.getEncoder();
         shooterEncoder.setPosition(0);

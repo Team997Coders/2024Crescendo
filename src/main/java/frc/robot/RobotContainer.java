@@ -99,8 +99,8 @@ public class RobotContainer {
     SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
     SmartDashboard.putNumber("Feeder Encoder Position", m_indexerSubsystem.getFeederEncoderPosition());
     SmartDashboard.putNumber("Left FLywheel Encoder Position", m_shooterSubsystem.getFlywheelPosition());
-    SmartDashboard.putNumber("climber motor rotations",m_ClimberSubsystem.getEncoderRotations());
-
+    SmartDashboard.putNumber("Left Climber Rotations",m_ClimberSubsystem.getEncoderRotations());
+    SmartDashboard.putBoolean("Left Climber Down?",m_ClimberSubsystem.getLeftClimberLimit());
   } 
 
 }

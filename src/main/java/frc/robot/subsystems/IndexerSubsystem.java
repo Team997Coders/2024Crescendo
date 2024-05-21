@@ -8,23 +8,23 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 
 
 
 public class IndexerSubsystem extends SubsystemBase {
-    private final CANSparkMax intakeNEO = new CANSparkMax(Constants.Indexer.INTAKE_MOTOR_ID, MotorType.kBrushless);
-    private final CANSparkMax feederNEO = new CANSparkMax(Constants.Indexer.FEEDER_MOTOR_ID, MotorType.kBrushless);
+    private final CANSparkMax intakeNEO = new CANSparkMax(IntakeConstants.intakeMotorId, MotorType.kBrushless);
+    private final CANSparkMax feederNEO = new CANSparkMax(IntakeConstants.indexMotorId, MotorType.kBrushless);
 
     private final RelativeEncoder feederEncoder = feederNEO.getEncoder();
     private final RelativeEncoder intakeEncoder = intakeNEO.getEncoder();
 
-    public final DigitalInput feederSensor = new DigitalInput(Constants.Indexer.FEEDER_SENSOR_CHANNEL);
+    public final DigitalInput feederSensor = new DigitalInput(IntakeConstants.noteSensorId);
     public Trigger FeederTrigger = new Trigger(feederSensor::get);
     
     public IndexerSubsystem() {
-        intakeNEO.setInverted(Constants.Indexer.INTAKE_MOTOR_IS_INVERTED);
-        feederNEO.setInverted(Constants.Indexer.FEEDER_MOTOR_IS_INVERTED);
+        intakeNEO.setInverted(IntakeConstants.intakeMotorReversed);
+        feederNEO.setInverted(IntakeConstants.indexMotorReversed);
         
         intakeEncoder.setPosition(0);
         feederEncoder.setPosition(0);
