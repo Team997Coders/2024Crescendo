@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import cowlib.SwerveModule;
+import swervelib.SwerveModule;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,13 +27,14 @@ import frc.robot.Constants.DriveConstants.ModuleLocations;
 import frc.robot.Constants.DriveConstants.SwerveModules;
 
 public class DrivebaseSubsystem extends SubsystemBase {
-  private final double DRIVE_REDUCTION = 1.0 / 6.75;
-  private final double NEO_FREE_SPEED = 5820.0 / 60.0;
-  private final double WHEEL_DIAMETER = 0.1016;
-  private final double MAX_VELOCITY = NEO_FREE_SPEED * DRIVE_REDUCTION * WHEEL_DIAMETER * Math.PI;
+  private final double DRIVE_REDUCTION = 1.0 / 6.75; // SDS MK4i L2
+  private final double NEO_FREE_SPEED = 5820.0 / 60.0;  // RPM to RPS
+  private final double WHEEL_DIAMETER = 0.1016; // meters (4 inches)
+  private final double MAX_VELOCITY = NEO_FREE_SPEED * DRIVE_REDUCTION * WHEEL_DIAMETER * Math.PI; // m/s
   private final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / (ModuleLocations.dist / Math.sqrt(2.0));
 
-  private final double MAX_VOLTAGE = 12;
+  //private final double MAX_VOLTAGE = 12;
+  private final double MAX_VOLTAGE = 9;
 
   private AHRS gyro;
 

@@ -32,6 +32,6 @@ public class TestSubsystems extends SequentialCommandGroup {
     addCommands(new WaitCommand(2));
     addCommands(m_indexer.runIndexCommand(8.0));
     addCommands(new WaitCommand(2));
-    addCommands(m_shooter.runShooterCommand(10.0));
+    addCommands(m_shooter.spinupShooterCommand(10.0));
   }
 }

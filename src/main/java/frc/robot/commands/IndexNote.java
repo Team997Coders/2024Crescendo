@@ -29,7 +29,7 @@ public class IndexNote extends Command {
     indexer.setIntakeVoltage(Constants.IntakeConstants.intakeSpeed);
     indexer.setFeederVoltage(Constants.IntakeConstants.indexSpeed);
     } else if (indexer.getSensorStatus() == true ) {
-      indexer.stop();
+      this.end(true);
     }
   }
 
