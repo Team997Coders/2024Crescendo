@@ -1,0 +1,114 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7044441642327478,
+        "y": 4.348392164717821
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.7756180025424197,
+        "y": 1.6769584132992503
+      },
+      "isLocked": false,
+      "linkedName": "Far Field Sub Blue"
+    },
+    {
+      "anchor": {
+        "x": 8.25075702407937,
+        "y": 1.10172267850474
+      },
+      "prevControl": {
+        "x": 7.256065230252824,
+        "y": 1.2046218295902413
+      },
+      "nextControl": {
+        "x": 8.533500012368197,
+        "y": 1.0724734038541728
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.626446098497899,
+        "y": 4.5043882961875195
+      },
+      "prevControl": {
+        "x": 3.717119453241284,
+        "y": 1.7744559954678125
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -10.491477012331593,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.25,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.75,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.4,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -57.994616791916435,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Center Field",
+  "previewStartingState": {
+    "rotation": -60.39554925399514,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

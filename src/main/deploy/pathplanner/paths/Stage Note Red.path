@@ -1,0 +1,114 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.41,
+        "y": 5.5600000000000005
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.9719127324240409,
+        "y": 6.181346709486769
+      },
+      "isLocked": false,
+      "linkedName": "Subwoofer"
+    },
+    {
+      "anchor": {
+        "x": 2.712894356905105,
+        "y": 6.922328333967831
+      },
+      "prevControl": {
+        "x": 2.1615119098859736,
+        "y": 6.467955981206417
+      },
+      "nextControl": {
+        "x": 2.9650719318427363,
+        "y": 7.130137847414501
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.41,
+        "y": 5.5600000000000005
+      },
+      "prevControl": {
+        "x": 1.8061668427374873,
+        "y": 5.840105171896805
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Subwoofer"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 35.37435869669091,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": 36.69052639402069,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.7,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 2.75,
+    "maxAcceleration": 2.75,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Speaker",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

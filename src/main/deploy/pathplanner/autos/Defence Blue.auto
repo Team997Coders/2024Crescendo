@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.72394368066646,
+      "y": 6.7468326860644225
+    },
+    "rotation": 60.12400730831056
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Defence Blue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Defence Shoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Defence",
+  "choreoAuto": false
+}

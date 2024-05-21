@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 15.797069883925992,
+      "y": 6.727333169630711
+    },
+    "rotation": 118.95099520746659
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Defence Red"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Defence",
+  "choreoAuto": false
+}
