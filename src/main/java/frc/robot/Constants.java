@@ -96,18 +96,18 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int intakeMotorId = 15;
     public static final int indexMotorId = 10;
-    public static final double indexSpeed = 0.4;
-    public static final double intakeSpeed = 0.7;
+    public static final double indexSpeed = 8;
+    public static final double intakeSpeed = 10;
     public static final int noteSensorId = 0;
-    public static final boolean IntakeMotorReversed = false;
+    public static final boolean IntakeMotorReversed = true;
     public static final boolean IndexMotorReversed = false;
 
     public static final int currentLimit = 30;
   }
 
   public static final class ClimberConstants {
-    public static final int leftClimberMotorId = 16;
-    public static final int rightClimberMotorId = 14;
+    public static final int leftClimberMotorId = 14;
+    public static final int rightClimberMotorId = 16;
     public static final int leftClimberSensorId = 2;
     public static final int rightClimberSensorId = 3;
     public static final boolean leftClimberMotorReversed = false;

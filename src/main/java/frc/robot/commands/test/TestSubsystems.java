@@ -14,20 +14,24 @@ import frc.robot.subsystems.ShooterSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TestSubsystems extends SequentialCommandGroup {
-  private final IndexerSubsystem m_indexer = new IndexerSubsystem();
-  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  private final ClimberSubsystem m_climber = new ClimberSubsystem();
+  private final ShooterSubsystem m_shooter;
+  private final ClimberSubsystem m_climber;
+  private final IndexerSubsystem m_indexer;
 
   /** Creates a new TestSubsystems. */
-  public TestSubsystems() {
+  public TestSubsystems(ShooterSubsystem shooter, ClimberSubsystem climber, IndexerSubsystem indexer) {
+    this.m_shooter = shooter;
+    this.m_climber = climber;
+    this.m_indexer = indexer;
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(m_indexer.runIntakeCommand(5.0));
     addCommands(new WaitCommand(2));
-    addCommands(m_indexer.runIntakeCommand(-5.0));
-    addCommands(new WaitCommand(2));
-    addCommands(m_indexer.runIndexCommand(5.0));
-    addCommands(new WaitCommand(2));
-    addCommands(m_shooter.runShooterCommand(10.0));
+    // addCommands(m_indexer.runIntakeCommand(-5.0));
+    // addCommands(new WaitCommand(2));
+    // addCommands(m_indexer.runIndexCommand(5.0));
+    // addCommands(new WaitCommand(2));
+    // addCommands(m_shooter.runShooterCommand(10.0));
   }
 }

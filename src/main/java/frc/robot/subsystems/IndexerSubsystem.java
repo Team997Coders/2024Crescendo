@@ -87,7 +87,7 @@ public class IndexerSubsystem extends SubsystemBase {
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
                 () -> {
-                    setIntakeVoltage(speed);
+                    this.setIntakeVoltage(speed);
                 }).withTimeout(5);
     }
 

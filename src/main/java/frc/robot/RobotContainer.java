@@ -158,7 +158,7 @@ public class RobotContainer {
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
 
     // Intake
-    c_driveStick.a().onTrue(new IndexNote(indexer));
+    c_driveStick.a().onTrue(new IndexNote(indexer)).onFalse(Commands.runOnce(indexer::stop));
 
     // Codriver climb controls
     // c_driveStick2.y().whileTrue(new Climb(climber, 1));
@@ -176,18 +176,19 @@ public class RobotContainer {
   }
 
   public Command testCommandSequence() {
-    return new TestSubsystems();
+    return new TestSubsystems(shooter, climber, indexer);
   }
 
-    public void populateDashboard() {
+  public void populateDashboard() {
     SmartDashboard.putData("IndexerSubsystem", indexer);
     SmartDashboard.putData("ShooterSubsystem", shooter);
     SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
     SmartDashboard.putNumber("Shooter Velocity", shooter.getFlywheelVelocity());
     SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
     SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
-    SmartDashboard.putBoolean("bool key", Autos.run_state);
-    SmartDashboard.putNumber("Left Climber Rotations",climber.getEncoderRotations());
-    SmartDashboard.putBoolean("Left Climber Down?",climber.getLeftClimberLimit());
-  } 
+    SmartDashboard.putNumber("Left Climber Rotations", climber.getEncoderRotations());
+    SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberLimit());
+    SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberLimit());
+
+  }
 }

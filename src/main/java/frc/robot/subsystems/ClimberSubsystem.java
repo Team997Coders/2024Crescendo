@@ -36,6 +36,10 @@ public class ClimberSubsystem extends SubsystemBase {
         return leftClimberLimit.get();
     }
 
+    public Boolean getRightClimberLimit() {
+        return rightClimberLimit.get();
+    }
+
     public void setBrakeMode() {
         leftClimberMotor.setIdleMode(IdleMode.kBrake);
     }
