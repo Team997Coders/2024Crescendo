@@ -47,7 +47,6 @@ public class ShooterSubsystem extends SubsystemBase {
         leftFlywheelNeo.setVoltage(0);
     }
 
-
     /**
      * Simple command to run the shooter motor as a test
      *
@@ -58,16 +57,14 @@ public class ShooterSubsystem extends SubsystemBase {
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
                 () -> {
-                    timer.start();
                     setLeftMotorVoltage(voltage);
                 });
     }
 
     public Command stopShooterCommand() {
         return runOnce(
-            () -> {
-                this.stop();
-            }
-        );
+                () -> {
+                    this.stop();
+                });
     }
 }

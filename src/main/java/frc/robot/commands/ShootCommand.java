@@ -4,31 +4,58 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
+public class ShootCommand extends Command {
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootCommand extends SequentialCommandGroup {
-  private final ShooterSubsystem m_shooter;
-  private final IndexerSubsystem m_indexer;
-  private final double m_speed;
+  private Timer timer = new Timer();
+  /** Creates a new RunIntake. */
+  public final IndexerSubsystem m_indexer;
+  public final ShooterSubsystem m_shooter;
 
-  /** Creates a new ShootCommand. */
-  public ShootCommand(ShooterSubsystem shooter, IndexerSubsystem indexer, double speed) {
-    this.m_shooter = shooter;
+  private boolean indexOn = false;
+
+  public ShootCommand(IndexerSubsystem indexer, ShooterSubsystem shooter) {
+    // Use addRequirements() here to declare subsystem dependencies.
     this.m_indexer = indexer;
-    this.m_speed = speed;
+    this.m_shooter = shooter;
 
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands( m_shooter.spinupShooterCommand(Constants.ShooterConstants.shooterSpeed));
-    addCommands( new WaitCommand(5). until(() -> (m_shooter.getFlywheelVelocity() >= m_speed)));
-    addCommands( m_indexer.runIndexCommand(5).withTimeout(3.0));
+    addRequirements(indexer, shooter);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    timer.start();
+    this.indexOn = false;
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    m_shooter.setLeftMotorVoltage(10);
+    if (timer.get() >= 2.0) {
+      m_indexer.setFeederVoltage(12);
+    } else if (timer.get() >= 2.5) {
+      end(true);
+    }
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    System.out.println("Stop indexNote");
+    m_indexer.stop();
+    m_shooter.stop();
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 }

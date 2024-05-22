@@ -88,7 +88,7 @@ public class IndexerSubsystem extends SubsystemBase {
         return runOnce(
                 () -> {
                     setIntakeVoltage(speed);
-                }).withTimeout(5);
+                });
     }
 
     /**
@@ -102,14 +102,13 @@ public class IndexerSubsystem extends SubsystemBase {
         return runOnce(
                 () -> {
                     setFeederVoltage(speed);
-                }).withTimeout(5);
+                });
     }
 
     public Command runStopCommand() {
         return runOnce(
-            () -> {
-                this.stop();
-            }
-        );
+                () -> {
+                    this.stop();
+                });
     }
 }

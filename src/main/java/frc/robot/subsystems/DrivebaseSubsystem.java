@@ -28,13 +28,14 @@ import frc.robot.Constants.DriveConstants.SwerveModules;
 
 public class DrivebaseSubsystem extends SubsystemBase {
   private final double DRIVE_REDUCTION = 1.0 / 6.75; // SDS MK4i L2
-  private final double NEO_FREE_SPEED = 5820.0 / 60.0;  // RPM to RPS
+  // private final double NEO_FREE_SPEED = 5820.0 / 60.0; // RPM to RPS
+  private final double NEO_FREE_SPEED = 3820.0 / 60.0;
   private final double WHEEL_DIAMETER = 0.1016; // meters (4 inches)
   private final double MAX_VELOCITY = NEO_FREE_SPEED * DRIVE_REDUCTION * WHEEL_DIAMETER * Math.PI; // m/s
   private final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / (ModuleLocations.dist / Math.sqrt(2.0));
 
-  //private final double MAX_VOLTAGE = 12;
-  private final double MAX_VOLTAGE = 9;
+  // private final double MAX_VOLTAGE = 12;
+  private final double MAX_VOLTAGE = 8;
 
   private AHRS gyro;
 
@@ -43,7 +44,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
   private SwerveModule backLeft = new SwerveModule(SwerveModules.backLeft, MAX_VELOCITY, MAX_VOLTAGE);
   private SwerveModule backRight = new SwerveModule(SwerveModules.backRight, MAX_VELOCITY, MAX_VOLTAGE);
 
-  //                                                       0           1          2         3
+  // 0 1 2 3
   private SwerveModule[] modules = new SwerveModule[] { frontLeft, frontRight, backLeft, backRight };
 
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
@@ -105,8 +106,10 @@ public class DrivebaseSubsystem extends SubsystemBase {
     }
   }
 
-  /** drive:
-   * Move the robot. Given the requested chassis speed (where do we want to go) in meters/sec and radians.
+  /**
+   * drive:
+   * Move the robot. Given the requested chassis speed (where do we want to go) in
+   * meters/sec and radians.
    * moduleStates are in meters/sec and radians (for rotation).
    * This can be a source of angle mismatch degrees <> radians
    */

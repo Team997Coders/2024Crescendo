@@ -8,6 +8,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IndexNote;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.test.TestSubsystems;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -159,8 +160,9 @@ public class RobotContainer {
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
 
     // Intake
-    c_driveStick.a().whileTrue(new IndexNote(indexer));
-    c_driveStick.b().onTrue(new ShootCommand(shooter, indexer, 100));
+    c_driveStick.a().toggleOnTrue(new IndexNote(indexer));
+    c_driveStick.b().onTrue(new ShootCommand(indexer, shooter));
+    c_driveStick.x().toggleOnTrue(new Shoot(shooter, 1));
     // c_driveStick.leftBumper().whileTrue(new Climb(climber, -3));
     // c_driveStick.rightBumper().whileTrue(new Climb(climber, 3));
 
@@ -183,7 +185,7 @@ public class RobotContainer {
     return new TestSubsystems(indexer, shooter, climber);
   }
 
-    public void populateDashboard() {
+  public void populateDashboard() {
     SmartDashboard.putData("IndexerSubsystem", indexer);
     SmartDashboard.putData("ShooterSubsystem", shooter);
     SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
@@ -191,7 +193,7 @@ public class RobotContainer {
     SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
     SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
     SmartDashboard.putBoolean("bool key", Autos.run_state);
-    SmartDashboard.putNumber("Left Climber Rotations",climber.getEncoderRotations());
-    SmartDashboard.putBoolean("Left Climber Down?",climber.getLeftClimberLimit());
-  } 
+    SmartDashboard.putNumber("Left Climber Rotations", climber.getEncoderRotations());
+    SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberLimit());
+  }
 }
