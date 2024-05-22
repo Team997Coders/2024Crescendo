@@ -5,10 +5,9 @@
 package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IndexNote;
-import frc.robot.commands.test.TestSubsystems;
+import frc.robot.commands.Shoot;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -158,7 +157,10 @@ public class RobotContainer {
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
 
     // Intake
-    c_driveStick.a().onTrue(new IndexNote(indexer)).onFalse(Commands.runOnce(indexer::stop));
+    c_driveStick.a().onTrue(new IndexNote(indexer));
+    c_driveStick.b().onTrue(new Shoot(shooter, 100));
+    // c_driveStick.leftBumper().whileTrue(new Climb(climber, -3));
+    // c_driveStick.rightBumper().whileTrue(new Climb(climber, 3));
 
     // Codriver climb controls
     // c_driveStick2.y().whileTrue(new Climb(climber, 1));
@@ -173,10 +175,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return new InstantCommand();
-  }
-
-  public Command testCommandSequence() {
-    return new TestSubsystems(shooter, climber, indexer);
   }
 
   public void populateDashboard() {

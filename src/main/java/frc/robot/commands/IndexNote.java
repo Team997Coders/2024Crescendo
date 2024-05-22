@@ -25,8 +25,12 @@ public class IndexNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(indexer.getSensorStatus() == false) {
     indexer.setIntakeVoltage(Constants.IntakeConstants.intakeSpeed);
     indexer.setFeederVoltage(Constants.IntakeConstants.indexSpeed);
+    } else if (indexer.getSensorStatus() == true ) {
+      indexer.stop();
+    }
   }
 
   // Called once the command ends or is interrupted.

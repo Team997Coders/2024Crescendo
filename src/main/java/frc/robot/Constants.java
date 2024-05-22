@@ -29,7 +29,7 @@ public final class Constants {
     public static final class SwervePID {
       public static final double p = 0.052;
       public static final double i = 0;
-      public static final double d = 0;
+      public static final double d = 0; 
     }
 
     public static final class SwerveModules {
@@ -110,16 +110,16 @@ public final class Constants {
     public static final int rightClimberMotorId = 16;
     public static final int leftClimberSensorId = 2;
     public static final int rightClimberSensorId = 3;
-    public static final boolean leftClimberMotorReversed = false;
-    public static final boolean rightClimberMotorReversed = false;
+    public static final boolean leftClimberMotorReversed = true;
+    public static final boolean rightClimberMotorReversed = true;
   }
 
   public static final class ShooterConstants {
     public static final int leftShootMotorID = 11;
     public static final int rightShootMotorID = 12;
-    public static final double shooterSpeed = -1;
+    public static final double shooterSpeed = 10;
     public static final boolean leftShooterMotorReversed = false;
-    public static final boolean rightShooterMotorReversed = false;
+    public static final boolean rightShooterMotorReversed = true;
 
     public static final double targetFlywheelVelocity = 3700;
     public static final int currentLimit = 50;

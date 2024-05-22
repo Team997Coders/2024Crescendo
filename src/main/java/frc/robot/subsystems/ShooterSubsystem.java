@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
@@ -16,9 +17,11 @@ public class ShooterSubsystem extends SubsystemBase {
             MotorType.kBrushless);
     private RelativeEncoder shooterEncoder;
 
+    private Timer timer = new Timer();
+
     public ShooterSubsystem() {
         leftFlywheelNeo.setInverted(ShooterConstants.leftShooterMotorReversed);
-        rightFlywheelNeo.follow(leftFlywheelNeo);
+        rightFlywheelNeo.follow(leftFlywheelNeo, true);
         shooterEncoder = leftFlywheelNeo.getEncoder();
         shooterEncoder.setPosition(0);
         shooterEncoder.setVelocityConversionFactor(1.0);
@@ -40,6 +43,11 @@ public class ShooterSubsystem extends SubsystemBase {
         return shooterEncoder.getVelocity();
     }
 
+    public void stop() {
+        leftFlywheelNeo.setVoltage(0);
+    }
+
+
             /**
      * Simple command to run the shooter motor as a test
      *
@@ -50,7 +58,16 @@ public class ShooterSubsystem extends SubsystemBase {
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
                 () -> {
+                    timer.start();
                     setLeftMotorVoltage(speed);
-                }).withTimeout(5);
+                }).until(() -> timer.get() >= 7);
+    }
+
+    public Command runStopCommand() {
+        return runOnce(
+            () -> {
+                this.stop();
+            }
+        );
     }
 }
