@@ -13,11 +13,15 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShootCommand extends Command {
 
   private Timer timer = new Timer();
+  private int shooterState = 0;
   /** Creates a new RunIntake. */
   public final IndexerSubsystem m_indexer;
   public final ShooterSubsystem m_shooter;
+  private boolean flag_1 = true;
+  private boolean flag_2 = true;
 
-  private boolean indexOn = false;
+  private final int SPINUP_DELAY = 2;
+  private final int SHOT_INDEX_DELAY = 2;
 
   public ShootCommand(IndexerSubsystem indexer, ShooterSubsystem shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,37 +29,76 @@ public class ShootCommand extends Command {
     this.m_shooter = shooter;
 
     addRequirements(indexer, shooter);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("Start ShootCommand");
     timer.start();
-    this.indexOn = false;
+    shooterState = 0;
+    flag_1 = true;
+    flag_2 = true;
+    if (m_shooter.isShooterOn()) {
+      System.out.println("Shooter already on, skipping spinnup.");
+      shooterState = 2;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setLeftMotorVoltage(8);
-    if (timer.get() >= 2.0) {
-      m_indexer.setFeederVoltage(12);
-    } else if (timer.get() >= 2.5) {
-      end(true);
+    switch(shooterState) {
+      case 0:
+        System.out.println(shooterState + " : start ShootCommand");
+        timer.reset();
+        m_shooter.setLeftMotorVoltage(Constants.ShooterConstants.shooterSpeed);
+        shooterState = 1;
+        break;
+      
+      case 1:
+        if (flag_1) {
+          System.out.println(shooterState + " : wait for shooter spin up.");
+          flag_1 = false;
+        }
+        if (timer.get() > 2.0 && shooterState == 1){
+          shooterState = 2;
+        }
+        break;
+
+      case 2:
+        System.out.println(shooterState + " : engage the feeder to push in the note.");
+        m_indexer.setFeederVoltage(12);
+        shooterState = 3;
+        break;
+
+      case 3:
+        if (flag_2) {
+          System.out.println(shooterState + " : wait for the shot.");
+          flag_2 = false;
+        }
+        if (timer.get() >= 3 && shooterState == 3) {
+          shooterState = 4;
+        }
+        break;
+
+      case 4:
+        System.out.println(shooterState + " : all done.");
+        m_indexer.stop();
+        m_shooter.stop();
+        shooterState = 5;
+        break;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    System.out.println("Stop indexNote");
-    m_indexer.stop();
-    m_shooter.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return shooterState==5;
   }
 }

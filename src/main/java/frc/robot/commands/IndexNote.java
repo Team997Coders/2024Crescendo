@@ -28,28 +28,25 @@ public class IndexNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(indexer.getSensorStatus() == false) {
       if (!this.indexOn){
         System.out.println("Start indexNote");
       }
       indexer.setIntakeVoltage(Constants.IntakeConstants.intakeSpeed);
       indexer.setFeederVoltage(Constants.IntakeConstants.indexSpeed);
       this.indexOn = true;
-    } else if (indexer.getSensorStatus() == true ) {
-      this.end(true);
-    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     System.out.println("Stop indexNote");
+    this.indexOn = false;
     indexer.stop();
   }
 
-  // Returns true when the command should end.
+  // Should stop the command when note is detected in indexer.
   @Override
   public boolean isFinished() {
-    return false;
+    return indexer.getSensorStatus();
   }
 }

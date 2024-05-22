@@ -6,6 +6,7 @@ package frc.robot.commands.test;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.SpinnupShooter;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -31,6 +32,6 @@ public class TestSubsystems extends SequentialCommandGroup {
     addCommands(new WaitCommand(2));
     addCommands(m_indexer.runIndexCommand(8.0));
     addCommands(new WaitCommand(2));
-    addCommands(m_shooter.spinupShooterCommand(10.0));
+    addCommands(new SpinnupShooter(m_shooter));
   }
 }
