@@ -37,7 +37,7 @@ public class ShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setLeftMotorVoltage(10);
+    m_shooter.setLeftMotorVoltage(8);
     if (timer.get() >= 2.0) {
       m_indexer.setFeederVoltage(12);
     } else if (timer.get() >= 2.5) {
