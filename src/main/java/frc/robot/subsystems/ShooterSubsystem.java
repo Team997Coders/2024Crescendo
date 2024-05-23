@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,14 +23,41 @@ public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax rightFlywheelNeo = new CANSparkMax(ShooterConstants.rightShootMotorID,
             MotorType.kBrushless);
     private RelativeEncoder shooterEncoder;
+    private SparkPIDController mController;
 
     public ShooterSubsystem() {
+        leftFlywheelNeo.restoreFactoryDefaults();
+        rightFlywheelNeo.restoreFactoryDefaults();
+
+        leftFlywheelNeo.setIdleMode(IdleMode.kCoast);
+        rightFlywheelNeo.setIdleMode(IdleMode.kCoast);
+
         leftFlywheelNeo.setInverted(ShooterConstants.leftShooterMotorReversed);
         rightFlywheelNeo.follow(leftFlywheelNeo, true);
 
         shooterEncoder = leftFlywheelNeo.getEncoder();
         shooterEncoder.setPosition(0);
         shooterEncoder.setVelocityConversionFactor(1.0);
+
+        mController = leftFlywheelNeo.getPIDController();
+        mController.setP(ShooterConstants.SHOOTER_VELOCITY_GAINS.kP);
+        mController.setI(ShooterConstants.SHOOTER_VELOCITY_GAINS.kI);
+        mController.setD(ShooterConstants.SHOOTER_VELOCITY_GAINS.kD);
+        mController.setFF(ShooterConstants.SHOOTER_VELOCITY_GAINS.kF);
+
+        register();
+    }
+
+    public boolean eps(double a, double b, double eps) {
+        return Math.abs(a - b) < eps;
+    }
+
+    public void setRPM(double RPM) {
+        mController.setReference(RPM, ControlType.kVelocity);
+    }
+
+    public boolean getError(double mTarget) {
+        return  eps(getFlywheelVelocity(), mTarget, 80);
     }
 
     /**
@@ -39,8 +69,8 @@ public class ShooterSubsystem extends SubsystemBase {
         leftFlywheelNeo.setVoltage(leftFlywheelVoltage);
     }
 
-    public void setMotorOutput(double output) {
-        leftFlywheelNeo.set(output); // between -1.0 and 1.0
+    public void setMotorOutput(double percent) {
+        leftFlywheelNeo.set(percent); // between -1.0 and 1.0
     }
 
     public double getFlywheelVelocity() {
@@ -65,8 +95,8 @@ public class ShooterSubsystem extends SubsystemBase {
      */
     public Command StopShooterCommand() {
         return runOnce(
-            () -> {
-                this.stop();
-            });
+                () -> {
+                    this.stop();
+                });
     }
 }

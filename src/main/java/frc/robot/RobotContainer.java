@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IndexNote;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.SpinnupPID;
 import frc.robot.commands.SpinnupShooter;
 import frc.robot.commands.test.TestSubsystems;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -161,8 +162,10 @@ public class RobotContainer {
 
     // Intake
     c_driveStick.a().toggleOnTrue(new IndexNote(indexer));
-    c_driveStick.button(2).toggleOnTrue(new ShootCommand(indexer, shooter));
+    c_driveStick.b().toggleOnTrue(new ShootCommand(indexer, shooter));
     c_driveStick.x().toggleOnTrue(new SpinnupShooter(shooter));
+    c_driveStick.y().toggleOnTrue(new SpinnupPID(3000, shooter));
+
     // c_driveStick.leftBumper().whileTrue(new Climb(climber, -3));
     // c_driveStick.rightBumper().whileTrue(new Climb(climber, 3));
 

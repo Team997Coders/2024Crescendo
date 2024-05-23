@@ -23,12 +23,12 @@ public class SpinnupShooter extends Command {
   @Override
   public void initialize() {
     System.out.println("Start SpinnupShooter Command");
+    m_shooter.setLeftMotorVoltage(Constants.ShooterConstants.shooterSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setLeftMotorVoltage(Constants.ShooterConstants.shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.
