@@ -50,40 +50,40 @@ public class ShootCommand extends Command {
   @Override
   public void execute() {
     switch(shooterState) {
-      case 0:
+      case 0: // start, spin-up shooter
         System.out.println(shooterState + " : start ShootCommand");
         timer.reset();
         m_shooter.setLeftMotorVoltage(Constants.ShooterConstants.shooterSpeed);
         shooterState = 1;
         break;
       
-      case 1:
+      case 1: // wait for shooter to reach speed (should be PID)
         if (flag_1) {
           System.out.println(shooterState + " : wait for shooter spin up.");
           flag_1 = false;
         }
-        if (timer.get() > 2.0 && shooterState == 1){
+        if (timer.get() > SPINUP_DELAY && shooterState == 1){
           shooterState = 2;
         }
         break;
 
-      case 2:
+      case 2: // turn-on the indexer to push note into shooter, max speed.
         System.out.println(shooterState + " : engage the feeder to push in the note.");
-        m_indexer.setFeederVoltage(12);
+        m_indexer.setFeederVoltage(12.0);
         shooterState = 3;
         break;
 
-      case 3:
+      case 3: // wait for the note to be fired (exit both shooter and indexer)
         if (flag_2) {
           System.out.println(shooterState + " : wait for the shot.");
           flag_2 = false;
         }
-        if (timer.get() >= 3 && shooterState == 3) {
+        if (timer.get() >= (SPINUP_DELAY + SHOT_INDEX_DELAY) && shooterState == 3) {
           shooterState = 4;
         }
         break;
 
-      case 4:
+      case 4: // all done, stop all subsystems and mark command done (state=5)
         System.out.println(shooterState + " : all done.");
         m_indexer.stop();
         m_shooter.stop();
