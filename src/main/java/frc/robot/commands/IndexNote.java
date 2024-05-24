@@ -36,7 +36,7 @@ public class IndexNote extends Command {
       indexer.setFeederVoltage(Constants.IntakeConstants.indexSpeed);
       this.indexOn = true;
     } else if (indexer.getSensorStatus() == true ) {
-      this.end(true);
+      this.end(isFinished());
     }
   }
 
@@ -50,6 +50,6 @@ public class IndexNote extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return indexer.getSensorStatus();
   }
 }
