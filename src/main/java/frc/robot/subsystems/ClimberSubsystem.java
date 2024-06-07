@@ -19,11 +19,16 @@ public class ClimberSubsystem extends SubsystemBase {
     private final DigitalInput rightClimberSensor = new DigitalInput(Constants.ClimberConstants.rightClimberSensorId);
 
     public ClimberSubsystem() {
+        leftClimberMotor.setInverted(Constants.ClimberConstants.leftClimberMotorReversed);
+        rightClimberMotor.setInverted(Constants.ClimberConstants.rightClimberMotorReversed);
         climberEncoder = leftClimberMotor.getEncoder();
         climberEncoder.setPosition(-1);
         leftClimberMotor.setIdleMode(IdleMode.kBrake);
         rightClimberMotor.setIdleMode(IdleMode.kBrake);
         rightClimberMotor.follow(leftClimberMotor, true);
+        if (leftClimberSensor.get() | rightClimberSensor.get()){
+            climberEncoder.setPosition(-1);
+        }
     }
 
     public void setMotorVoltage(double voltage) {
