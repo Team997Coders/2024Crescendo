@@ -15,13 +15,14 @@ public class ClimberSubsystem extends SubsystemBase {
     private final CANSparkMax rightClimberMotor = new CANSparkMax(Constants.ClimberConstants.rightClimberMotorId,
             MotorType.kBrushless);
     private final RelativeEncoder climberEncoder;
-    private final DigitalInput leftClimberLimit = new DigitalInput(Constants.ClimberConstants.leftClimberSensorId);
-    private final DigitalInput rightClimberLimit = new DigitalInput(Constants.ClimberConstants.rightClimberSensorId);
+    private final DigitalInput leftClimberSensor = new DigitalInput(Constants.ClimberConstants.leftClimberSensorId);
+    private final DigitalInput rightClimberSensor = new DigitalInput(Constants.ClimberConstants.rightClimberSensorId);
 
     public ClimberSubsystem() {
         climberEncoder = leftClimberMotor.getEncoder();
         climberEncoder.setPosition(0);
         leftClimberMotor.setIdleMode(IdleMode.kBrake);
+        rightClimberMotor.setIdleMode(IdleMode.kBrake);
         rightClimberMotor.follow(leftClimberMotor);
     }
 
@@ -29,19 +30,15 @@ public class ClimberSubsystem extends SubsystemBase {
         leftClimberMotor.setVoltage(voltage);
     }
 
-    public double getEncoderRotations() {
+    public double getEncoderPosition() {
         return climberEncoder.getPosition();
     }
 
-    public Boolean getLeftClimberLimit() {
-        return leftClimberLimit.get();
+    public Boolean getLeftClimberSensor() {
+        return leftClimberSensor.get();
     }
 
-    public Boolean getRightClimberLimit() {
-        return rightClimberLimit.get();
-    }
-
-    public void setBrakeMode() {
-        leftClimberMotor.setIdleMode(IdleMode.kBrake);
+    public Boolean getRightClimberSensor() {
+        return rightClimberSensor.get();
     }
 }

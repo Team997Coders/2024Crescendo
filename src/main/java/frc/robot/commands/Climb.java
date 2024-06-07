@@ -17,6 +17,7 @@ public class Climb extends Command {
     }
     @Override
     public void end(boolean interrupted) {
+        climber.setMotorVoltage(0);
     }
     @Override 
     public boolean isFinished() {
