@@ -20,10 +20,10 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public ClimberSubsystem() {
         climberEncoder = leftClimberMotor.getEncoder();
-        climberEncoder.setPosition(0);
+        climberEncoder.setPosition(-1);
         leftClimberMotor.setIdleMode(IdleMode.kBrake);
         rightClimberMotor.setIdleMode(IdleMode.kBrake);
-        rightClimberMotor.follow(leftClimberMotor);
+        rightClimberMotor.follow(leftClimberMotor, true);
     }
 
     public void setMotorVoltage(double voltage) {
