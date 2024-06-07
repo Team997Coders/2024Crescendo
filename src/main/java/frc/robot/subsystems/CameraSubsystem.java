@@ -27,11 +27,16 @@ public class CameraSubsystem
 
     public void update(SwerveDrivePoseEstimator poseEstimator)
     {
-        var results = camera.getLatestResult();
+        var results = this.camera.getLatestResult();
         if (results.hasTargets())
         {
             Optional<EstimatedRobotPose> estimatedRobotPose = this.photonPoseEstimator.update(results);
             poseEstimator.addVisionMeasurement(estimatedRobotPose.orElseThrow().estimatedPose.toPose2d(), results.getTimestampSeconds());
         }
+    }
+
+    public int get_tag_id()
+    {
+        return this.camera.getLatestResult().getBestTarget().getFiducialId();
     }
 }
