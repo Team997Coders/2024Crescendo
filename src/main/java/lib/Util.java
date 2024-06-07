@@ -1,4 +1,4 @@
-package cowlib;
+package lib;
 
 /** Add your docs here. */
 public class Util {
