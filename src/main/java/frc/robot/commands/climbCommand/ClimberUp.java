@@ -6,6 +6,7 @@ public class ClimberUp extends Command {
     private ClimberSubsystem climber;
     public ClimberUp(ClimberSubsystem climber) {
         this.climber = climber;
+        addRequirements(climber);
     }
     @Override
     public void initialize() {   
