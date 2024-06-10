@@ -6,13 +6,12 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Drive;
-import frc.robot.commands.climber.ClimberStop;
-import frc.robot.commands.climber.ClimberUp;
-import frc.robot.commands.climber.ClimberDown;
-import frc.robot.commands.indexAndShoot.Index;
-import frc.robot.commands.indexAndShoot.Shoot;
-import frc.robot.commands.indexAndShoot.StopIndex;
-
+import frc.robot.commands.climbCommand.ClimberDown;
+import frc.robot.commands.climbCommand.ClimberStop;
+import frc.robot.commands.climbCommand.ClimberUp;
+import frc.robot.commands.indexAndShootCommand.Index;
+import frc.robot.commands.indexAndShootCommand.Shoot;
+import frc.robot.commands.indexAndShootCommand.StopIndex;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
