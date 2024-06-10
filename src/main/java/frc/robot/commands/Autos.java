@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.commands.indexAndShoot.Shoot;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;

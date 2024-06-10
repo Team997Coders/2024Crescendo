@@ -112,6 +112,7 @@ public final class Constants {
     public static final int rightClimberSensorId = 3;
     public static final boolean leftClimberMotorReversed = true;
     public static final boolean rightClimberMotorReversed = true;
+    public static final double climberVoltage = 3;
   }
 
   public static final class ShooterConstants {

@@ -5,11 +5,14 @@
 package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.Climb;
 import frc.robot.commands.Drive;
-import frc.robot.commands.Index;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.StopIndex;
+import frc.robot.commands.climber.ClimberStop;
+import frc.robot.commands.climber.ClimberUp;
+import frc.robot.commands.climber.ClimberDown;
+import frc.robot.commands.indexAndShoot.Index;
+import frc.robot.commands.indexAndShoot.Shoot;
+import frc.robot.commands.indexAndShoot.StopIndex;
+
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -157,19 +160,20 @@ public class RobotContainer {
   private void configureBindings() {
     // Gyro Reset
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
-    // Intake
+    // Intake: a
     c_driveStick.a().onTrue(new Index(indexer)).onFalse(new StopIndex(indexer));
-    // Shoot
+    // Shoot: b
     c_driveStick.b().onTrue(new Shoot(shooter, 100)).onFalse(new Shoot(shooter, 0));
-    // Climbers
+    // Climbers: bumpers
     if (climber.getLeftClimberSensor()){ //if climber is down
-      c_driveStick.rightBumper().onTrue(new Climb(climber, 3)).onFalse(new Climb(climber, 0));
+      c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
     }else if (climber.getEncoderPosition() == 1){ // if climber is up
-      c_driveStick.leftBumper().onTrue(new Climb(climber, -3)).onFalse(new Climb(climber, 0));
+      c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
     }else{ 
-      c_driveStick.rightBumper().onTrue(new Climb(climber, 3)).onFalse(new Climb(climber, 0));
-      c_driveStick.leftBumper().onTrue(new Climb(climber, -3)).onFalse(new Climb(climber, 0));
+      c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
+      c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
     }
+    //if wrong, reverse the sign
 
   }
 
