@@ -172,8 +172,16 @@ public class RobotContainer {
       c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
       c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
     }
-    //if wrong, reverse the sign
-
+    //if wrong, do:
+    // if (climber.getLeftClimberSensor()){ //if climber is down
+    //   c_driveStick.rightBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
+    // }else if (climber.getEncoderPosition() == 1){ // if climber is up
+    //   c_driveStick.leftBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
+    // }else{ 
+    //   c_driveStick.rightBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
+    //   c_driveStick.leftBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
+    // }
+    // In the start, the climber should be COMPLETELY DOWN, or the upper limit would not work.
   }
 
   /**
