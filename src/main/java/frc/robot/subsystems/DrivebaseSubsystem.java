@@ -34,7 +34,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
   private final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / (ModuleLocations.dist / Math.sqrt(2.0));
 
   private final double MAX_VOLTAGE = 12;
-
+ 
   private AHRS gyro;
 
   private SwerveModule frontLeft = new SwerveModule(SwerveModules.frontLeft, MAX_VELOCITY, MAX_VOLTAGE);
