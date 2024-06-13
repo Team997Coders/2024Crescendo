@@ -19,6 +19,9 @@ public class ClimberSubsystem extends SubsystemBase {
     private final DigitalInput rightClimberSensor = new DigitalInput(Constants.ClimberConstants.rightClimberSensorId);
 
     public ClimberSubsystem() {
+        leftClimberMotor.restoreFactoryDefaults();
+        rightClimberMotor.restoreFactoryDefaults();
+        
         leftClimberMotor.setInverted(Constants.ClimberConstants.leftClimberMotorReversed);
         rightClimberMotor.setInverted(Constants.ClimberConstants.rightClimberMotorReversed);
         climberEncoder = leftClimberMotor.getEncoder();
@@ -39,11 +42,19 @@ public class ClimberSubsystem extends SubsystemBase {
         return climberEncoder.getPosition();
     }
 
-    public Boolean getLeftClimberSensor() {
+    public boolean getLeftClimberSensor() {
         return leftClimberSensor.get();
     }
 
-    public Boolean getRightClimberSensor() {
+    public boolean getRightClimberSensor() {
         return rightClimberSensor.get();
+    }
+
+    public double getLeftVelocity() {
+        return climberEncoder.getVelocity();
+    }
+
+    public boolean isClimberMoving() {
+        return (getLeftVelocity() > 0.1 || getLeftVelocity() < -0.1);
     }
 }
