@@ -110,6 +110,10 @@ public class RobotContainer {
     SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
     SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
     SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
+    
+    SmartDashboard.putBoolean("Climber Sensor: ", climber.getLeftClimberSensor());
+    SmartDashboard.putBoolean("Is Climber Moving?", climber.isClimberMoving());
+    SmartDashboard.putNumber("Climber Position: ", climber.getEncoderPosition());
   }
 
   @SuppressWarnings("unused")
