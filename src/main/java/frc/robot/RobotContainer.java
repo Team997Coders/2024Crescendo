@@ -4,13 +4,22 @@
 
 package frc.robot;
 
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Climb;
+import frc.robot.commands.Drive;
 import frc.robot.commands.IndexAndShoot;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -27,10 +36,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final AHRS gyro = new AHRS();
+
+  private final DrivebaseSubsystem drivebase = new DrivebaseSubsystem(gyro);
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
-  
+  private static XboxController driveStick = new XboxController(0);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
@@ -40,9 +52,86 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the trigger bindings
+    drivebase.setDefaultCommand(new Drive(drivebase, () -> getScaledXY(), () -> scaleRotationAxis(driveStick.getRawAxis(4))))
+    ;
 
     configureBindings();
     populateDashboard();
+  }
+  private double deadband(double input, double deadband) {
+    if (Math.abs(input) < deadband) {
+      return 0;
+    } else {
+      return input;
+    }
+  }
+
+  private double[] getXY() {
+    double[] xy = new double[2];
+    xy[0] = deadband(driveStick.getLeftX(), DriveConstants.deadband);
+    xy[1] = deadband(driveStick.getLeftY(), DriveConstants.deadband);
+    return xy;
+  }
+
+  private double[] getScaledXY() {
+    double[] xy = getXY();
+
+    // Convert to Polar coordinates
+    double r = Math.sqrt(xy[0] * xy[0] + xy[1] * xy[1]);
+    double theta = Math.atan2(xy[1], xy[0]);
+
+    // Square radius and scale by max velocity
+    r = r * r * drivebase.getMaxVelocity();
+
+    // Convert to Cartesian coordinates
+    xy[0] = r * Math.cos(theta);
+    xy[1] = r * Math.sin(theta);
+
+    return xy;
+  }
+
+  private double squared(double input) {
+    return Math.copySign(input * input, input);
+  }
+
+  public void updateDashboard() {
+    SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
+    SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
+    SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
+    
+    SmartDashboard.putBoolean("Climber Sensor: ", m_ClimberSubsystem.getLeftClimberLimit());
+
+    SmartDashboard.putNumber("Climber Position: ", m_ClimberSubsystem.getEncoderRotations());
+  }
+
+  @SuppressWarnings("unused")
+  private double cube(double input) {
+    return Math.copySign(input * input * input, input);
+  }
+
+  @SuppressWarnings("unused")
+  private double scaleTranslationAxis(double input) {
+    return deadband(-squared(input), DriveConstants.deadband) * drivebase.getMaxVelocity();
+  }
+
+  private double scaleRotationAxis(double input) {
+    return deadband(squared(input), DriveConstants.deadband) * drivebase.getMaxAngleVelocity() * -0.6;
+  }
+
+  public void resetGyro() {
+    gyro.reset();
+  }
+
+  public double getGyroYaw() {
+    return -gyro.getYaw();
+  }
+
+  public boolean onBlueAlliance() {
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      return alliance.get() == Alliance.Blue;
+    }
+    return false;
   }
 
   /**

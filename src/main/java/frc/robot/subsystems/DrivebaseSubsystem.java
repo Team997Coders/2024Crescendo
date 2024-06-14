@@ -70,7 +70,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
     var inst = NetworkTableInstance.getDefault();
     var table = inst.getTable("SmartDashboard");
     this.fieldOrientedEntry = table.getBooleanTopic("Field Oriented").getEntry(true);
-
+    this.poseEstimator = new SwerveDrivePoseEstimator(kinematics, null, getPositions(), getPose());
     this.photonCameraForward = new CameraSubsystem("pineapple", 
         new Transform3d(new Translation3d(0, 0, 0), 
                         new Rotation3d(0, 0, 0)));
