@@ -15,7 +15,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.BooleanEntry;
@@ -38,23 +37,26 @@ public class DrivebaseSubsystem extends SubsystemBase {
 
   private final double MAX_VOLTAGE = 12;
  
-  public AHRS gyro;
+  public AHRS gyro = new AHRS();
 
   private SwerveModule frontLeft = new SwerveModule(SwerveModules.frontLeft, MAX_VELOCITY, MAX_VOLTAGE);
   private SwerveModule frontRight = new SwerveModule(SwerveModules.frontRight, MAX_VELOCITY, MAX_VOLTAGE);
   private SwerveModule backLeft = new SwerveModule(SwerveModules.backLeft, MAX_VELOCITY, MAX_VOLTAGE);
   private SwerveModule backRight = new SwerveModule(SwerveModules.backRight, MAX_VELOCITY, MAX_VOLTAGE);
-
+  
   //                                                       0           1          2         3
   private SwerveModule[] modules = new SwerveModule[] { frontLeft, frontRight, backLeft, backRight };
-
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
       ModuleLocations.frontLeft,
       ModuleLocations.frontRight,
       ModuleLocations.backLeft,
       ModuleLocations.backRight);
-
-  public SwerveDrivePoseEstimator poseEstimator;
+  private SwerveModulePosition modulePositions [] = {frontLeft.getPosition(), 
+                                                     frontRight.getPosition(), 
+                                                     backLeft.getPosition(), 
+                                                     backRight.getPosition()
+                                                    };
+  
 
   private Field2d field = new Field2d();
 
@@ -63,18 +65,18 @@ public class DrivebaseSubsystem extends SubsystemBase {
 
   private BooleanEntry fieldOrientedEntry;
   private VisionSubsystem photonCameraForward;
-  /** Creates a new Drivebase. */
+  public SwerveDrivePoseEstimator poseEstimator ;
+  /* Creates a new Drivebase. */
   public DrivebaseSubsystem(AHRS gyro) {
     var inst = NetworkTableInstance.getDefault();
     var table = inst.getTable("SmartDashboard");
-    this.fieldOrientedEntry = table.getBooleanTopic("Field Oriented").getEntry(true);
 
+    this.fieldOrientedEntry = table.getBooleanTopic("Field Oriented").getEntry(true);
+    
     this.photonCameraForward = new VisionSubsystem("pineapple", new Transform3d(new Translation3d(0, 0, 0), 
     new Rotation3d(0, 0, 0)));
-    
-    this.poseEstimator = new SwerveDrivePoseEstimator(kinematics, null, getPositions(), getPose());
-
     this.gyro = gyro;
+    poseEstimator = new SwerveDrivePoseEstimator(kinematics, gyro.getRotation2d(), modulePositions, new Pose2d());
 
     SmartDashboard.putData("Field", field);
   }
@@ -137,7 +139,11 @@ public class DrivebaseSubsystem extends SubsystemBase {
   }
 
   public Pose2d getPose() {
-    return poseEstimator.getEstimatedPosition();
+    if (poseEstimator == null) {
+      // Handle the case where poseEstimator is null (logging, error handling, etc.)
+      throw new NullPointerException("poseEstimator is not initialized.");
+  }
+  return poseEstimator.getEstimatedPosition();
   }
 
   public void resetPose(Pose2d pose2d) {

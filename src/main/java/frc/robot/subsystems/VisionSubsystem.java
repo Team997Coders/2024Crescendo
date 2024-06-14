@@ -6,6 +6,7 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -31,6 +32,14 @@ public class VisionSubsystem {
         }
     }
     public int get_tag_id(){
-        return this.camera.getLatestResult().getBestTarget().getFiducialId();
+            // Handle the case where there is no target
+        PhotonTrackedTarget bestTarget = this.camera.getLatestResult().getBestTarget();
+        if (bestTarget != null) {
+            return bestTarget.getFiducialId();
+        } else {
+            // Handle the case where there is no target
+            System.err.println("No target found!");
+            return -1; // Or another appropriate value or error handling
+        }
     }
 }
