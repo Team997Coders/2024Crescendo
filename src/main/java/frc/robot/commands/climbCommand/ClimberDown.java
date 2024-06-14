@@ -13,7 +13,11 @@ public class ClimberDown extends Command {
     }
     @Override
     public void execute() {
-        climber.setMotorVoltage(-Constants.ClimberConstants.climberVoltage);
+        if (climber.getLeftClimberSensor()){
+            climber.setMotorVoltage(0);
+        }else{
+            climber.setMotorVoltage(-Constants.ClimberConstants.climberVoltage);
+        }
     }
     @Override
     public void end(boolean interrupted) {

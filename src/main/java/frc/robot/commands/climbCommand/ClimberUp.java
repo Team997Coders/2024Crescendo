@@ -13,7 +13,11 @@ public class ClimberUp extends Command {
     }
     @Override
     public void execute() {
-        climber.setMotorVoltage(Constants.ClimberConstants.climberVoltage);
+        if (climber.getEncoderPosition() >= 100) {
+            climber.setMotorVoltage(0);
+        }else{
+            climber.setMotorVoltage(Constants.ClimberConstants.climberVoltage);
+        }
     }
     @Override
     public void end(boolean interrupted) {
