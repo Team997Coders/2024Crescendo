@@ -15,28 +15,46 @@ public class ClimberSubsystem extends SubsystemBase {
     private final CANSparkMax rightClimberMotor = new CANSparkMax(Constants.ClimberConstants.rightClimberMotorId,
             MotorType.kBrushless);
     private final RelativeEncoder climberEncoder;
-    private final DigitalInput leftClimberLimit = new DigitalInput(Constants.ClimberConstants.leftClimberSensorId);
-    private final DigitalInput rightClimberLimit = new DigitalInput(Constants.ClimberConstants.rightClimberSensorId);
+    private final DigitalInput leftClimberSensor = new DigitalInput(Constants.ClimberConstants.leftClimberSensorId);
+    private final DigitalInput rightClimberSensor = new DigitalInput(Constants.ClimberConstants.rightClimberSensorId);
 
     public ClimberSubsystem() {
+        leftClimberMotor.restoreFactoryDefaults();
+        rightClimberMotor.restoreFactoryDefaults();
+        
+        leftClimberMotor.setInverted(Constants.ClimberConstants.leftClimberMotorReversed);
+        rightClimberMotor.setInverted(Constants.ClimberConstants.rightClimberMotorReversed);
         climberEncoder = leftClimberMotor.getEncoder();
-        climberEncoder.setPosition(0);
+        climberEncoder.setPosition(-1);
         leftClimberMotor.setIdleMode(IdleMode.kBrake);
+        rightClimberMotor.setIdleMode(IdleMode.kBrake);
+        rightClimberMotor.follow(leftClimberMotor, true);
+        if (leftClimberSensor.get() | rightClimberSensor.get()){
+            climberEncoder.setPosition(-1);
+        }
     }
 
     public void setMotorVoltage(double voltage) {
         leftClimberMotor.setVoltage(voltage);
     }
 
-    public double getEncoderRotations() {
+    public double getEncoderPosition() {
         return climberEncoder.getPosition();
     }
 
-    public Boolean getLeftClimberLimit() {
-        return leftClimberLimit.get();
+    public boolean getLeftClimberSensor() {
+        return leftClimberSensor.get();
     }
 
-    public void setBrakeMode() {
-        leftClimberMotor.setIdleMode(IdleMode.kBrake);
+    public boolean getRightClimberSensor() {
+        return rightClimberSensor.get();
+    }
+
+    public double getLeftVelocity() {
+        return climberEncoder.getVelocity();
+    }
+
+    public boolean isClimberMoving() {
+        return (getLeftVelocity() > 0.1 || getLeftVelocity() < -0.1);
     }
 }

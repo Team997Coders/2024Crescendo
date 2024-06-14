@@ -4,9 +4,9 @@
 
 package frc.robot;
 
-import cowlib.SwerveModuleConfig;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import lib.SwerveModuleConfig;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -29,7 +29,7 @@ public final class Constants {
     public static final class SwervePID {
       public static final double p = 0.052;
       public static final double i = 0;
-      public static final double d = 0;
+      public static final double d = 0; 
     }
 
     public static final class SwerveModules {
@@ -42,17 +42,21 @@ public final class Constants {
           true,
           false,
           1,
-          .462);
+          // .462 // swervebot
+          0.303 // apollo
+      );
 
       // Front Right
-      public static final SwerveModuleConfig frontRight= new SwerveModuleConfig(
+      public static final SwerveModuleConfig frontRight = new SwerveModuleConfig(
           6,
           7,
           true,
           true,
           false,
           1,
-          0);
+          // 0 // swervebot
+          0.966 // apollo
+      );
 
       // Back Right
       public static final SwerveModuleConfig backRight = new SwerveModuleConfig(
@@ -62,7 +66,9 @@ public final class Constants {
           true,
           false,
           1,
-          .759);
+          // .759 // swervebot
+          0.485 // apollo
+      );
 
       // Back Left
       public static final SwerveModuleConfig backLeft = new SwerveModuleConfig(
@@ -72,7 +78,8 @@ public final class Constants {
           true,
           false,
           1,
-          .158 // 0 to 1
+          // .158 // swervebot
+          0.199 // apollo
       );
     }
 
@@ -89,30 +96,31 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int intakeMotorId = 15;
     public static final int indexMotorId = 10;
-    public static final double indexSpeed = 0.4;
-    public static final double intakeSpeed = 0.7;
+    public static final double indexSpeed = 8;
+    public static final double intakeSpeed = 10;
     public static final int noteSensorId = 0;
-    public static final boolean intakeMotorReversed = false;
-    public static final boolean indexMotorReversed = false;
+    public static final boolean IntakeMotorReversed = true;
+    public static final boolean IndexMotorReversed = false;
 
     public static final int currentLimit = 30;
   }
 
   public static final class ClimberConstants {
-    public static final int leftClimberMotorId = 16;
-    public static final int rightClimberMotorId = 14;
+    public static final int leftClimberMotorId = 14;
+    public static final int rightClimberMotorId = 16;
     public static final int leftClimberSensorId = 2;
     public static final int rightClimberSensorId = 3;
-    public static final boolean leftClimberMotorReversed = false;
-    public static final boolean rightClimberMotorReversed = false;
+    public static final boolean leftClimberMotorReversed = true;
+    public static final boolean rightClimberMotorReversed = true;
+    public static final double climberVoltage = 3;
   }
 
   public static final class ShooterConstants {
     public static final int leftShootMotorID = 11;
     public static final int rightShootMotorID = 12;
-    public static final double shooterSpeed = -1;
+    public static final double shooterSpeed = 10;
     public static final boolean leftShooterMotorReversed = false;
-    public static final boolean rightShooterMotorReversed = false;
+    public static final boolean rightShooterMotorReversed = true;
 
     public static final double targetFlywheelVelocity = 3700;
     public static final int currentLimit = 50;

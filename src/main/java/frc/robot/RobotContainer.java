@@ -4,15 +4,28 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.Climb;
-import frc.robot.commands.IndexAndShoot;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.Drive;
+import frc.robot.commands.climbCommand.ClimberDown;
+import frc.robot.commands.climbCommand.ClimberStop;
+import frc.robot.commands.climbCommand.ClimberUp;
+import frc.robot.commands.indexAndShootCommand.Index;
+import frc.robot.commands.indexAndShootCommand.Shoot;
+import frc.robot.commands.indexAndShootCommand.StopIndex;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -27,22 +40,110 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
-  
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController = new CommandXboxController(
-      OperatorConstants.kDriverControllerPort);
+  private final AHRS gyro = new AHRS();
+
+  private final DrivebaseSubsystem drivebase = new DrivebaseSubsystem(gyro);
+  private final IndexerSubsystem indexer = new IndexerSubsystem();
+  private final ShooterSubsystem shooter = new ShooterSubsystem();
+  private final ClimberSubsystem climber = new ClimberSubsystem();
+
+  private static XboxController driveStick = new XboxController(0);
+
+  // private static CommandXboxController c_driveStick2 = new
+  // CommandXboxController(1);
+  private static CommandXboxController c_driveStick = new CommandXboxController(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the trigger bindings
+    drivebase.setDefaultCommand(
+        new Drive(
+            drivebase,
+            () -> getScaledXY(),
+            () -> scaleRotationAxis(driveStick.getRawAxis(4))));
 
     configureBindings();
-    populateDashboard();
+  }
+
+  /**
+   * {@link edu.wpi.first.math.MathUtil}
+   */
+  private double deadband(double input, double deadband) {
+    if (Math.abs(input) < deadband) {
+      return 0;
+    } else {
+      return input;
+    }
+  }
+
+  private double[] getXY() {
+    double[] xy = new double[2];
+    xy[0] = deadband(driveStick.getLeftX(), DriveConstants.deadband);
+    xy[1] = deadband(driveStick.getLeftY(), DriveConstants.deadband);
+    return xy;
+  }
+
+  private double[] getScaledXY() {
+    double[] xy = getXY();
+
+    // Convert to Polar coordinates
+    double r = Math.sqrt(xy[0] * xy[0] + xy[1] * xy[1]);
+    double theta = Math.atan2(xy[1], xy[0]);
+
+    // Square radius and scale by max velocity
+    r = r * r * drivebase.getMaxVelocity();
+
+    // Convert to Cartesian coordinates
+    xy[0] = r * Math.cos(theta);
+    xy[1] = r * Math.sin(theta);
+
+    return xy;
+  }
+
+  private double squared(double input) {
+    return Math.copySign(input * input, input);
+  }
+
+  public void updateDashboard() {
+    SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
+    SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
+    SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
+    
+    SmartDashboard.putBoolean("Climber Sensor: ", climber.getLeftClimberSensor());
+    SmartDashboard.putBoolean("Is Climber Moving?", climber.isClimberMoving());
+    SmartDashboard.putNumber("Climber Position: ", climber.getEncoderPosition());
+  }
+
+  @SuppressWarnings("unused")
+  private double cube(double input) {
+    return Math.copySign(input * input * input, input);
+  }
+
+  @SuppressWarnings("unused")
+  private double scaleTranslationAxis(double input) {
+    return deadband(-squared(input), DriveConstants.deadband) * drivebase.getMaxVelocity();
+  }
+
+  private double scaleRotationAxis(double input) {
+    return deadband(squared(input), DriveConstants.deadband) * drivebase.getMaxAngleVelocity() * -0.6;
+  }
+
+  public void resetGyro() {
+    gyro.reset();
+  }
+
+  public double getGyroYaw() {
+    return -gyro.getYaw();
+  }
+
+  public boolean onBlueAlliance() {
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      return alliance.get() == Alliance.Blue;
+    }
+    return false;
   }
 
   /**
@@ -60,22 +161,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // new Trigger(m_exampleSubsystem::exampleCondition)
-    // .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.a().whileTrue(new IndexAndShoot(2, 2, 3, m_shooterSubsystem, m_indexerSubsystem));
-
-    m_driverController.rightBumper().whileTrue(new Climb(m_ClimberSubsystem, -3));
-    m_driverController.leftBumper().whileTrue(new Climb(m_ClimberSubsystem, 3)); 
-
-    m_driverController.rightBumper().onFalse(new Climb(m_ClimberSubsystem, 0));
-    m_driverController.leftBumper().onFalse(new Climb(m_ClimberSubsystem, 0));
-
+    // Gyro Reset
+    c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
+    // Intake: a
+    c_driveStick.a().onTrue(new Index(indexer)).onFalse(new StopIndex(indexer));
+    // Shoot: b
+    c_driveStick.b().onTrue(new Shoot(shooter, 100)).onFalse(new Shoot(shooter, 0));
+    
+    c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
+    c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
+    
   }
 
   /**
@@ -85,22 +180,17 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_indexerSubsystem, m_shooterSubsystem);
+    return new InstantCommand();
   }
 
   public void populateDashboard() {
-    SmartDashboard.putData("IndexerSubsystem", m_indexerSubsystem);
-    SmartDashboard.putData("ShooterSubsystem", m_shooterSubsystem);
-    SmartDashboard.putBoolean("Note Sensor", m_indexerSubsystem.getSensorStatus());
-    SmartDashboard.putNumber("Shooter Velocity", m_shooterSubsystem.getFlywheelVelocity());
-    SmartDashboard.putNumber("Feeder Velocity", m_indexerSubsystem.getFeederMotorVoltage());
-    SmartDashboard.putNumber("Intake Velocity", m_indexerSubsystem.getIntakeMotorVoltage());
-    SmartDashboard.putBoolean("bool key", Autos.run_state);
-    SmartDashboard.putNumber("Intake Encoder Position", m_indexerSubsystem.getIntakeEncoderPosition());
-    SmartDashboard.putNumber("Feeder Encoder Position", m_indexerSubsystem.getFeederEncoderPosition());
-    SmartDashboard.putNumber("Left FLywheel Encoder Position", m_shooterSubsystem.getFlywheelPosition());
-    SmartDashboard.putNumber("Left Climber Rotations",m_ClimberSubsystem.getEncoderRotations());
-    SmartDashboard.putBoolean("Left Climber Down?",m_ClimberSubsystem.getLeftClimberLimit());
-  } 
-
+    SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
+    SmartDashboard.putNumber("Shooter Velocity", shooter.getFlywheelVelocity());
+    SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
+    SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
+    SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
+    SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
+    SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
+    
+  }
 }

@@ -1,22 +1,22 @@
-package frc.robot.commands;
+package frc.robot.commands.climbCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberSubsystem;
-public class Climb extends Command {
+public class ClimberStop extends Command {
     private ClimberSubsystem climber;
-    private double voltage;
-    public Climb(ClimberSubsystem climber, double voltage) {
+    public ClimberStop(ClimberSubsystem climber) {
         this.climber = climber;
-        this.voltage = voltage;
+        addRequirements(climber);
     }
     @Override
     public void initialize() {   
     }
     @Override
     public void execute() {
-        climber.setMotorVoltage(voltage);
+        climber.setMotorVoltage(0);
     }
     @Override
     public void end(boolean interrupted) {
+        climber.setMotorVoltage(0);
     }
     @Override 
     public boolean isFinished() {
