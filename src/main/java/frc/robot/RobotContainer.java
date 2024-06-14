@@ -106,16 +106,6 @@ public class RobotContainer {
     return Math.copySign(input * input, input);
   }
 
-  public void updateDashboard() {
-    SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
-    SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
-    SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
-    
-    SmartDashboard.putBoolean("Climber Sensor: ", climber.getLeftClimberSensor());
-    SmartDashboard.putBoolean("Is Climber Moving?", climber.isClimberMoving());
-    SmartDashboard.putNumber("Climber Position: ", climber.getEncoderPosition());
-  }
-
   @SuppressWarnings("unused")
   private double cube(double input) {
     return Math.copySign(input * input * input, input);
@@ -191,6 +181,10 @@ public class RobotContainer {
     SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
     SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
     SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
+    SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
+    SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
+    SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
+    SmartDashboard.putBoolean("Is Climber Moving?", climber.isClimberMoving());
     
   }
 }
