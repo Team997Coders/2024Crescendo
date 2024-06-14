@@ -16,11 +16,13 @@ public class Drive extends Command {
   private final Supplier<double[]> speedXY;
   private final DoubleSupplier rot;
 
+
   /** Creates a new Drive. */
   public Drive(DrivebaseSubsystem drivebase, Supplier<double[]> speedXY, DoubleSupplier rot) {
     this.drivebase = drivebase;
     this.speedXY = speedXY;
     this.rot = rot;
+    this.drivebase.register();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.drivebase);

@@ -187,11 +187,13 @@ public class DrivebaseSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("module output", modules[0].getDriveOutput());
 
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("FL Encoder", frontLeft.getEncoder());
-    SmartDashboard.putNumber("FR Encoder", frontRight.getEncoder());
-    SmartDashboard.putNumber("BR Encoder", backRight.getEncoder());
-    SmartDashboard.putNumber("BL Encoder", backLeft.getEncoder());
+    SmartDashboard.putNumber("FL Encoder", this.frontLeft.getEncoder());
+    SmartDashboard.putNumber("FR Encoder", this.frontRight.getEncoder());
+    SmartDashboard.putNumber("BR Encoder", this.backRight.getEncoder());
+    SmartDashboard.putNumber("BL Encoder", this.backLeft.getEncoder());
+   
 
     SmartDashboard.putNumber("April Tag Number", this.photonCameraForward.get_tag_id());  
+
   }
 }
