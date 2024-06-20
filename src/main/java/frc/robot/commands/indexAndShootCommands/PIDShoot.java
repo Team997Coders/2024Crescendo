@@ -15,7 +15,6 @@ public class PIDShoot extends PIDCommand {
   /** Creates a new PIDShoot. */
 
   private final ShooterSubsystem shooter;
-  private final double m_speed;
 
   public PIDShoot(ShooterSubsystem shooter, double speed) {
 
@@ -27,14 +26,12 @@ public class PIDShoot extends PIDCommand {
         // This should return the setpoint (can also be a constant)
         () -> speed,
         // This uses the output
-        output -> shooter.setLeftMotorVoltage(output)
-    );
+        output -> shooter.setLeftMotorVoltage(output));
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     this.shooter = shooter;
-    this.m_speed = speed;
 
-    addRequirements(this.shooter);    
+    addRequirements(this.shooter);
   }
 
   // Returns true when the command should end.
