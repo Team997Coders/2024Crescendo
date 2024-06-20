@@ -62,6 +62,9 @@ public class SwerveModule {
     this.encoder.setVelocityConversionFactor(1);
     this.speedEncoder.setPositionConversionFactor(rotationsToDistance);
     this.speedEncoder.setVelocityConversionFactor(rotationsToDistance / 60);
+
+    this.angleMotor.setSmartCurrentLimit(DriveConstants.currentLimit);
+    this.speedMotor.setSmartCurrentLimit(DriveConstants.currentLimit);
   }
 
   public SwerveModule(SwerveModuleConfig config, double maxVelocity, double maxVoltage) {
@@ -74,9 +77,6 @@ public class SwerveModule {
         config.angleEncoderOffset,
         maxVelocity,
         maxVoltage);
-
-    angleMotor.setSmartCurrentLimit(DriveConstants.currentLimit);
-    speedMotor.setSmartCurrentLimit(DriveConstants.currentLimit);
   }
 
   /**
@@ -115,6 +115,7 @@ public class SwerveModule {
    * 
    * @return Return the module angle in degrees 0-360. CCW positive.
    *         Straight Forward should be 0 (with the addjustment of module offset)
+   *         Encoder will return nateively 0-1.
    */
   public double getEncoder() {
     return encoder.getPosition() * 360.0;
