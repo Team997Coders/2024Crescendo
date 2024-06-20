@@ -163,6 +163,8 @@ public class RobotContainer {
   private void configureBindings() {
     // Gyro Reset
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
+    // Drivetrain Lock
+    c_driveStick.povDown().onTrue(Commands.runOnce(drivebase::SwerveModuleLock));
     // Intake: a
     c_driveStick.a().onTrue(new Index(indexer)).onFalse(new StopIndex(indexer));
     // Shoot: b
@@ -170,7 +172,6 @@ public class RobotContainer {
     
     c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
     c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
-    
   }
 
   /**

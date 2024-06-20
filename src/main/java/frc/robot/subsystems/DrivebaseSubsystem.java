@@ -123,6 +123,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
   /** SwerveModuleLock
    * Initiate a defencive pose where all modules will turn off and rotate to point at the 
    * center of the robot.  This makes it extremely hard to move.
+   * Note that this method uses the module's version of the drive command.
    */
   public void SwerveModuleLock() {
     this.frontLeft.drive( new SwerveModuleState(0, new Rotation2d(5*Math.PI/4.0)));
