@@ -35,6 +35,8 @@ public class VisionSubsystem {
             // Handle the case where there is no target
         PhotonTrackedTarget bestTarget = this.camera.getLatestResult().getBestTarget();
         if (bestTarget != null) {
+            System.out.println(bestTarget);
+            System.out.println("bestTarget");
             return bestTarget.getFiducialId();
         } else {
             // Handle the case where there is no target
