@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Drive;
+import frc.robot.commands.ShootSequence;
 import frc.robot.commands.climbCommand.ClimberDown;
 import frc.robot.commands.climbCommand.ClimberStop;
 import frc.robot.commands.climbCommand.ClimberUp;
@@ -171,6 +172,8 @@ public class RobotContainer {
     c_driveStick.b().onTrue(new Shoot(shooter, 100)).onFalse(new Shoot(shooter, 0));
     // Spinnup Shooter: X
     c_driveStick.x().onTrue(shooter.SpinnupShooterCommand(100)).onFalse(shooter.StopShooterCommand());
+    // Full shooter sequence: Y
+    c_driveStick.y().onTrue(new ShootSequence(shooter, indexer, 12));
     
     c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
     c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
