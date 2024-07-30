@@ -186,12 +186,12 @@ public class RobotContainer {
 
   public void populateDashboard() {
     SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
-    SmartDashboard.putNumber("Shooter Velocity", shooter.getFlywheelVelocity());
-    SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
-    SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
+    SmartDashboard.putNumber("Shooter Velocity", shooter.getShooterVelocity());
+    SmartDashboard.putNumber("Feeder Power", indexer.getFeederMotorVoltage());
+    SmartDashboard.putNumber("Intake Power", indexer.getIntakeMotorVoltage());
     SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
     SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
     SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
-    
+    SmartDashboard.putNumber("Gyro Angle", getGyroYaw());
   }
 }

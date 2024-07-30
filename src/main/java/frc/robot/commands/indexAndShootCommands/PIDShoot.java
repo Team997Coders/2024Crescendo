@@ -22,7 +22,7 @@ public class PIDShoot extends PIDCommand {
         // The controller that the command will use
         new PIDController(0, 0, 0),
         // This should return the measurement
-        () -> shooter.getFlywheelVelocity(),
+        () -> shooter.getShooterVelocity(),
         // This should return the setpoint (can also be a constant)
         () -> speed,
         // This uses the output

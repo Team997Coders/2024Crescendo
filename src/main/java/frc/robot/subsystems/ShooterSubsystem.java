@@ -37,11 +37,7 @@ public class ShooterSubsystem extends SubsystemBase {
         leftFlywheelNeo.set(output); // between -1.0 and 1.0
     }
 
-    public double getFlywheelPosition() {
-        return shooterEncoder.getPosition();
-    }
-
-    public double getFlywheelVelocity() {
+    public double getShooterVelocity() {
         return shooterEncoder.getVelocity();
     }
 
