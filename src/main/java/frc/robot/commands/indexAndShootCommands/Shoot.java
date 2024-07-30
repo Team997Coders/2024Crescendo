@@ -26,7 +26,10 @@ public class Shoot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setLeftMotorVoltage(speed);
+    double current_power = shooter.getMotorOutput();
+    if (current_power == 0) {
+      shooter.setLeftMotorVoltage(speed);
+    }
   }
 
   // Called once the command ends or is interrupted.
