@@ -17,10 +17,9 @@ public class PIDShoot extends PIDCommand {
   private final ShooterSubsystem shooter;
 
   public PIDShoot(ShooterSubsystem shooter, double speed) {
-
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(0.001, 0.0, 0.005),
         // This should return the measurement
         () -> shooter.getShooterVelocity(),
         // This should return the setpoint (can also be a constant)
