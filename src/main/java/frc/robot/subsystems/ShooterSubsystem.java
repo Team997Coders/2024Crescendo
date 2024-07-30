@@ -37,6 +37,10 @@ public class ShooterSubsystem extends SubsystemBase {
         leftFlywheelNeo.set(output); // between -1.0 and 1.0
     }
 
+    public double getMotorOutput() {
+        return leftFlywheelNeo.getAppliedOutput();
+    }
+
     public double getShooterVelocity() {
         return shooterEncoder.getVelocity();
     }
@@ -51,7 +55,7 @@ public class ShooterSubsystem extends SubsystemBase {
      *
      * @return a command
      */
-    public Command runShooterCommand(double speed) {
+    public Command SpinnupShooterCommand(double speed) {
         // Inline construction of command goes here.
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
@@ -61,7 +65,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 }).until(() -> timer.get() >= 7);
     }
 
-    public Command runStopCommand() {
+    public Command StopShooterCommand() {
         return runOnce(
             () -> {
                 this.stop();
