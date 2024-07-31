@@ -165,9 +165,9 @@ public class RobotContainer {
     // Gyro Reset
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
     // Intake: a
-    c_driveStick.a().onTrue(new Intake(indexer)).onFalse(new StopIntake(indexer));
+    c_driveStick.a().onTrue(new Intake(indexer));
     // Shoot: b
-    c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 100)).onFalse(new Shoot(shooter, new Index(indexer, 8), 0));
+    c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 100));
     
     c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
     c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
@@ -185,13 +185,13 @@ public class RobotContainer {
   }
 
   public void populateDashboard() {
-    SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
-    SmartDashboard.putNumber("Shooter Velocity", shooter.getFlywheelVelocity());
-    SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
-    SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
-    SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
-    SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
-    SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
+    // SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
+    // SmartDashboard.putNumber("Shooter Velocity", shooter.getFlywheelVelocity());
+    // SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
+    // SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
+    // SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
+    // SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
+    // SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
     
   }
 }
