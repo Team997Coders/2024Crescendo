@@ -4,16 +4,19 @@
 
 package frc.robot.commands.autoCommands;
 
+import frc.robot.commands.indexAndShootCommand.Index;
 import frc.robot.commands.indexAndShootCommand.Shoot;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 public final class Autos {
   public static boolean run_state = false;
+
+  
   /** Example static factory for an autonomous command. */
   public static Command exampleAuto(IndexerSubsystem m_indexer, ShooterSubsystem m_shooter) {
     //return new Index(m_indexer,run_state);
-    return new Shoot(m_shooter, 0);
+    return new Shoot(m_shooter, new Index(m_indexer, 8), 0);
   }
 
   private Autos() {
