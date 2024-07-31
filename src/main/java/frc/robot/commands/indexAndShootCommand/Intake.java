@@ -5,13 +5,14 @@
 package frc.robot.commands.indexAndShootCommand;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.IndexerSubsystem;
 
-public class StopIndex extends Command {
+public class Intake extends Command {
   /** Creates a new RunIntake. */
   public final IndexerSubsystem indexer;
 
-  public StopIndex(IndexerSubsystem indexer) {
+  public Intake(IndexerSubsystem indexer) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.indexer = indexer;
     addRequirements(indexer);
@@ -24,7 +25,12 @@ public class StopIndex extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    indexer.stop();
+    if(indexer.getSensorStatus() == false) {
+    indexer.setIntakeVoltage(Constants.IntakeConstants.intakeSpeed);
+    indexer.setFeederVoltage(Constants.IntakeConstants.indexSpeed);
+    } else {
+      indexer.stop();
+    }
   }
 
   // Called once the command ends or is interrupted.

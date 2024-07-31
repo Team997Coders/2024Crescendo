@@ -5,20 +5,16 @@
 package frc.robot.commands.indexAndShootCommand;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 
-public class Shoot extends Command {
-  /** Creates a new Shoot. */
-  private final ShooterSubsystem shooter;
-  private final Index indexCommand;
-  private final double speed;
+public class StopIntake extends Command {
+  /** Creates a new RunIntake. */
+  public final IndexerSubsystem indexer;
 
-  public Shoot(ShooterSubsystem shooter, Index indexCommand, double speed) {
-    this.shooter = shooter;
-    this.indexCommand = indexCommand;
-    this.speed = speed;
-
-    addRequirements(this.shooter);
+  public StopIntake(IndexerSubsystem indexer) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.indexer = indexer;
+    addRequirements(indexer);
   }
 
   // Called when the command is initially scheduled.
@@ -28,14 +24,13 @@ public class Shoot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    indexCommand.execute();
-    shooter.setLeftMotorVoltage(speed);
+    indexer.stop();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setLeftMotorVoltage(0);
+    indexer.stop();
   }
 
   // Returns true when the command should end.

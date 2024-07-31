@@ -10,8 +10,9 @@ import frc.robot.commands.climbCommand.ClimberDown;
 import frc.robot.commands.climbCommand.ClimberStop;
 import frc.robot.commands.climbCommand.ClimberUp;
 import frc.robot.commands.indexAndShootCommand.Index;
+import frc.robot.commands.indexAndShootCommand.Intake;
 import frc.robot.commands.indexAndShootCommand.Shoot;
-import frc.robot.commands.indexAndShootCommand.StopIndex;
+import frc.robot.commands.indexAndShootCommand.StopIntake;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -164,9 +165,9 @@ public class RobotContainer {
     // Gyro Reset
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
     // Intake: a
-    c_driveStick.a().onTrue(new Index(indexer)).onFalse(new StopIndex(indexer));
+    c_driveStick.a().onTrue(new Intake(indexer)).onFalse(new StopIntake(indexer));
     // Shoot: b
-    c_driveStick.b().onTrue(new Shoot(shooter, 100)).onFalse(new Shoot(shooter, 0));
+    c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 100)).onFalse(new Shoot(shooter, new Index(indexer, 8), 0));
     
     c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
     c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
