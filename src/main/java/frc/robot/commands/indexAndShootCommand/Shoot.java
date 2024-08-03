@@ -15,10 +15,10 @@ public class Shoot extends Command {
   private final double speed;
   private Timer timer = new Timer();
 
-  public Shoot(ShooterSubsystem shooter, Index indexCommand, double speed) {
+  public Shoot(ShooterSubsystem shooter, Index indexCommand, double voltage) {
     this.shooter = shooter;
     this.indexCommand = indexCommand;
-    this.speed = speed;
+    this.speed = voltage;
 
     addRequirements(this.shooter);
   }

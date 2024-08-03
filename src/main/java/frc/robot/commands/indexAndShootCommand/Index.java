@@ -10,9 +10,9 @@ public class Index extends Command {
     private final double speed;
 
 
-    public Index(IndexerSubsystem indexer, double speed) {
+    public Index(IndexerSubsystem indexer, double voltage) {
         this.indexer = indexer;
-        this.speed = speed;
+        this.speed = voltage;
     }
     
       @Override

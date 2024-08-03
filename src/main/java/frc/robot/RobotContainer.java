@@ -19,10 +19,14 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -43,6 +47,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final AHRS gyro = new AHRS();
 
+  private final SendableChooser<Command> autoChooser;
+
   private final DrivebaseSubsystem drivebase = new DrivebaseSubsystem(gyro);
   private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -58,6 +64,17 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    
+    autoChooser = AutoBuilder.buildAutoChooser("Straight line");
+    SmartDashboard.putData("Auto Choser", autoChooser);
+
+
+
+    NamedCommands.registerCommand("Intake", new Intake(indexer));
+    NamedCommands.registerCommand("StopIntake", new StopIntake(indexer));
+    NamedCommands.registerCommand("Index", new Index(indexer, 8));
+    NamedCommands.registerCommand("Shoot", new Shoot(shooter, new Index(indexer, 8), 14));
+
     // Configure the trigger bindings
     drivebase.setDefaultCommand(
         new Drive(
@@ -167,7 +184,7 @@ public class RobotContainer {
     // Intake: a
     c_driveStick.a().onTrue(new Intake(indexer));
     // Shoot: b
-    c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 100));
+    c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 14));
     
     c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
     c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
@@ -180,18 +197,27 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
+    PathPlannerPath path = PathPlannerPath.fromPathFile("Straight line");
     // An example command will be run in autonomous
-    return new InstantCommand();
+
+    return autoChooser.getSelected();
+  // return AutoBuilder.followPath(path);
   }
 
   public void populateDashboard() {
-    // SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
-    // SmartDashboard.putNumber("Shooter Velocity", shooter.getFlywheelVelocity());
-    // SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
-    // SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
-    // SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
-    // SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
-    // SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
+
+    
+    SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
+    SmartDashboard.putNumber("Shooter Velocity", shooter.getFlywheelVelocity());
+    SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
+    SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
+    SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
+    SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
+    SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
+    SmartDashboard.putNumber("Gyro yaw", getGyroYaw());
+
+    SmartDashboard.putBoolean("autobuilder is configured", AutoBuilder.isConfigured());
     
   }
 }

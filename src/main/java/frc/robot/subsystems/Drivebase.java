@@ -23,6 +23,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -75,37 +76,14 @@ public class Drivebase extends SubsystemBase {
     this.gyro = gyro;
     odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
 
-    AutoBuilder.configureHolonomic(
-        this::getPose, // Robot pose supplier
-        this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-        this::getCurrentSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-        this::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-        new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            new PIDConstants(TranslationPID.p, TranslationPID.i, TranslationPID.d), // Translation PID constants
-            new PIDConstants(RotationPID.p, RotationPID.i, RotationPID.d), // Rotation PID constants
-            MAX_VELOCITY, // Max module speed, in m/s
-            ModuleLocations.robotRaduius, // Drive base radius in meters. Distance from robot center to furthest module.
-            new ReplanningConfig()), // Default path replanning config. See the API for the options here
-
-        // Boolean supplier that controls when the path will be mirrored for the red
-        // alliance
-        // This will flip the path being followed to the red side of the field.
-        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-        () -> {
-          // var alliance = DriverStation.getAlliance();
-          // if (alliance.isPresent()) {
-          // return alliance.get() == DriverStation.Alliance.Red;
-          // }
-          return false;
-        },
-        this); // Reference to this subsystem to set requirements
+   
 
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
     SmartDashboard.putData("Field", field);
   }
 
   public double getFieldAngle() {
-    return -gyro.getYaw();
+    return -gyro.getYaw(); //was negative
   }
 
   public void fieldOrientedDrive(double speedX, double speedY, double rot) {
