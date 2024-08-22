@@ -26,7 +26,7 @@ public class Index extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (indexer.getSensorStatus() == false) {
+    if (!indexer.getSensorStatus()) {
       indexer.setIntakeVoltage(Constants.IntakeConstants.intakeSpeed);
       indexer.setFeederVoltage(Constants.IntakeConstants.indexSpeed);
     } else {
