@@ -10,9 +10,9 @@ import frc.robot.commands.ShootSequence;
 import frc.robot.commands.climbCommand.ClimberDown;
 import frc.robot.commands.climbCommand.ClimberStop;
 import frc.robot.commands.climbCommand.ClimberUp;
-import frc.robot.commands.indexAndShootCommands.Index;
-import frc.robot.commands.indexAndShootCommands.Shoot;
-import frc.robot.commands.indexAndShootCommands.StopIndex;
+import frc.robot.commands.indexAndShootCommand.Index;
+import frc.robot.commands.indexAndShootCommand.Shoot;
+import frc.robot.commands.indexAndShootCommand.StopIndex;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -105,16 +105,6 @@ public class RobotContainer {
 
     private double squared(double input) {
         return Math.copySign(input * input, input);
-    }
-
-    public void updateDashboard() {
-        SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
-        SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
-        SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
-
-        SmartDashboard.putBoolean("Climber Sensor: ", climber.getLeftClimberSensor());
-        SmartDashboard.putBoolean("Is Climber Moving?", climber.isClimberMoving());
-        SmartDashboard.putNumber("Climber Position: ", climber.getEncoderPosition());
     }
 
     @SuppressWarnings("unused")
