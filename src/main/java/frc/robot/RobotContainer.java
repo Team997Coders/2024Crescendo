@@ -11,8 +11,9 @@ import frc.robot.commands.climbCommand.ClimberDown;
 import frc.robot.commands.climbCommand.ClimberStop;
 import frc.robot.commands.climbCommand.ClimberUp;
 import frc.robot.commands.indexAndShootCommand.Index;
+import frc.robot.commands.indexAndShootCommand.Intake;
 import frc.robot.commands.indexAndShootCommand.Shoot;
-import frc.robot.commands.indexAndShootCommand.StopIndex;
+import frc.robot.commands.indexAndShootCommand.StopIntake;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -154,9 +155,9 @@ public class RobotContainer {
         // Drivetrain Lock
         c_driveStick.povDown().onTrue(Commands.runOnce(drivebase::SwerveModuleLock));
         // Intake: a
-        c_driveStick.a().onTrue(new Index(indexer)).onFalse(new StopIndex(indexer));
+        c_driveStick.a().onTrue(new Intake(indexer)).onFalse(new StopIntake(indexer));
         // Shoot: b
-        c_driveStick.b().onTrue(new Shoot(shooter, 100)).onFalse(new Shoot(shooter, 0));
+        c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 14));
         // Spinnup Shooter: X
         c_driveStick.x().onTrue(shooter.SpinnupShooterCommand(100)).onFalse(shooter.StopShooterCommand());
         // Full shooter sequence: Y
