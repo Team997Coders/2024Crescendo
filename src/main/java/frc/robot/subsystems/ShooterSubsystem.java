@@ -59,10 +59,10 @@ public class ShooterSubsystem extends SubsystemBase {
         // Inline construction of command goes here.
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
-                () -> {
-                    timer.start();
-                    setLeftMotorVoltage(speed);
-                }).until(() -> timer.get() >= 7);
+            () -> {
+                this.setLeftMotorVoltage(speed);
+            }
+        );
     }
 
     public Command StopShooterCommand() {
