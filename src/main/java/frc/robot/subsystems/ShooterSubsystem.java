@@ -7,7 +7,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
@@ -18,8 +17,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax rightFlywheelNeo = new CANSparkMax(ShooterConstants.rightShootMotorID,
             MotorType.kBrushless);
     private RelativeEncoder shooterEncoder;
-
-    private Timer timer = new Timer();
 
     public ShooterSubsystem() {
         leftFlywheelNeo.setInverted(ShooterConstants.leftShooterMotorReversed);

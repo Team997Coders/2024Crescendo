@@ -20,14 +20,16 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -44,26 +46,37 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final AHRS gyro = new AHRS();
 
+    private final SendableChooser<Command> autoChooser;
+
     private final DrivebaseSubsystem drivebase = new DrivebaseSubsystem(gyro);
     private final IndexerSubsystem indexer = new IndexerSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
     private final ClimberSubsystem climber = new ClimberSubsystem();
 
-    private static final XboxController driveStick = new XboxController(0);
+    private static XboxController driveStick = new XboxController(0);
 
     // private static CommandXboxController c_driveStick2 = new
     // CommandXboxController(1);
-    private static final CommandXboxController c_driveStick = new CommandXboxController(0);
+    private static CommandXboxController c_driveStick = new CommandXboxController(0);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+
+        autoChooser = AutoBuilder.buildAutoChooser("Straight line");
+        SmartDashboard.putData("Auto Choser", autoChooser);
+
+        NamedCommands.registerCommand("Intake", new Intake(indexer));
+        NamedCommands.registerCommand("StopIntake", new StopIntake(indexer));
+        NamedCommands.registerCommand("Index", new Index(indexer, 8));
+        NamedCommands.registerCommand("Shoot", new Shoot(shooter, new Index(indexer, 8), 14));
+
         // Configure the trigger bindings
         drivebase.setDefaultCommand(
                 new Drive(
                         drivebase,
-                        this::getScaledXY,
+                        () -> getScaledXY(),
                         () -> scaleRotationAxis(driveStick.getRawAxis(4))));
 
         configureBindings();
@@ -72,8 +85,8 @@ public class RobotContainer {
     /**
      * {@link edu.wpi.first.math.MathUtil}
      */
-    private double deadband(double input) {
-        if (Math.abs(input) < DriveConstants.deadband) {
+    private double deadband(double input, double deadband) {
+        if (Math.abs(input) < deadband) {
             return 0;
         } else {
             return input;
@@ -82,8 +95,8 @@ public class RobotContainer {
 
     private double[] getXY() {
         double[] xy = new double[2];
-        xy[0] = deadband(driveStick.getLeftX());
-        xy[1] = deadband(driveStick.getLeftY());
+        xy[0] = deadband(driveStick.getLeftX(), DriveConstants.deadband);
+        xy[1] = deadband(driveStick.getLeftY(), DriveConstants.deadband);
         return xy;
     }
 
@@ -108,6 +121,16 @@ public class RobotContainer {
         return Math.copySign(input * input, input);
     }
 
+    public void updateDashboard() {
+        SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
+        SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
+        SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
+
+        SmartDashboard.putBoolean("Climber Sensor: ", climber.getLeftClimberSensor());
+        SmartDashboard.putBoolean("Is Climber Moving?", climber.isClimberMoving());
+        SmartDashboard.putNumber("Climber Position: ", climber.getEncoderPosition());
+    }
+
     @SuppressWarnings("unused")
     private double cube(double input) {
         return Math.copySign(input * input * input, input);
@@ -115,11 +138,11 @@ public class RobotContainer {
 
     @SuppressWarnings("unused")
     private double scaleTranslationAxis(double input) {
-        return deadband(-squared(input)) * drivebase.getMaxVelocity();
+        return deadband(-squared(input), DriveConstants.deadband) * drivebase.getMaxVelocity();
     }
 
     private double scaleRotationAxis(double input) {
-        return deadband(squared(input)) * drivebase.getMaxAngleVelocity() * -0.6;
+        return deadband(squared(input), DriveConstants.deadband) * drivebase.getMaxAngleVelocity() * -0.6;
     }
 
     public void resetGyro() {
@@ -155,7 +178,7 @@ public class RobotContainer {
         // Drivetrain Lock
         c_driveStick.povDown().onTrue(Commands.runOnce(drivebase::SwerveModuleLock));
         // Intake: a
-        c_driveStick.a().onTrue(new Intake(indexer)).onFalse(new StopIntake(indexer));
+        c_driveStick.a().onTrue(new Intake(indexer));
         // Shoot: b
         c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 14));
         // Spinnup Shooter: X
@@ -173,8 +196,12 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
+
+        // PathPlannerPath path = PathPlannerPath.fromPathFile("Straight line");
         // An example command will be run in autonomous
-        return new InstantCommand();
+
+        return autoChooser.getSelected();
+        // return AutoBuilder.followPath(path);
     }
 
     public void populateDashboard() {
@@ -186,5 +213,7 @@ public class RobotContainer {
         SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
         SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
         SmartDashboard.putNumber("Gyro Angle", getGyroYaw());
+
+        SmartDashboard.putBoolean("autobuilder is configured", AutoBuilder.isConfigured());
     }
 }
