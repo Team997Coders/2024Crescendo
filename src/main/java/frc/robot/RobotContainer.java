@@ -184,7 +184,7 @@ public class RobotContainer {
     // Intake: a
     c_driveStick.a().onTrue(new Intake(indexer));
     // Shoot: b
-    c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 14));
+    c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 12), 14));
     
     c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
     c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
