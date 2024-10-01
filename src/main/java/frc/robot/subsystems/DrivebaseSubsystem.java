@@ -35,7 +35,7 @@ import lib.SwerveModule;
 
 public class DrivebaseSubsystem extends SubsystemBase {
   private final double DRIVE_REDUCTION = 1.0 / 6.75;
-  private final double NEO_FREE_SPEED = 5820.0 / 60.0;
+  private final double NEO_FREE_SPEED = 5676.0 / 60.0;
   private final double WHEEL_DIAMETER = 0.1016;
   private final double MAX_VELOCITY = NEO_FREE_SPEED * DRIVE_REDUCTION * WHEEL_DIAMETER * Math.PI;
   private final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / (ModuleLocations.dist / Math.sqrt(2.0));
