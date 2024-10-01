@@ -213,9 +213,9 @@ public class DrivebaseSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("module output", modules[0].getDriveOutput());
 
     // This method will be called once per sgit scheduler run
-    SmartDashboard.putNumber("FL Encoder", frontLeft.getEncoder());
-    SmartDashboard.putNumber("FR Encoder", frontRight.getEncoder());
-    SmartDashboard.putNumber("BR Encoder", backRight.getEncoder());
-    SmartDashboard.putNumber("BL Encoder", backLeft.getEncoder());
+    // SmartDashboard.putNumber("FL Encoder", frontLeft.getEncoder());
+    // SmartDashboard.putNumber("FR Encoder", frontRight.getEncoder());
+    // SmartDashboard.putNumber("BR Encoder", backRight.getEncoder());
+    // SmartDashboard.putNumber("BL Encoder", backLeft.getEncoder());
   }
 }
