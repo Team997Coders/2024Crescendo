@@ -212,7 +212,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
     Shuffleboard.selectTab("Drive");
     SmartDashboard.putNumber("module output", modules[0].getDriveOutput());
 
-    // This method will be called once per scheduler run
+    // This method will be called once per sgit scheduler run
     SmartDashboard.putNumber("FL Encoder", frontLeft.getEncoder());
     SmartDashboard.putNumber("FR Encoder", frontRight.getEncoder());
     SmartDashboard.putNumber("BR Encoder", backRight.getEncoder());

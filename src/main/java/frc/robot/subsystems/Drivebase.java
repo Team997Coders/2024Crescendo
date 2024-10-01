@@ -5,11 +5,11 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
+//import com.pathplanner.lib.auto.AutoBuilder;
+//import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+//import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import com.pathplanner.lib.util.ReplanningConfig;
+//import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -23,15 +23,15 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
+//import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.DriveConstants.ModuleLocations;
 import frc.robot.Constants.DriveConstants.SwerveModules;
-import frc.robot.Constants.PathPlannerConstants.RotationPID;
-import frc.robot.Constants.PathPlannerConstants.TranslationPID;
+//import frc.robot.Constants.PathPlannerConstants.RotationPID;
+//import frc.robot.Constants.PathPlannerConstants.TranslationPID;
 import lib.SwerveModule;
 
 public class Drivebase extends SubsystemBase {
@@ -75,8 +75,6 @@ public class Drivebase extends SubsystemBase {
 
     this.gyro = gyro;
     odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
-
-   
 
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
     SmartDashboard.putData("Field", field);
@@ -182,12 +180,11 @@ public class Drivebase extends SubsystemBase {
 
     SmartDashboard.putNumber("module output", modules[0].getDriveOutput());
 
-    // TODO: Sendables?
-    //
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("FL Encoder", frontLeft.getEncoder());
-    SmartDashboard.putNumber("FR Encoder", frontRight.getEncoder());
-    SmartDashboard.putNumber("BR Encoder", backRight.getEncoder());
-    SmartDashboard.putNumber("BL Encoder", backLeft.getEncoder());
+    //   Uncomment these smartdashboard calls to debug the swerve encoders position.
+    // SmartDashboard.putNumber("FL Encoder", frontLeft.getEncoder());
+    // SmartDashboard.putNumber("FR Encoder", frontRight.getEncoder());
+    // SmartDashboard.putNumber("BR Encoder", backRight.getEncoder());
+    // SmartDashboard.putNumber("BL Encoder", backLeft.getEncoder());
   }
 }
