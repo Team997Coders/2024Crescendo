@@ -27,7 +27,7 @@ public class ClimberStop extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
-}
+}git checkout 
