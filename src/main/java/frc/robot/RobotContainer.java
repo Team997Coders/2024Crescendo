@@ -72,6 +72,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("StopIntake", new StopIntake(indexer));
     NamedCommands.registerCommand("Index", new Index(indexer, 8));
     NamedCommands.registerCommand("Shoot", new Shoot(shooter, new Index(indexer, 8), 14));
+    NamedCommands.registerCommand("ClimberUp", new ClimberUp(climber));
+    NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber));
+
 
     // Configure the trigger bindings
     drivebase.setDefaultCommand(
@@ -181,12 +184,12 @@ public class RobotContainer {
     c_driveStick.povUp().onTrue(Commands.runOnce(gyro::reset));
     // Intake: a
     c_driveStick.a().onTrue(new Intake(indexer));
+    c_driveStick.x().onTrue(new StopIntake(indexer));
     // Shoot: b
     c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 14));
     
     c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
     c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
-    
   }
 
   /**
