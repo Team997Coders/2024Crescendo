@@ -179,13 +179,14 @@ public class RobotContainer {
         c_driveStick.povDown().onTrue(Commands.runOnce(drivebase::SwerveModuleLock));
         // Intake: a
         c_driveStick.a().onTrue(new Intake(indexer));
+        c_driveStick.povRight().onTrue(new StopIntake(indexer));
         // Shoot: b
         c_driveStick.b().onTrue(new Shoot(shooter, new Index(indexer, 8), 14));
         // Spinnup Shooter: X
         c_driveStick.x().onTrue(shooter.SpinnupShooterCommand(100)).onFalse(shooter.StopShooterCommand());
         // Full shooter sequence: Y
         c_driveStick.y().onTrue(new ShootSequence(shooter, indexer, 12));
-
+        // Climber: right and left bumpers.
         c_driveStick.rightBumper().onTrue(new ClimberUp(climber)).onFalse(new ClimberStop(climber));
         c_driveStick.leftBumper().onTrue(new ClimberDown(climber)).onFalse(new ClimberStop(climber));
     }

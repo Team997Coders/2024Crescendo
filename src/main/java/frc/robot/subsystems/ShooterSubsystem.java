@@ -47,7 +47,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
 
-            /**
+    /**
      * Simple command to run the shooter motor as a test
      *
      * @return a command
