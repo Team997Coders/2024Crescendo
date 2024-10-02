@@ -22,6 +22,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -221,7 +222,10 @@ public class DrivebaseSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("rot", rotation);
     field.setRobotPose(getPose());
 
-    // This method will be called once per scheduler run
+    Shuffleboard.selectTab("Drive");
+    SmartDashboard.putNumber("module output", modules[0].getDriveOutput());
+
+    // This method will be called once per sgit scheduler run
     // SmartDashboard.putNumber("FL Encoder", frontLeft.getEncoder());
     // SmartDashboard.putNumber("FR Encoder", frontRight.getEncoder());
     // SmartDashboard.putNumber("BR Encoder", backRight.getEncoder());
