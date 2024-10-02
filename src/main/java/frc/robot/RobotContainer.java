@@ -67,14 +67,12 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser("Straight line");
         SmartDashboard.putData("Auto Choser", autoChooser);
 
-
-
-    NamedCommands.registerCommand("Intake", new Intake(indexer));
-    NamedCommands.registerCommand("StopIntake", new StopIntake(indexer));
-    NamedCommands.registerCommand("Index", new Index(indexer, 8));
-    NamedCommands.registerCommand("Shoot", new Shoot(shooter, new Index(indexer, 8), 14));
-    NamedCommands.registerCommand("ClimberUp", new ClimberUp(climber));
-    NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber));
+        NamedCommands.registerCommand("Intake", new Intake(indexer));
+        NamedCommands.registerCommand("StopIntake", new StopIntake(indexer));
+        NamedCommands.registerCommand("Index", new Index(indexer, 8));
+        NamedCommands.registerCommand("Shoot", new Shoot(shooter, new Index(indexer, 8), 14));
+        NamedCommands.registerCommand("ClimberUp", new ClimberUp(climber));
+        NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber));
 
         // Configure the trigger bindings
         drivebase.setDefaultCommand(
@@ -209,20 +207,20 @@ public class RobotContainer {
         // return AutoBuilder.followPath(path);
     }
 
-  public void populateDashboard() {
-    SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
-    SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
-    SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
-    
-    SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
-    SmartDashboard.putNumber("Shooter Velocity", shooter.getShooterVelocity());
-    SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
-    SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
-    SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
-    SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
-    SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
-    SmartDashboard.putNumber("Gyro Angle", getGyroYaw());
+    public void populateDashboard() {
+        SmartDashboard.putNumber("Scaled_X", getScaledXY()[0]);
+        SmartDashboard.putNumber("Scaled_Y", getScaledXY()[1]);
+        SmartDashboard.putNumber("Rotation", scaleRotationAxis(driveStick.getRawAxis(4)));
 
-    SmartDashboard.putBoolean("autobuilder is configured", AutoBuilder.isConfigured());
+        SmartDashboard.putBoolean("Note Sensor", indexer.getSensorStatus());
+        SmartDashboard.putNumber("Shooter Velocity", shooter.getShooterVelocity());
+        SmartDashboard.putNumber("Feeder Velocity", indexer.getFeederMotorVoltage());
+        SmartDashboard.putNumber("Intake Velocity", indexer.getIntakeMotorVoltage());
+        SmartDashboard.putNumber("Climber Position", climber.getEncoderPosition());
+        SmartDashboard.putBoolean("Left Climber Down?", climber.getLeftClimberSensor());
+        SmartDashboard.putBoolean("Right Climber Down?", climber.getRightClimberSensor());
+        SmartDashboard.putNumber("Gyro Angle", getGyroYaw());
+
+        SmartDashboard.putBoolean("autobuilder is configured", AutoBuilder.isConfigured());
     }
 }
