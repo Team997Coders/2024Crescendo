@@ -32,7 +32,7 @@ public class Shoot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (timer.get() <= 1) {
+    if (timer.get() <= 2) {
       shooter.setLeftMotorVoltage(speed);
     } else {
     indexCommand.execute();
@@ -55,6 +55,6 @@ public class Shoot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() >= 2;
+    return timer.get() >= 4;
   }
 }

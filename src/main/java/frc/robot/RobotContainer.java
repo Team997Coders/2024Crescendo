@@ -73,7 +73,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake", new Intake(indexer));
     NamedCommands.registerCommand("StopIntake", new StopIntake(indexer));
     NamedCommands.registerCommand("Index", new Index(indexer, 8));
-    NamedCommands.registerCommand("Shoot", new Shoot(shooter, new Index(indexer, 8), 14));
+    NamedCommands.registerCommand("Shoot", new Shoot(shooter, new Index(indexer, 12), 12));
 
     // Configure the trigger bindings
     drivebase.setDefaultCommand(
