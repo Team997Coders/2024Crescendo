@@ -154,7 +154,19 @@ public class DrivebaseSubsystem extends SubsystemBase {
     this.backLeft.drive(moduleStates[2]);
     this.backRight.drive(moduleStates[3]);
 
-    SmartDashboard.putNumber("BL Target Angle", moduleStates[2].angle.getDegrees());
+    //SmartDashboard.putNumber("BL Target Angle", moduleStates[2].angle.getDegrees());
+  }
+
+  /** SwerveModuleLock
+   * Initiate a defencive pose where all modules will turn off and rotate to point at the 
+   * center of the robot.  This makes it extremely hard to move.
+   * Note that this method uses the module's version of the drive command.
+   */
+  public void SwerveModuleLock() {
+    this.frontLeft.drive( new SwerveModuleState(0, new Rotation2d(5*Math.PI/4.0)));
+    this.frontRight.drive( new SwerveModuleState(0, new Rotation2d(3*Math.PI/4.0)));
+    this.backLeft.drive( new SwerveModuleState(0, new Rotation2d(7*Math.PI/4.0)));
+    this.backRight.drive( new SwerveModuleState(0, new Rotation2d(1*Math.PI/4.0)));
   }
 
   public double getMaxVelocity() {
@@ -192,6 +204,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
     }
     return positions;
   }
+
 
   @Override
   public void periodic() {
